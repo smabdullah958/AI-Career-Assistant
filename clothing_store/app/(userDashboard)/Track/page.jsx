@@ -1,10 +1,9 @@
-
 const page = () => {
   return (
-    <div>
-this is a track order page      
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      this is a track order page
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

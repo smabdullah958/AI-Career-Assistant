@@ -1,0 +1,88 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+const LoginForm = ({ HideForm }) => {
+  let [Form, SetForm] = useState({
+    Email: "",
+    Password: "",
+  });
+  let FormFunction = (e) => {
+    SetForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
+      <div className="bg-blue-50 shadow-2xl rounded-2xl p-8 w-[90vw] sm:w-[400px] border border-amber-200 relative">
+        {/* Heading */}
+        <div className="flex">
+          <button
+            onClick={HideForm}
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 active:scale-95 transition-all duration-200 text-blue-700 font-bold text-lg"
+          >
+            X
+          </button>
+          <h2 className="text-3xl font-bold text-blue-700 text-center mb-2">
+            Welcome Back
+          </h2>
+        </div>
+        <p className="text-center text-gray-400 mb-8 text-sm">
+          Login to your account
+        </p>
+
+        {/* Form */}
+        <form className="flex flex-col gap-5">
+          {/* Email */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-blue-700">Email</label>
+            <input
+              type="email"
+              placeholder="test@gmail.com"
+              onChange={FormFunction}
+              name="Email"
+              value={Form.Email}
+              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-blue-700">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={Form.Password}
+              onChange={FormFunction}
+              name="Password"
+              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button className="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200 text-white font-semibold py-3 rounded-lg shadow-md mt-2">
+            Login
+          </button>
+        </form>
+
+        {/* Signup redirect */}
+        <p className="text-center text-gray-400 text-sm mt-6">
+          Don't have an account?{" "}
+          <Link
+            onClick={HideForm}
+            href="/SignUp"
+            className="text-blue-500 hover:text-blue-600 duration-300 transition-all hover:text-[15px]"
+          >
+            Sign Up
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default LoginForm;

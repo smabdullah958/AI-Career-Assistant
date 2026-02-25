@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-// import LogIn from "../Buttons/LogIn";
-// import LogOut from "../Buttons/LogOut";
+import LogIn from "@/Component/Buttons/LoginButton";
+import LogOut from "@/Component/Buttons/LogoutButton";
 import Image from "next/image";
 const Header = () => {
   return (
@@ -53,10 +53,10 @@ const Header = () => {
           </Link>
         </nav>
 
-        {/* <div className="flex gap-2">
+        <div className="flex gap-2">
           <LogOut />
           <LogIn />
-        </div> */}
+        </div>
       </div>
     </header>
   );

@@ -51,7 +51,10 @@ const LoginForm = ({ HideForm }) => {
         {/* Heading */}
         <div className="flex">
           <button
-            onClick={HideForm}
+            onClick={() => {
+              HideForm();
+              dispatch(ResetLogInState());
+            }}
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 active:scale-95 transition-all duration-200 text-blue-700 font-bold text-lg"
           >
             X

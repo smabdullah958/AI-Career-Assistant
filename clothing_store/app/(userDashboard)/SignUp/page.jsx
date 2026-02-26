@@ -16,6 +16,7 @@ const page = () => {
   let { loading, Role, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
   );
+
   //disable button when  loading or a name or a email or a password is not
   let DisableButton = loading || !field.Name || !field.Email || !field.Password;
   // redirect after success
@@ -36,10 +37,25 @@ const page = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  // for check the length ofa  passsword
+  let [CheckPassword, SetCheckPassword] = useState("");
+
   let SignupFunction = async (Data) => {
+    // for check the length ofa  passsword
+    if (field.Password?.length < 6) {
+      SetCheckPassword("Password must be at least 6 character");
+      return;
+    }
+    SetCheckPassword("");
     let res = await dispatch(SignUpThunck(Data));
     console.log(res);
   };
+
+  useEffect(() => {
+    dispatch(ResetSignUpState()); // clears Redux errorMessage
+    SetCheckPassword(""); // clears local password error
+  }, []); // runs once when page is opens
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8">
@@ -56,6 +72,13 @@ const page = () => {
             {errorMessage}
           </p>
         )}
+        {/* password length issue */}
+        {CheckPassword && (
+          <p className="text-red-500 text-sm mt-3 text-center">
+            {CheckPassword}
+          </p>
+        )}
+
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-blue-700 mb-2 mt-5">
             Full Name

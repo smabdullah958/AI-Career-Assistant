@@ -1,18 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
+import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
+import ButtonLoader from "../ButtonLoader";
 const LoginForm = ({ HideForm }) => {
-  let [Form, SetForm] = useState({
+  let dispatch = useDispatch();
+  let router = useRouter();
+
+  let { loading, Role, errorMessage, success } = useSelector(
+    (state) => state.LogInSlice, //LogInSlice is come from a store
+  );
+
+  let [Field, SetField] = useState({
     Email: "",
     Password: "",
   });
   let FormFunction = (e) => {
-    SetForm((prev) => ({
+    SetField((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+
+  let LogInFunction = async (Data) => {
+    let result = await dispatch(LogInThunck(Data));
+    console.log(result);
+  };
+
+  //disable button when  loading or a name or a email or a password is not
+  let DisableButton = loading || !Field.Email || !Field.Password;
+  // redirect after success
+  useEffect(() => {
+    if (success) {
+      if (Role === "Admin") {
+        router.push("/AdminDashboard");
+      } else {
+        HideForm();
+      }
+      dispatch(ResetLogInState());
+    }
+  }, [success]);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
@@ -35,6 +66,12 @@ const LoginForm = ({ HideForm }) => {
 
         {/* Form */}
         <form className="flex flex-col gap-5">
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-3 text-center">
+              {errorMessage}
+            </p>
+          )}
+
           {/* Email */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium text-blue-700">Email</label>
@@ -43,7 +80,7 @@ const LoginForm = ({ HideForm }) => {
               placeholder="test@gmail.com"
               onChange={FormFunction}
               name="Email"
-              value={Form.Email}
+              value={Field.Email}
               className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             />
           </div>
@@ -56,7 +93,7 @@ const LoginForm = ({ HideForm }) => {
             <input
               type="password"
               placeholder="••••••••"
-              value={Form.Password}
+              value={Field.Password}
               onChange={FormFunction}
               name="Password"
               className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
@@ -64,12 +101,20 @@ const LoginForm = ({ HideForm }) => {
           </div>
 
           {/* Submit Button */}
-          <button className="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200 text-white font-semibold py-3 rounded-lg shadow-md mt-2">
-            Login
+          <button
+            disabled={DisableButton}
+            onClick={() => LogInFunction(Field)}
+            className={`w-full text-white font-semibold py-3 rounded-lg shadow-md mt-5 transition-all duration-200 ${
+              DisableButton
+                ? "bg-blue-200 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 active:scale-95"
+            }`}
+          >
+            {loading ? <ButtonLoader /> : "Login"}
           </button>
         </form>
 
-        {/* Signup redirect */}
+        {/* Signup redirect */} 
         <p className="text-center text-gray-400 text-sm mt-6">
           Don't have an account?{" "}
           <Link

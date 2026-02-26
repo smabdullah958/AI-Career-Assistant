@@ -1,10 +1,10 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
+import ButtonLoader from "@/Component/ButtonLoader";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -13,15 +13,15 @@ const page = () => {
     Password: "",
     Email: "",
   });
-
   let { loading, Role, errorMessage, success } = useSelector(
-    (state) => state.SignUpSlice,
+    (state) => state.SignUpSlice, //SignUpSlice is come from a store
   );
-
+  //disable button when  loading or a name or a email or a password is not
+  let DisableButton = loading || !field.Name || !field.Email || !field.Password;
   // redirect after success
   useEffect(() => {
     if (success) {
-      if (Role === "admin") {
+      if (Role === "Admin") {
         router.push("/AdminDashboard");
       } else {
         router.push("/");
@@ -36,12 +36,10 @@ const page = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
   let SignupFunction = async (Data) => {
     let res = await dispatch(SignUpThunck(Data));
     console.log(res);
   };
-
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8">
@@ -52,17 +50,12 @@ const page = () => {
         <p className="text-center text-gray-400 mb-8 text-sm">
           Sign up to get started
         </p>
-
-        {/* Form */}
-
         {/* Name */}
-
         {errorMessage && (
           <p className="text-red-500 text-sm mt-3 text-center">
             {errorMessage}
           </p>
         )}
-
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-blue-700 mb-2 mt-5">
             Full Name
@@ -76,7 +69,6 @@ const page = () => {
             className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
           />
         </div>
-
         {/* Email */}
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-blue-700 mb-2 mt-5">
@@ -91,7 +83,6 @@ const page = () => {
             className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
           />
         </div>
-
         {/* Password */}
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-blue-700 mb-2 mt-5">
@@ -106,17 +97,20 @@ const page = () => {
             className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
           />
         </div>
-
         {/* Submit Button */}
         <button
+          disabled={DisableButton}
           onClick={() => SignupFunction({ ...field, Role: "User" })}
-          className="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200 text-white font-semibold py-3 rounded-lg shadow-md mt-5 p-5"
+          className={`w-full text-white font-semibold py-3 rounded-lg shadow-md mt-5 transition-all duration-200 ${
+            DisableButton
+              ? "bg-blue-200 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 active:scale-95"
+          }`}
         >
-          Sign Up
+          {loading ? <ButtonLoader /> : "Sign Up"}
         </button>
       </div>
     </div>
   );
 };
-
 export default page;

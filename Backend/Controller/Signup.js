@@ -3,7 +3,6 @@ require("dotenv").config();
 let key = process.env.SecretKey;
 let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
-
 let SignUp = async (req, res) => {
   try {
     let { Name, Email, Password, Role } = req.body;

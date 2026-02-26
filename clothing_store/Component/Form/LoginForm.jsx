@@ -114,7 +114,7 @@ const LoginForm = ({ HideForm }) => {
           </button>
         </form>
 
-        {/* Signup redirect */} 
+        {/* Signup redirect */}
         <p className="text-center text-gray-400 text-sm mt-6">
           Don't have an account?{" "}
           <Link

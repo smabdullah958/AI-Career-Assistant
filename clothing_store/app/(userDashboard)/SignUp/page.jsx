@@ -1,19 +1,45 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
+import { useRouter } from "next/navigation";
+import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
 const page = () => {
+  let dispatch = useDispatch();
+  let router = useRouter();
   let [field, setfield] = useState({
     Name: "",
     Password: "",
     Email: "",
   });
 
+  let { loading, Role, errorMessage, success } = useSelector(
+    (state) => state.SignUpSlice,
+  );
+
+  // redirect after success
+  useEffect(() => {
+    if (success) {
+      if (Role === "admin") {
+        router.push("/AdminDashboard");
+      } else {
+        router.push("/");
+      }
+      dispatch(ResetSignUpState());
+    }
+  }, [success]);
+
   let FieldFunction = (e) => {
     setfield((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  let SignupFunction = async (Data) => {
+    let res = await dispatch(SignUpThunck(Data));
+    console.log(res);
   };
 
   return (
@@ -30,6 +56,13 @@ const page = () => {
         {/* Form */}
 
         {/* Name */}
+
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-3 text-center">
+            {errorMessage}
+          </p>
+        )}
+
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-blue-700 mb-2 mt-5">
             Full Name
@@ -75,7 +108,10 @@ const page = () => {
         </div>
 
         {/* Submit Button */}
-        <button className="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200 text-white font-semibold py-3 rounded-lg shadow-md mt-5 p-5">
+        <button
+          onClick={() => SignupFunction({ ...field, Role: "User" })}
+          className="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200 text-white font-semibold py-3 rounded-lg shadow-md mt-5 p-5"
+        >
           Sign Up
         </button>
       </div>

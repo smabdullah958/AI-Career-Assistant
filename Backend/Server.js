@@ -4,8 +4,15 @@ require("dotenv").config();
 let cookieParser = require("cookie-parser");
 const PORT = process.env.PortNo;
 let connection = process.env.connection;
+let cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.Frontend,
+    credentials: true,
+  }),
+);
 //mongose connection
 let mongoose = require("mongoose");
 mongoose.connect(connection);

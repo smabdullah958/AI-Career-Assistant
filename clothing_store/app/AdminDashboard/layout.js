@@ -6,9 +6,11 @@ export const metadata = {
 import Header from "@/Component/AdminHeader/Header";
 import MobileHeader from "@/Component/AdminHeader/MobileHeader";
 import Footer from "@/Component/Footer";
+// import ProtectAdminRoute from "@/app/AdminDashboard/ProtectAdminRoute";
 export default function RootLayout({ children }) {
   return (
     <>
+      {/* <ProtectAdminRoute /> */}
       <MobileHeader />
       <Header />
       {children}

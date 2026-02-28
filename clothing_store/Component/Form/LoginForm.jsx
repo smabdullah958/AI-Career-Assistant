@@ -31,8 +31,6 @@ const LoginForm = ({ HideForm }) => {
   let LogInFunction = async (Data) => {
     await dispatch(LogInThunck(Data));
     console.log("role si ", Role, "the succes is :", success);
-    // DO NOT navigate here
-    // DO NOT reset state here
   };
 
   useEffect(() => {

@@ -9,11 +9,11 @@ const Header = () => {
         {/* Logo / Brand */}
         <div className="relative size-10 2xl:size-36">
           <Image
+            loading="lazy"
             src="/logo.avif"
             alt="logo"
             fill
             className="object-contain"
-            priority
           />
         </div>
         {/* Navigation Links */}

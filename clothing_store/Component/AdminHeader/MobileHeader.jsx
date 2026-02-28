@@ -20,11 +20,11 @@ const AdminMobileHeader = () => {
 
         <div className="relative w-16 h-20">
           <Image
+            loading="lazy"
             src="/logo.avif"
             alt="logo"
             fill
             className="object-contain"
-            priority
           />
         </div>
 

@@ -15,8 +15,8 @@ const LogoutButton = () => {
   useEffect(() => {
     if (success) {
       // so here we can reset the role and also islogin so that it show a login button
-      dispatch(ResetLogOutRole()); //to show the login button
       router.push("/");
+      dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
     }
   }, [success]);

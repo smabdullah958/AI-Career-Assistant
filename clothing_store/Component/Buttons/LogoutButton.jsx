@@ -3,10 +3,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import ButtonLoader from "../ButtonLoader";
 import { ResetLogOutState } from "@/Libraries/Slices/Auth/LogOutSlice";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
-
+import { ResetLogOutRole } from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo  the login buutton
 const LogoutButton = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -15,6 +14,8 @@ const LogoutButton = () => {
 
   useEffect(() => {
     if (success) {
+      // so here we can reset the role and also islogin so that it show a login button
+      dispatch(ResetLogOutRole()); //to show the login button
       router.push("/");
       dispatch(ResetLogOutState());
     }
@@ -34,7 +35,7 @@ const LogoutButton = () => {
           loading
             ? "bg-blue-400 opacity-50 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700 active:scale-95"
-        }`}
+        }}`}
       >
         Logout{" "}
       </button>

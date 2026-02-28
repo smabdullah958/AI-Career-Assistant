@@ -34,9 +34,11 @@ let Login = async (req, res) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //for 7 days
     });
-    return res
-      .status(200)
-      .json({ message: "user is login", Role: ExistUser.Role });
+    return res.status(200).json({
+      message: "user is login",
+      Role: ExistUser.Role,
+      IsLoggIn: true,
+    });
   } catch (error) {
     console.log("some thing went wrong", error);
     res.status(500).json({ message: "some thing went wrong" });

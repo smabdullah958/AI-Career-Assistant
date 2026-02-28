@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
 
+
+
 let initialState={
     loading:false,
     success:false,
-    error:false
+    error:false,
 }
 
 let LogOutSlice=createSlice({
@@ -15,7 +17,7 @@ let LogOutSlice=createSlice({
         state.success=false,
         state.error=false,
         state.loading=false
-    }
+    },
     },
     extraReducers:(builder)=>{
         builder
@@ -29,7 +31,7 @@ let LogOutSlice=createSlice({
             state.loading=false,
             state.error=true
         }) 
-            .addCase(LogOutThunck.fulfilled,(state)=>{
+            .addCase(LogOutThunck.fulfilled,(state,action)=>{
             state.success=true,
             state.loading=false,
             state.error=false
@@ -37,4 +39,5 @@ let LogOutSlice=createSlice({
 })
 
 export let {ResetLogOutState}=LogOutSlice.actions;
+
 export default LogOutSlice.reducer

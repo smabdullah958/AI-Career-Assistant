@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
-import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
+import { ResetLogInState, ResetRole } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../ButtonLoader";
 const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
@@ -26,24 +26,31 @@ const LoginForm = ({ HideForm }) => {
     }));
   };
 
-  let LogInFunction = async (Data) => {
-    let result = await dispatch(LogInThunck(Data));
-    console.log(result);
-  };
-
   //disable button when  loading or a name or a email or a password is not
   let DisableButton = loading || !Field.Email || !Field.Password;
-  // redirect after success
+  let LogInFunction = async (Data) => {
+    await dispatch(LogInThunck(Data));
+    console.log("role si ", Role, "the succes is :", success);
+    // DO NOT navigate here
+    // DO NOT reset state here
+  };
+
   useEffect(() => {
-    if (success) {
-      if (Role === "Admin") {
-        router.push("/AdminDashboard");
-      } else {
-        HideForm();
-      }
-      dispatch(ResetLogInState());
+    if (!success) return console.log("success is false", success);
+    if (!Role) return console.log("role  is empty", Role);
+
+    if (Role === "Admin") {
+      router.push("/AdminDashboard");
+      console.log("Redirecting:", Role);
+      HideForm();
+    } else {
+      console.log("red", Role);
+      router.push("/");
+      HideForm();
     }
-  }, [success]);
+    dispatch(ResetRole()); //to shwo the logout button
+    dispatch(ResetLogInState());
+  }, [success, Role]);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
@@ -105,6 +112,7 @@ const LoginForm = ({ HideForm }) => {
 
           {/* Submit Button */}
           <button
+            type="button"
             disabled={DisableButton}
             onClick={() => LogInFunction(Field)}
             className={`w-full text-white font-semibold py-3 rounded-lg shadow-md mt-5 transition-all duration-200 ${

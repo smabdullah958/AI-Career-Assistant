@@ -1,14 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import LogIn from "@/Component/Buttons/LoginButton";
-import LogOut from "@/Component/Buttons/LogoutButton";
 import Image from "next/image";
+import HeaderWrapper from "./HeaderWrapper";
 const Header = () => {
   return (
     <header className=" sticky top-0 z-50">
       <div className=" hidden md:flex justify-between items-center md:h-16 bg-[#618cf9] shadow-lg  mx-auto px-3 lg:px-6  h-16 2xl:h-40 ">
         {/* Logo / Brand */}
-
         <div className="relative size-10 2xl:size-36">
           <Image
             src="/logo.avif"
@@ -18,7 +16,6 @@ const Header = () => {
             priority
           />
         </div>
-
         {/* Navigation Links */}
         <nav className="flex gap-6 text-lg 2xl:text-4xl font-medium">
           <Link
@@ -52,11 +49,7 @@ const Header = () => {
             Track Order
           </Link>
         </nav>
-
-        <div className="flex gap-2">
-          <LogOut />
-          <LogIn />
-        </div>
+        <HeaderWrapper />
       </div>
     </header>
   );

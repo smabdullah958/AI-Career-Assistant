@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import LogOut from "@/Component/Buttons/LogoutButton";
-import LogIn from "@/Component/Buttons/LoginButton";
+import HeaderWrapper from "../HeaderWrapper";
 import Image from "next/image";
 const Header = () => {
   return (
@@ -46,10 +45,7 @@ const Header = () => {
             sale
           </Link>
         </nav>
-        <div className="flex gap-2">
-          <LogOut />
-          <LogIn />
-        </div>
+        <HeaderWrapper />
       </div>
     </header>
   );

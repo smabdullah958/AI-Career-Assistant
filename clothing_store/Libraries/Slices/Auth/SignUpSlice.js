@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 
+//   Read or get the role and also islogin from memory IMMEDIATELY when the app starts if these are not  already present than assing the null and also false value
+const savedRole = typeof window !== 'undefined' ? localStorage.getItem("Role") : '';
+
 let initialState = {
   errorMessage: "",
   loading: false,
   success: false,
-  Role: "",
+Role:savedRole,
 };
 
 let SignUpSlice = createSlice({
@@ -16,7 +19,7 @@ let SignUpSlice = createSlice({
       state.errorMessage = "",
     state.loading = false,
     state.success = false;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -24,8 +27,9 @@ let SignUpSlice = createSlice({
       state.success = true,
         state.errorMessage = "",
         state.loading = false,
-        state.Role = action?.payload?.Role;
-    })
+            state.Role=action?.payload?.Role,
+            localStorage.setItem("Role",action.payload.Role);
+      })
     .addCase(SignUpThunck.pending,(state)=>{
         state.success=false,
         state.loading=true,

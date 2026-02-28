@@ -8,13 +8,11 @@ import MobileHeader from "@/Component/AdminHeader/MobileHeader";
 import Footer from "@/Component/Footer";
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <MobileHeader />
-        <Header />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <>
+      <MobileHeader />
+      <Header />
+      {children}
+      <Footer />
+    </>
   );
 }

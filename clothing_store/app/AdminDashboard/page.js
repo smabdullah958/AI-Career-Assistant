@@ -1,12 +1,10 @@
-import LogOut from "@/Component/Buttons/LogoutButton";
-import LogIn from "@/Component/Buttons/LoginButton";
+import HeaderWrapper from "@/Component/HeaderWrapper";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Login/Logout button — only on mobile, top right */}
       <div className="flex justify-end px-6 py-3 md:hidden">
-        <LogIn />
-        <LogOut />
+        <HeaderWrapper />
       </div>
 
       {/* Home page content */}

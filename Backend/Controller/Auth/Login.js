@@ -1,4 +1,4 @@
-let UserModel = require("../Model/Auth");
+let UserModel = require("../../Model/Auth");
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
 let Login = async (req, res) => {
@@ -26,7 +26,7 @@ let Login = async (req, res) => {
         expiresIn: "1w",
       },
     );
-    console.log(token, ExistUser.Role);
+    console.log(ExistUser.Role);
     //send token or a cookie toa  frontend
     res.cookie("token", token, {
       httpOnly: true,

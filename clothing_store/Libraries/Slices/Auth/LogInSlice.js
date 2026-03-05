@@ -23,10 +23,8 @@ let LogInSlice=createSlice({
     state.success = false;
     },
     //to shwo  the logout button 
-    ResetRole:(state)=>{
-        state.Role='',
+    DisplayLogout:(state)=>{
         state.IsLoggIn=false
-          localStorage.removeItem("Role");
         localStorage.setItem("IsLoggIn","false");
 
     },
@@ -67,5 +65,5 @@ let LogInSlice=createSlice({
     }   
 })
 
-export let {ResetLogInState,ResetRole,ResetLogOutRole}=LogInSlice.actions;
+export let {ResetLogInState,DisplayLogout,ResetLogOutRole}=LogInSlice.actions;
 export default LogInSlice.reducer

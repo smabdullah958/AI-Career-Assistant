@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
-import { ResetRole } from "@/Libraries/Slices/Auth/LogInSlice";
+import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/ButtonLoader";
 const page = () => {
   let dispatch = useDispatch();
@@ -30,7 +30,7 @@ const page = () => {
       }
       dispatch(ResetSignUpState());
       //to shwo a logout button
-      dispatch(ResetRole());
+      dispatch(DisplayLogout());
     }
   }, [success]);
 

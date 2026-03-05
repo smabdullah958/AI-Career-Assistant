@@ -1,8 +1,8 @@
 let express = require("express");
 let app = express.Router();
-let SignUp = require("../Controller/Signup");
-let LogIn = require("../Controller/Login");
-let LogOut = require("../Controller/LogOut");
+let SignUp = require("../Controller/Auth/Signup");
+let LogIn = require("../Controller/Auth/Login");
+let LogOut = require("../Controller/Auth/LogOut");
 
 app.post("/signup", SignUp);
 app.post("/login", LogIn);

@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
-import { ResetLogInState, ResetRole } from "@/Libraries/Slices/Auth/LogInSlice";
+import {
+  ResetLogInState,
+  DisplayLogout,
+} from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../ButtonLoader";
 const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
@@ -46,7 +49,7 @@ const LoginForm = ({ HideForm }) => {
       router.push("/");
       HideForm();
     }
-    dispatch(ResetRole()); //to shwo the logout button
+    dispatch(DisplayLogout()); //to shwo the logout button
     dispatch(ResetLogInState());
   }, [success, Role]);
 

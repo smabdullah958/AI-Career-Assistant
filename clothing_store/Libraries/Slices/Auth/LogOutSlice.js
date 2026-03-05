@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
 
-
-
 let initialState={
     loading:false,
     success:false,

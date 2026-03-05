@@ -1,4 +1,4 @@
-let userModel = require("../Model/Auth");
+let userModel = require("../../Model/Auth");
 require("dotenv").config();
 let key = process.env.SecretKey;
 let bcrypt = require("bcrypt");

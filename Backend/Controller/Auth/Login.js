@@ -44,5 +44,4 @@ let Login = async (req, res) => {
     res.status(500).json({ message: "some thing went wrong" });
   }
 };
-
 module.exports = Login;

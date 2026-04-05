@@ -14,7 +14,7 @@ const page = () => {
     Password: "",
     Email: "",
   });
-  let { loading, Role, errorMessage, success } = useSelector(
+  let { loading, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
   );
 
@@ -23,15 +23,11 @@ const page = () => {
   // redirect after success
   useEffect(() => {
     if (success) {
-      if (Role === "Admin") {
-        router.push("/AdminDashboard");
-      } else {
-        router.push("/");
-      }
-      dispatch(ResetSignUpState());
-      //to shwo a logout button
-      dispatch(DisplayLogout());
+      router.push("/");
     }
+    dispatch(ResetSignUpState());
+    //to shwo a logout button
+    dispatch(DisplayLogout());
   }, [success]);
 
   let FieldFunction = (e) => {

@@ -14,12 +14,6 @@ let Schema = new mongoose.Schema({
     required: true,
     min: 6,
   },
-  Role: {
-    type: String,
-    required: true,
-    enum: ["Admin", "User"],
-    default: "User",
-  },
 });
 
 let model = mongoose.model("user", Schema);

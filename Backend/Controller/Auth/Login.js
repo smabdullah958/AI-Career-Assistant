@@ -19,14 +19,12 @@ let Login = async (req, res) => {
     let token = jwt.sign(
       {
         Email,
-        Role: ExistUser.Role,
       },
       process.env.SecretKey,
       {
         expiresIn: "1w",
       },
     );
-    console.log(ExistUser.Role);
     //send token or a cookie toa  frontend
     res.cookie("token", token, {
       httpOnly: true,
@@ -36,7 +34,6 @@ let Login = async (req, res) => {
     });
     return res.status(200).json({
       message: "user is login",
-      Role: ExistUser.Role,
       IsLoggIn: true,
     });
   } catch (error) {

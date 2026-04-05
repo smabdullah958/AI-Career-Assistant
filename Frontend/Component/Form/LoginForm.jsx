@@ -14,7 +14,7 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, Role, errorMessage, success } = useSelector(
+  let { loading, errorMessage, success } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 
@@ -38,20 +38,13 @@ const LoginForm = ({ HideForm }) => {
 
   useEffect(() => {
     if (!success) return console.log("success is false", success);
-    if (!Role) return console.log("role  is empty", Role);
-
-    if (Role === "Admin") {
-      router.push("/AdminDashboard");
-      console.log("Redirecting:", Role);
+    if (success) {
       HideForm();
-    } else {
-      console.log("red", Role);
       router.push("/");
-      HideForm();
     }
     dispatch(DisplayLogout()); //to shwo the logout button
     dispatch(ResetLogInState());
-  }, [success, Role]);
+  }, [success]);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">

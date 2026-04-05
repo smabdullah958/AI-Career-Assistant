@@ -5,8 +5,8 @@ let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let SignUp = async (req, res) => {
   try {
-    let { Name, Email, Password, Role } = req.body;
-    if (!Name || !Email || !Password || !Role) {
+    let { Name, Email, Password } = req.body;
+    if (!Name || !Email || !Password) {
       return res.status(400).json({ message: "All fields are required" });
     }
     let user = await userModel.findOne({ Email });
@@ -21,14 +21,12 @@ let SignUp = async (req, res) => {
       Name,
       Email,
       Password: hashPassword,
-      Role,
     });
     await newUser.save();
 
     let token = jwt.sign(
       {
         Email,
-        Role,
       },
       key,
       { expiresIn: "1w" },

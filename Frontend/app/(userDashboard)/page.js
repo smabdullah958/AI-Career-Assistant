@@ -9,7 +9,7 @@ export default function Home() {
 
       {/* Home page content */}
       <div className="h-screen flex items-center justify-center">
-        this is a home page
+        this is a AI Career Assitant
       </div>
     </div>
   );

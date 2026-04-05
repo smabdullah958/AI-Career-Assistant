@@ -25,28 +25,22 @@ const Header = () => {
             Home
           </Link>
           <Link
-            href="/Products"
+            href="/Resume"
             className="text-white hover:text-blue-700 transition-colors duration-300"
           >
-            All Products
+            Resume
           </Link>
           <Link
-            href="/About"
+            href="/ATS_Analyzer"
             className="text-white hover:text-blue-700 transition-colors duration-300"
           >
-            About
+            Resume Analyzer
           </Link>
           <Link
-            href="/Contact"
+            href="/Interview"
             className="text-white hover:text-blue-700 transition-colors duration-300"
           >
-            Contact
-          </Link>
-          <Link
-            href="/Track"
-            className="text-white hover:text-blue-700 transition-colors duration-300"
-          >
-            Track Order
+            Interview Questions
           </Link>
         </nav>
         <HeaderWrapper />

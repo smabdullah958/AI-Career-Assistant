@@ -65,25 +65,25 @@ const AdminMobileHeader = () => {
               Home
             </Link>
             <Link
-              href="/Products"
+              href="/Resume"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
-              Products
+              Resume
             </Link>
             <Link
-              href="/About"
+              href="/ATS_Analyzer"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
-              About
+              ATS Analyzer
             </Link>
             <Link
-              href="/Contact"
+              href="Interview"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
-              Contact
+              Interview Questions
             </Link>
           </nav>
         </div>

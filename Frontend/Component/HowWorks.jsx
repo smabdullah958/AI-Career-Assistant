@@ -2,12 +2,12 @@ import Link from "next/link";
 
 const HowWorks = () => {
   return (
-    <section className="py-10 sm:pt-20 sm:pb-10 px-6 bg-white text-center">
+    <section className=" sm:pt-16 pb-1 px-6 bg-white text-center">
       <h3 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
         From Idea to Interview In Minutes
       </h3>
       <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-        No complex steps. Just tell us about yourself — our AI does the heavy
+        No complex steps. Just tell us about yourself our AI does the heavy
         lifting.
       </p>
 
@@ -21,7 +21,7 @@ const HowWorks = () => {
             Tell Us About You
           </h4>
           <p className="text-gray-600">
-            Enter your skills, experience, or job role — no formatting needed.
+            Enter your skills, experience, or job role no formatting needed.
           </p>
         </div>
 

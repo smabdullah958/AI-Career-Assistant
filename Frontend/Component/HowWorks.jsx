@@ -11,7 +11,7 @@ const HowWorks = () => {
         lifting.
       </p>
 
-      <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8">
         {/* Step 1 */}
         <div className="p-8 rounded-2xl bg-gradient-to-b from-indigo-50 to-white shadow-lg hover:shadow-2xl transition relative">
           <div className="text-5xl font-extrabold text-indigo-100 absolute -top-6 left-6">

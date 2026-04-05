@@ -1,11 +1,11 @@
 const WhyChoose = () => {
   return (
-    <section className="pb-20 sm:py-20 px-8 bg-gradient-to-b from-white to-indigo-50 text-center">
+    <section className="pt-5 pb-20 sm:py-20 px-8 bg-gradient-to-b from-white to-indigo-50 text-center">
       <h3 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
         Why Job Seekers Love Us
       </h3>
       <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-        We don’t just generate content — we help you stand out, get noticed, and
+        We don’t just generate content we help you stand out, get noticed, and
         get hired faster.
       </p>
 
@@ -15,7 +15,7 @@ const WhyChoose = () => {
             Instant Results
           </h4>
           <p className="text-gray-600">
-            Generate resumes, interview questions, and ATS analysis in seconds —
+            Generate resumes, interview questions, and ATS analysis in seconds
             no waiting, no hassle.
           </p>
         </div>
@@ -25,8 +25,8 @@ const WhyChoose = () => {
             Built for Success
           </h4>
           <p className="text-gray-600">
-            Our AI focuses on what recruiters actually look for — helping you
-            pass ATS filters and impress hiring managers.
+            Our AI focuses on what recruiters actually look for helping you pass
+            ATS filters and impress hiring managers.
           </p>
         </div>
 

@@ -28,12 +28,21 @@ export const ResumeSchema = z.object({
     .optional(),
 
   //user professional details
-  AboutMe: z
+  Summary: z
     .string()
-    .max(200, "Description must be less than 200 characters long"),
+    .nonempty("Summary is required")
+    .max(200, "Summary must be less than 200 characters long"),
 
   //skills and projects
-  Skills: z.array(z.string()).min(1, "At least one skill is required"),
+  Skills: z
+    .array(
+      z.object({
+        value: z.string().nonempty("Skill is required"),
+      }),
+    )
+    .nonempty("At least one skill is required")
+    .min(1, "At least one skill is required")
+    .max(20, "You can add up to 20 skills only"),
 
   Projects: z.array(
     z.object({

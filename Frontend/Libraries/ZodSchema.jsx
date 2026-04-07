@@ -13,7 +13,7 @@ export const ResumeSchema = z.object({
     .email("invalid email address"),
   phone: z
     .string()
-    .nonempty("phone no is requred")
+    .nonempty("phone no is required")
     .regex(/^\d{11}$/, "Phone number must be a 11-digit number"),
   Role: z.string().nonempty("Role is required"),
   portfolio: z
@@ -94,11 +94,13 @@ export const ResumeSchema = z.object({
     z.object({
       nameOfInstitute: z
         .string()
+        .nonempty("Institution name is required")
         .max(50, "Institution name must be less than 50 characters"),
       CertifcateName: z
         .string()
+        .nonempty("Certificate name is required")
         .max(50, "Certificate name must be less than 50 characters"),
-      date: z.string().nonempty("Date is required"),
+      IssueDate: z.string().nonempty("Date is required"),
     }),
   ),
 
@@ -107,14 +109,17 @@ export const ResumeSchema = z.object({
     z.object({
       nameOfInstitute: z
         .string()
+        .nonempty("Institution name is required")
         .max(50, "Institution name must be less than 50 characters long"),
-      degree: z.string().max(50, "Degree must be less than 50 characters long"),
+      degree: z
+        .string()
+        .nonempty("Degree is required")
+        .max(50, "Degree must be less than 50 characters long"),
       fieldOfStudy: z
         .string()
+        .nonempty("Field of study is required")
         .max(50, "Field of study must be less than 50 characters long"),
-      graduationYear: z
-        .string()
-        .max(50, "Graduation year must be less than 50 characters long"),
+      graduationYear: z.string().nonempty("Graduation year is required"),
     }),
   ),
 });

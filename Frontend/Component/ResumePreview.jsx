@@ -39,14 +39,12 @@ const ResumePreview = ({ data }) => {
       </div>
 
       {/* Summary */}
-      {data.Summary && (
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            Professional Summary
-          </h2>
-          <p className="text-gray-600 leading-relaxed">{data.Summary}</p>
-        </div>
-      )}
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">
+          Professional Summary
+        </h2>
+        <p className="text-gray-600 leading-relaxed">{data.Summary}</p>
+      </div>
 
       {/* Skills */}
       {data.Skills?.some((s) => s.value) && (

@@ -3,7 +3,6 @@ const app = express();
 require("dotenv").config();
 let cookieParser = require("cookie-parser");
 const PORT = process.env.PortNo;
-let connection = process.env.connection;
 let cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
@@ -13,14 +12,13 @@ app.use(
     credentials: true,
   }),
 );
-//mongose connection
-let mongoose = require("mongoose");
-mongoose.connect(connection);
-console.log("Database connected successfully");
 
 let AuthRoute = require("./Routes/Auth");
+let ResumeRoute = require("./Routes/Resume");
 
 app.use("/Auth", AuthRoute);
+app.use("/Resume", ResumeRoute);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

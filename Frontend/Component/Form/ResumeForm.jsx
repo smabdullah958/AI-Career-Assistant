@@ -58,15 +58,17 @@ const ResumeForm = ({ onDataChange }) => {
 
   const summaryCharacter = watch("Summary");
 
-  //formdata has all the data of a form
-  let formData = watch();
-
-  //onDataChange is a function passed from parent component to get the form data in real time and preview it in resume preview section
   useEffect(() => {
-    if (onDataChange) {
-      onDataChange(formData);
-    }
-  }, [formData, onDataChange]);
+    //formdata has all the data of a form
+    const formdata = watch((value) => {
+      //onDataChange is a function passed from parent component to get the form data in real time and preview it in resume preview section
+      if (onDataChange) {
+        onDataChange(value);
+      }
+    });
+
+    return () => formdata.unsubscribe();
+  }, [watch, onDataChange]);
 
   // useFieldArray for dynamic inputs for a skills section
   const {
@@ -161,9 +163,9 @@ const ResumeForm = ({ onDataChange }) => {
     name: "Certifications",
   });
 
-  // function to add Certifications (max 5)
+  // function to add Certifications (max 3)
   const handleAddCertifications = () => {
-    if (certificationsFields.length < 5) {
+    if (certificationsFields.length < 3) {
       addCertifications({
         nameOfInstitute: "",
         CertifcateName: "",
@@ -699,7 +701,7 @@ const ResumeForm = ({ onDataChange }) => {
         ))}
 
         {/* Add Button */}
-        {certificationsFields.length < 5 && (
+        {certificationsFields.length < 3 && (
           <button
             onClick={handleAddCertifications}
             className="mt-3 bg-indigo-500 text-white px-5 py-2 rounded-lg hover:bg-indigo-600 transition"

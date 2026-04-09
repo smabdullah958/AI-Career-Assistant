@@ -14,7 +14,7 @@ app.use(
 );
 
 let AuthRoute = require("./Routes/Auth");
-let ResumeRoute = require("./Routes/Resume");
+let ResumeRoute = require("./Routes/ResumeRoute");
 
 app.use("/Auth", AuthRoute);
 app.use("/Resume", ResumeRoute);

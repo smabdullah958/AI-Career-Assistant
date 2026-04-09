@@ -2,6 +2,20 @@ let { validationResult } = require("express-validator");
 
 let Resume = async (req, res) => {
   try {
+    let {
+      name,
+      email,
+      phone,
+      Role,
+      portfolio,
+      Linkedin,
+      Summary,
+      Skills,
+      Projects,
+      Experience,
+      Certifications,
+      Education,
+    } = req.body;
     let error = validationResult(req);
     if (!error.isEmpty()) {
       console.log("error", error.array());

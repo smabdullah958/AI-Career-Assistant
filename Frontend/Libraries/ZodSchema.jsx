@@ -79,9 +79,9 @@ export const ResumeSchema = z.object({
     .max(3, "You can add up to 3 projects only"),
 
   //experience and certifications
-  Experience: z.array(
-    z
-      .object({
+  Experience: z
+    .array(
+      z.object({
         Role: z
           .string()
           .max(50, "Role must be less than 50 characters long")
@@ -99,9 +99,9 @@ export const ResumeSchema = z.object({
           .string()
           .nonempty("Description is required")
           .max(120, "Description must be less than 120 characters"),
-      })
-      .max(3, "You can add up to 3 experiences only"),
-  ),
+      }),
+    )
+    .max(3, "You can add up to 3 certifications only"),
 
   Certifications: z
     .array(

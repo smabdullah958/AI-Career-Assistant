@@ -12,9 +12,11 @@ app.use(
     credentials: true,
   }),
 );
-
+let ConnectDB = require("./Config/db");
 let AuthRoute = require("./Routes/Auth");
 let ResumeRoute = require("./Routes/ResumeRoute");
+
+ConnectDB();
 
 app.use("/Auth", AuthRoute);
 app.use("/Resume", ResumeRoute);

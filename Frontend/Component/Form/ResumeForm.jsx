@@ -3,7 +3,13 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResumeSchema } from "@/Libraries/ZodSchema";
 import { useEffect } from "react";
+
+import ResumeThunck from "@/Libraries/Thuncks/Resume/ResumeThunck";
+import { useDispatch } from "react-redux";
+
 const ResumeForm = ({ onDataChange }) => {
+  let dispatch = useDispatch();
+
   const {
     register,
     control,
@@ -174,9 +180,10 @@ const ResumeForm = ({ onDataChange }) => {
     }
   };
 
-  let FormFunction = (data) => {
-    console.log(data);
-    alert("Form submitted successfully!", data.name, data.email);
+  let FormFunction = async (data) => {
+    let result = await dispatch(ResumeThunck(data));
+    console.log(result);
+    alert(result);
   };
 
   return (

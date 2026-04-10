@@ -33,7 +33,6 @@ const LoginForm = ({ HideForm }) => {
   let DisableButton = loading || !Field.Email || !Field.Password;
   let LogInFunction = async (Data) => {
     await dispatch(LogInThunck(Data));
-    console.log("role si ", Role, "the succes is :", success);
   };
 
   useEffect(() => {

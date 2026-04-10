@@ -8,10 +8,10 @@ let Resume = async (req, res) => {
       console.log("error", error.array());
       res.status(400).json({ error: error.array() });
     }
-    console.log("resume data", req.body);
 
     //here the resume will be generated
-    let response = generateResume(req.body);
+    let response = await generateResume(req.body);
+    console.log("resume data", response);
     res.status(200).json({ message: "resume is being created", response });
   } catch (err) {
     console.log("internal error", err);

@@ -31,7 +31,7 @@ let GenerateResume = async (data) => {
       Education: data.Education,
     });
 
-    console.log("response is generated ");
+    console.log("response is generated ", response.content);
     return response.content;
   } catch (err) {
     console.log("resume is not generated", err);

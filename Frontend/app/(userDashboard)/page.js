@@ -11,7 +11,6 @@ export default function Home() {
       <div className="flex justify-end px-6 py-3 md:hidden">
         <HeaderWrapper />
       </div>
-
       {/* Home page content */}
       <section className="text-center py-10 sm:pt-20 lg:pt-28 px-5 ">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl  md:px-20 font-extrabold text-gray-800">

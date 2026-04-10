@@ -23,12 +23,13 @@ export const ResumeSchema = z.object({
     .string()
     .url("Portfolio URL must be a valid URL")
     .or(z.literal(""))
-    .optional(),
+    .optional({ checkFalsy: true }),
+
   Linkedin: z
     .string()
     .url("LinkedIn URL must be a valid URL")
     .or(z.literal(""))
-    .optional(),
+    .optional({ checkFalsy: true }),
 
   //user professional details
   Summary: z
@@ -67,12 +68,12 @@ export const ResumeSchema = z.object({
           .string()
           .url("Project link must be a valid URL")
           .or(z.literal(""))
-          .optional(),
+          .optional({ checkFalsy: true }),
         Github: z
           .string()
           .url("GitHub URL must be a valid URL")
           .or(z.literal(""))
-          .optional(),
+          .optional({ checkFalsy: true }),
       }),
     )
     .nonempty("At least one project is required")
@@ -94,7 +95,7 @@ export const ResumeSchema = z.object({
           .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
 
         StartDate: z.string().nonempty("Start date is required"),
-        EndDate: z.string().optional(),
+        EndDate: z.string().optional({ checkFalsy: true }),
         Description: z
           .string()
           .nonempty("Description is required")

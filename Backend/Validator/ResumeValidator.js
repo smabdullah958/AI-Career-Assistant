@@ -34,12 +34,12 @@ let ResumeValidator = [
     .withMessage("maximum 50 character is allowed"),
 
   body("portfolio")
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage("Portfolio must be a valid URL"),
 
   body("Linkedin")
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage("LinkedIn must be a valid URL"),
 
@@ -79,14 +79,15 @@ let ResumeValidator = [
     .notEmpty()
     .withMessage("Project description is required")
     .isLength({ max: 120 })
-    .withMessage("Max 120 characters")
-    .matches(/^[a-zA-Z\s]+$/)
-    .withMessage("only alphabet are allowed"),
+    .withMessage("Max 120 characters"),
 
-  body("Projects.*.link").optional().isURL().withMessage("Invalid project URL"),
+  body("Projects.*.link")
+    .optional({ checkFalsy: true })
+    .isURL()
+    .withMessage("Invalid project URL"),
 
   body("Projects.*.Github")
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage("Invalid GitHub URL"),
 
@@ -120,7 +121,7 @@ let ResumeValidator = [
     .toDate(),
 
   body("Experience.*.EndDate")
-    .optional()
+    .optional({ checkFalsy: true })
     .isISO8601()
     .withMessage("end date must be a valid date")
     .toDate(),

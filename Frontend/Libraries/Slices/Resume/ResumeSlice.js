@@ -11,7 +11,9 @@ let initialState={
 let ResumeSlice=createSlice({
     name:"ResumeSlice",
     initialState,
-    reducers:{},
+    reducers:{
+        ResetResume:()=>initialState
+    },
     extraReducers:(builder)=>{
         builder.addCase(ResumeThunck.rejected,(state)=>{
             state.loading=false,
@@ -35,4 +37,5 @@ let ResumeSlice=createSlice({
 })
 
 
+export let {ResetResume}=ResumeSlice.actions;
 export default ResumeSlice.reducer;

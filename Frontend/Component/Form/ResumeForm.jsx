@@ -6,7 +6,12 @@ import { useEffect } from "react";
 
 import ResumeThunck from "@/Libraries/Thuncks/Resume/ResumeThunck";
 import { useDispatch } from "react-redux";
+//use watch is alway use for a complex form for a watchin or preview
+import { useWatch } from "react-hook-form";
 
+// on datachange is a funcion which hold the data which is used to preview the data
+
+//here we are using eh on datachange which is used to uplift the data to preview the live data in a resume section 
 const ResumeForm = ({ onDataChange }) => {
   let dispatch = useDispatch();
 
@@ -64,17 +69,15 @@ const ResumeForm = ({ onDataChange }) => {
 
   const summaryCharacter = watch("Summary");
 
-  useEffect(() => {
-    //formdata has all the data of a form
-    const formdata = watch((value) => {
-      //onDataChange is a function passed from parent component to get the form data in real time and preview it in resume preview section
-      if (onDataChange) {
-        onDataChange(value);
-      }
-    });
+  // formvalue has all the data of a form (latest data)
+  const formValues = useWatch({
+    control,
+  });
 
-    return () => formdata.unsubscribe();
-  }, [watch, onDataChange]);
+  useEffect(() => {
+    // onDataChange is a function passed from parent component to get the form data in real time and preview it in resume preview section
+    onDataChange?.(formValues);
+  }, [formValues, onDataChange]);
 
   // useFieldArray for dynamic inputs for a skills section
   const {

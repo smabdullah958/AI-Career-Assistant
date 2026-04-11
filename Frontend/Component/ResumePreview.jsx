@@ -4,7 +4,10 @@ import Link from "next/link";
 
 const ResumePreview = ({ data }) => {
   return (
-    <div className="bg-white ml-5  border-2 border-gray-300 shadow-2xl rounded-3xl p-8 max-w-2xl mx-auto sticky top-8">
+    <div
+      id="resumePDF"
+      className="bg-white ml-5  border-2 border-gray-300 shadow-2xl rounded-3xl p-8 max-w-2xl mx-auto sticky top-8"
+    >
       {/* Header */}
       <div className="text-center border-b pb-6">
         <h1 className="text-4xl font-bold text-gray-900">

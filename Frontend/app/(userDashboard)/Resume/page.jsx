@@ -1,4 +1,5 @@
 "use client";
+import DownloadPDF from "@/Component/Buttons/DownloadPDF";
 import DisplayResume from "@/Component/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
 import ResumePreview from "@/Component/ResumePreview";
@@ -8,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 const page = () => {
   let dispatch = useDispatch();
-  let { loading, success } = useSelector((state) => state.ResumeSlice);
+  let { success } = useSelector((state) => state.ResumeSlice);
 
   //to preview the data in resume preview section
   const [previewData, setPreviewData] = useState({});
@@ -22,9 +23,15 @@ const page = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-5 sm:p-10 2xl:p-20">
-      <h1 className="text-xl sm:text-3xl 2xl:text-4xl font-bold mb-6">
-        Resume Details
-      </h1>
+      <div className=" flex justify-between">
+        <h1 className="text-xl sm:text-3xl 2xl:text-4xl font-bold mb-6">
+          Resume Details
+        </h1>
+        <h2>
+          <DownloadPDF />
+        </h2>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 sm:justify-between">
         <ResumeForm onDataChange={setPreviewData} />
         <div className="lg:block my-5 ">

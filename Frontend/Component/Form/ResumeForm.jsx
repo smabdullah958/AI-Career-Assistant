@@ -11,7 +11,7 @@ import { useWatch } from "react-hook-form";
 
 // on datachange is a funcion which hold the data which is used to preview the data
 
-//here we are using eh on datachange which is used to uplift the data to preview the live data in a resume section 
+//here we are using eh on datachange which is used to uplift the data to preview the live data in a resume section
 const ResumeForm = ({ onDataChange }) => {
   let dispatch = useDispatch();
 
@@ -300,9 +300,9 @@ const ResumeForm = ({ onDataChange }) => {
             <div key={field.id} className="flex items-start gap-3">
               {/* Input + Error */}
               <div className="flex flex-col w-full">
-                {errors.Skills?.[0]?.value && (
+                {errors.Skills?.[index]?.value && (
                   <p className="text-red-500  mb-1">
-                    {errors.Skills[0].value?.message}
+                    {errors.Skills[index].value?.message}
                   </p>
                 )}
 
@@ -354,9 +354,9 @@ const ResumeForm = ({ onDataChange }) => {
             {/* Left side: Title, Link, GitHub */}
             <div className="flex flex-col ">
               <h3 className="my-2">Title </h3>
-              {errors.Projects?.[0]?.title && (
+              {errors.Projects?.[index]?.title && (
                 <p className="text-red-500 text-sm">
-                  {errors.Projects[0].title?.message}
+                  {errors.Projects[index].title?.message}
                 </p>
               )}
 
@@ -367,9 +367,9 @@ const ResumeForm = ({ onDataChange }) => {
               />
 
               <h3 className="my-2 ">Project Link </h3>
-              {errors.Projects?.[0]?.link && (
+              {errors.Projects?.[index]?.link && (
                 <p className="text-red-500 text-sm">
-                  {errors.Projects[0].link?.message}
+                  {errors.Projects[index].link?.message}
                 </p>
               )}
 
@@ -381,9 +381,9 @@ const ResumeForm = ({ onDataChange }) => {
 
               <h3 className="my-2 ">GitHub Link </h3>
 
-              {errors.Projects?.[0]?.Github && (
+              {errors.Projects?.[index]?.Github && (
                 <p className="text-red-500 text-sm">
-                  {errors.Projects[0].Github?.message}
+                  {errors.Projects[index].Github?.message}
                 </p>
               )}
               <input
@@ -408,9 +408,9 @@ const ResumeForm = ({ onDataChange }) => {
 
               <h3 className="my-2 ">Description </h3>
 
-              {errors.Projects?.[0]?.description && (
+              {errors.Projects?.[index]?.description && (
                 <p className="text-red-500 text-sm">
-                  {errors.Projects[0].description?.message}
+                  {errors.Projects[index].description?.message}
                 </p>
               )}
               <textarea
@@ -447,9 +447,9 @@ const ResumeForm = ({ onDataChange }) => {
             <div className="flex flex-col">
               <h3 className="my-2 ">Company Name </h3>
 
-              {errors.Experience?.[0]?.CompanyName && (
+              {errors.Experience?.[index]?.CompanyName && (
                 <p className="text-red-500 text-sm">
-                  {errors.Experience[0].CompanyName?.message}
+                  {errors.Experience[index].CompanyName?.message}
                 </p>
               )}
 
@@ -460,9 +460,9 @@ const ResumeForm = ({ onDataChange }) => {
               />
 
               <h3 className="my-2 ">Role </h3>
-              {errors.Experience?.[0]?.Role && (
+              {errors.Experience?.[index]?.Role && (
                 <p className="text-red-500 text-sm">
-                  {errors.Experience[0].Role?.message}
+                  {errors.Experience[index].Role?.message}
                 </p>
               )}
 
@@ -474,9 +474,9 @@ const ResumeForm = ({ onDataChange }) => {
 
               <h3 className="my-2 ">Start Date </h3>
 
-              {errors.Experience?.[0]?.StartDate && (
+              {errors.Experience?.[index]?.StartDate && (
                 <p className="text-red-500 text-sm">
-                  {errors.Experience[0].StartDate?.message}
+                  {errors.Experience[index].StartDate?.message}
                 </p>
               )}
               <input
@@ -487,9 +487,9 @@ const ResumeForm = ({ onDataChange }) => {
               />
 
               <h3 className="my-2 ">End Date </h3>
-              {errors.Experience?.[0]?.EndDate && (
+              {errors.Experience?.[index]?.EndDate && (
                 <p className="text-red-500 text-sm">
-                  {errors.Experience[0].EndDate?.message}
+                  {errors.Experience[index].EndDate?.message}
                 </p>
               )}
               <input
@@ -514,9 +514,9 @@ const ResumeForm = ({ onDataChange }) => {
               {/* Right side: Description */}
               <h3 className="my-2 ">Description </h3>
 
-              {errors.Experience?.[0]?.Description && (
+              {errors.Experience?.[index]?.Description && (
                 <p className="text-red-500 text-sm">
-                  {errors.Experience[0].Description?.message}
+                  {errors.Experience[index].Description?.message}
                 </p>
               )}
               <textarea
@@ -553,9 +553,9 @@ const ResumeForm = ({ onDataChange }) => {
             <div className="flex flex-col">
               <h3 className="my-2 ">Institution Name </h3>
 
-              {errors.Education?.[0]?.nameOfInstitute && (
+              {errors.Education?.[index]?.nameOfInstitute && (
                 <p className="text-red-500 text-sm">
-                  {errors.Education[0].nameOfInstitute?.message}
+                  {errors.Education[index].nameOfInstitute?.message}
                 </p>
               )}
 
@@ -568,9 +568,9 @@ const ResumeForm = ({ onDataChange }) => {
 
             <div className="flex flex-col">
               <h3 className="my-2 ">Degree</h3>
-              {errors.Education?.[0]?.degree && (
+              {errors.Education?.[index]?.degree && (
                 <p className="text-red-500 text-sm">
-                  {errors.Education[0].degree?.message}
+                  {errors.Education[index].degree?.message}
                 </p>
               )}
 
@@ -583,9 +583,9 @@ const ResumeForm = ({ onDataChange }) => {
             <div className="flex flex-col">
               <h3 className="my-2 ">field Of Study </h3>
 
-              {errors.Education?.[0]?.fieldOfStudy && (
+              {errors.Education?.[index]?.fieldOfStudy && (
                 <p className="text-red-500 text-sm">
-                  {errors.Education[0].fieldOfStudy?.message}
+                  {errors.Education[index].fieldOfStudy?.message}
                 </p>
               )}
               <input
@@ -596,9 +596,9 @@ const ResumeForm = ({ onDataChange }) => {
             </div>
             <div className="flex flex-col">
               <h3 className="my-2 "> Graduation Year</h3>
-              {errors.Education?.[0]?.graduationYear && (
+              {errors.Education?.[index]?.graduationYear && (
                 <p className="text-red-500 text-sm">
-                  {errors.Education[0].graduationYear?.message}
+                  {errors.Education[index].graduationYear?.message}
                 </p>
               )}
               <input
@@ -647,9 +647,9 @@ const ResumeForm = ({ onDataChange }) => {
               <div className="flex flex-col">
                 <label className=" text-gray-600 my-2">Institution Name</label>
 
-                {errors.Certifications?.[0]?.nameOfInstitute && (
+                {errors.Certifications?.[index]?.nameOfInstitute && (
                   <p className="text-red-500 text-sm ">
-                    {errors.Certifications[0].nameOfInstitute?.message}
+                    {errors.Certifications[index].nameOfInstitute?.message}
                   </p>
                 )}
 
@@ -664,9 +664,9 @@ const ResumeForm = ({ onDataChange }) => {
               <div className="flex flex-col">
                 <label className=" text-gray-600 my-2">Certificate Name</label>
 
-                {errors.Certifications?.[0]?.CertifcateName && (
+                {errors.Certifications?.[index]?.CertifcateName && (
                   <p className="text-red-500 text-sm ">
-                    {errors.Certifications[0].CertifcateName?.message}
+                    {errors.Certifications[index].CertifcateName?.message}
                   </p>
                 )}
 
@@ -681,9 +681,9 @@ const ResumeForm = ({ onDataChange }) => {
               <div className="flex flex-col">
                 <label className=" text-gray-600 my-2">Issue Date</label>
 
-                {errors.Certifications?.[0]?.IssueDate && (
+                {errors.Certifications?.[index]?.IssueDate && (
                   <p className="text-red-500 text-sm">
-                    {errors.Certifications[0].IssueDate?.message}
+                    {errors.Certifications[index].IssueDate?.message}
                   </p>
                 )}
 

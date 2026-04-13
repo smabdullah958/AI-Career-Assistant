@@ -32,7 +32,17 @@ let GenerateResume = async (data) => {
     });
 
     console.log("response is generated ", response.content);
-    return response.content;
+
+    let raw = response.content;
+    // remove ```json or ``` blocks
+    raw = raw
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    let parsed = JSON.parse(raw);
+
+    return parsed;
   } catch (err) {
     console.log("resume is not generated", err);
   }

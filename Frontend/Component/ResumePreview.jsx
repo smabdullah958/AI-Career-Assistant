@@ -110,31 +110,6 @@ const ResumePreview = ({ data }) => {
         </div>
       )}
 
-      {/* Education Section */}
-      {data.Education?.some((edu) => edu.nameOfInstitute) && (
-        <div className="mb-8">
-          <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-3 uppercase">
-            Education
-          </h2>
-
-          {data.Education.map(
-            (edu, i) =>
-              edu.nameOfInstitute && (
-                <div key={i} className="mb-3">
-                  <div className="flex justify-between items-baseline">
-                    <h3 className="font-bold text-[15px]">{edu.degree}</h3>
-                    <span className="text-xs font-semibold text-gray-500">
-                      {edu.graduationYear}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-700">{edu.fieldOfStudy}</p>
-                  <p className="text-sm text-gray-600">{edu.nameOfInstitute}</p>
-                </div>
-              ),
-          )}
-        </div>
-      )}
-
       {/* Projects Section */}
       {data.Projects?.some((p) => p.title) && (
         <div className="mb-8">
@@ -172,6 +147,31 @@ const ResumePreview = ({ data }) => {
                   <p className="text-sm text-gray-700 mt-1 leading-snug">
                     {project.description}
                   </p>
+                </div>
+              ),
+          )}
+        </div>
+      )}
+
+      {/* Education Section */}
+      {data.Education?.some((edu) => edu.nameOfInstitute) && (
+        <div className="mb-8">
+          <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-3 uppercase">
+            Education
+          </h2>
+
+          {data.Education.map(
+            (edu, i) =>
+              edu.nameOfInstitute && (
+                <div key={i} className="mb-3">
+                  <div className="flex justify-between items-baseline">
+                    <h3 className="font-bold text-[15px]">{edu.degree}</h3>
+                    <span className="text-xs font-semibold text-gray-500">
+                      {edu.graduationYear}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-700">{edu.fieldOfStudy}</p>
+                  <p className="text-sm text-gray-600">{edu.nameOfInstitute}</p>
                 </div>
               ),
           )}

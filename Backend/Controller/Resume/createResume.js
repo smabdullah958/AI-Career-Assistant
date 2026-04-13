@@ -11,7 +11,7 @@ let Resume = async (req, res) => {
 
     //here the resume will be generated
     let response = await generateResume(req.body);
-    console.log("resume data");
+    console.log("this is a req body ", req.body);
     res.status(200).json({ message: "resume is being created", response });
   } catch (err) {
     console.log("internal error", err);

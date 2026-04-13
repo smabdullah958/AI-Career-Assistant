@@ -481,6 +481,11 @@ const ResumeForm = ({ onDataChange }) => {
               )}
               <input
                 type="date"
+                //state date must be smaller thana ending date
+                max={
+                  watch(`Experience.${index}.EndDate`) ||
+                  new Date().toISOString().split("T")[0]
+                }
                 {...register(`Experience.${index}.StartDate`)}
                 placeholder="Start Date"
                 className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -494,6 +499,8 @@ const ResumeForm = ({ onDataChange }) => {
               )}
               <input
                 type="date"
+                //ending date must be smaller than afuter date
+                max={new Date().toISOString().split("T")[0]}
                 {...register(`Experience.${index}.EndDate`)}
                 placeholder="End Date"
                 className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -690,6 +697,8 @@ const ResumeForm = ({ onDataChange }) => {
                 <input
                   type="date"
                   {...register(`Certifications.${index}.IssueDate`)}
+                  //issue date must be smaller than afuture date
+                  max={new Date().toISOString().split("T")[0]}
                   className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
               </div>

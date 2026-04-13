@@ -42,6 +42,21 @@
 const ResumePrompt = `
 You are an expert ATS-optimized professional resume writer. Generate a professional resume based on the user's data.
 Return ONLY and only and only and only a valid JSON object with this exact structure:
+
+USER DATA TO PROCESS:
+Name: {Name}
+Role: {Role}
+Email: {Email}
+Phone: {Phone}
+Portfolio: {Portfolio}
+LinkedIn: {LinkedIn}
+Summary: {Summary}
+Skills: {Skills}
+Projects: {Projects}
+Experience: {Experience}
+Education: {Education}
+Certifications: {Certifications}
+
 Format:
 
 {{

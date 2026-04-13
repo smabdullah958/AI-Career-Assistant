@@ -102,7 +102,31 @@ export const ResumeSchema = z.object({
           .max(120, "Description must be less than 120 characters"),
       }),
     )
-    .max(3, "You can add up to 3 certifications only"),
+    .max(3, "You can add up to 3 certifications only")
+    .refine(
+      (data) => {
+        //for start date must be a smaller or equal to a end date
+        const start = new Date(data.StartDate);
+        const end = new Date(data.EndDate);
+        return start <= end;
+      },
+      {
+        message: "Start date must be smaller or equal to End date",
+        path: ["EndDate"],
+      },
+    )
+    //end date must be equal or smaller than a today but not in a future
+    .refine(
+      (data) => {
+        const end = new Date(data.EndDate);
+        const today = new Date();
+        return end <= today;
+      },
+      {
+        message: "End date cannot be in the future",
+        path: ["EndDate"],
+      },
+    ),
 
   Certifications: z
     .array(

@@ -59,7 +59,7 @@ const DisplayResume = () => {
     <div
       id="resumePDF"
       className="bg-white ml-0 sm:ml-5 overflow-x-hidden  sticky top-8 text-[#222] w-full 
-      max-w-[900px] mx-auto shadow-lg text-[13px]"
+      max-w-[900px] text-[13px]"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       {/* ── HEADER ── */}
@@ -169,25 +169,31 @@ const DisplayResume = () => {
                     <p className="text-[10px] text-[#555] m-0 mb-[2px] leading-[1.55]">
                       {proj.description}
                     </p>
-                    <div className="flex gap-[8px] text-[11px]">
-                      {proj.link && (
-                        <Link
-                          href={proj.link}
-                          target="_blank"
-                          className="text-blue-600 font-semibold no-underline"
-                        >
-                          Live
-                        </Link>
-                      )}
-                      {proj.Github && (
-                        <Link
-                          href={proj.Github}
-                          target="_blank"
-                          className="text-blue-600 font-semibold no-underline"
-                        >
-                          GitHub
-                        </Link>
-                      )}
+                    <div className="flex justify-between text-[10px]">
+                      <div>
+                        {proj.link && (
+                          <Link
+                            href={proj.link}
+                            target="_blank"
+                            className="text-blue-600 font-semibold no-underline"
+                          >
+                            <span className="text-black ">live link</span>{" "}
+                            {proj.link}
+                          </Link>
+                        )}
+                      </div>
+                      <div>
+                        {proj.Github && (
+                          <Link
+                            href={proj.Github}
+                            target="_blank"
+                            className="text-blue-600 font-semibold no-underline"
+                          >
+                            <span className="text-black ">Github link </span>{" "}
+                            {proj.Github}
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}

@@ -1,3 +1,5 @@
+//this is show during awhen we enter the data
+
 "use client";
 
 import Link from "next/link";

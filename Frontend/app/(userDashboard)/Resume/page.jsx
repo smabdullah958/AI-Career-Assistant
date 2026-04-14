@@ -22,7 +22,7 @@ const page = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-5 sm:p-10 2xl:p-20">
+    <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       <div className=" flex justify-between">
         <h1 className="text-xl sm:text-3xl 2xl:text-4xl font-bold mb-6">
           Resume Details
@@ -32,7 +32,7 @@ const page = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 sm:justify-between">
+      <div className="grid grid-cols-1  md:grid-cols-2">
         <ResumeForm onDataChange={setPreviewData} />
         <div className="lg:block my-5 ">
           {success === false ? (

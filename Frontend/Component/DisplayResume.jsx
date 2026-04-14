@@ -1,151 +1,246 @@
 "use client";
+import Link from "next/link";
 import { useSelector } from "react-redux";
 
 const DisplayResume = () => {
   const { response } = useSelector((state) => state.ResumeSlice);
 
-  // If there is no response, or if it's still a string (hasn't parsed yet), don't render
   if (!response || typeof response === "string") return null;
 
-  //remove teh unknow part ofa date
   const cleanDate = (date) => {
     if (!date) return "Present";
-    return date.split("T")[0]; // 👈 removes time part
+    return date.split("T")[0]; //  removes time part
   };
+  //call icon
+  const CalIcon = () => (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#888"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="inline mr-[3px] align-middle"
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
+
+  // pinc icon
+  const PinIcon = () => (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#888"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="inline mr-[3px] align-middle"
+    >
+      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+
+  const SectionHeading = ({ children }) => (
+    <h2 className="text-[13px] font-bold uppercase border-b-2 border-black pb-1 mb-2 text-black tracking-wide">
+      {children}
+    </h2>
+  );
 
   return (
     <div
       id="resumePDF"
-      className="bg-white ml-5 border border-gray-200 shadow-xl p-10 max-w-[210mm] min-h-[297mm] mx-auto sticky top-8 text-[#333]"
+      className="bg-white ml-0 sm:ml-5 overflow-x-hidden  sticky top-8 text-[#222] w-full 
+      max-w-[900px] mx-auto shadow-lg text-[13px]"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      {/* HEADER SECTION */}
-      <div className="border-b-2 border-gray-800 pb-4 mb-6">
-        <h1 className="text-3xl md:text-center font-bold tracking-tight uppercase text-black m-0">
+      {/* ── HEADER ── */}
+      <div className="px-6 pt-5 pb-[5px] border-b-2 border-gray-200">
+        <h1 className="text-[28px] font-extrabold uppercase tracking-wide text-[#111] m-0 leading-tight">
           {response.name}
         </h1>
-        <h2 className="text-md font-bold md:text-center tracking-tight uppercase text-black m-0">
+        <p className="text-[13px] font-bold text-blue-600 mt-[3px] mb-[10px] uppercase tracking-widest">
           {response.Role}
-        </h2>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600 mt-3">
-          <span>{response.email}</span>
-          <span>|</span>
-          <span>{response.phone}</span>
-          {response.Linkedin && (
-            <>
-              <span>|</span>
-              <a
-                href={response.Linkedin}
-                target="_blank"
-                className="text-blue-700 hover:underline"
-              >
-                LinkedIn
-              </a>
-            </>
-          )}
+        </p>
+        <div className="flex flex-wrap gap-y-1 gap-x-4 text-[12px] text-[#555]">
+          {response.phone && <span>{response.phone}</span>}
+          {response.email && <span>{response.email}</span>}
           {response.portfolio && (
-            <>
-              <span>|</span>
-              <a
-                href={response.portfolio}
-                target="_blank"
-                className="text-blue-700 hover:underline"
-              >
-                Portfolio
-              </a>
-            </>
+            <Link
+              href={response.portfolio}
+              target="_blank"
+              className="text-[#555] no-underline"
+            >
+              {response.portfolio}
+            </Link>
+          )}
+          {response.Linkedin && (
+            <Link
+              href={response.Linkedin}
+              target="_blank"
+              className="text-[#555] no-underline"
+            >
+              {response.Linkedin}
+            </Link>
           )}
         </div>
       </div>
 
-      {/* SUMMARY */}
-      <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-2 uppercase pb-1 mt-8">
-        Professional Summary
-      </h2>
-      <p className="text-sm leading-relaxed text-gray-700 mb-4">
-        {response.Summary}
-      </p>
+      <div className="pb-4">
+        <div className="px-5 py-4 pl-6 border-r border-gray-200">
+          {/* ABOUT ME */}
+          <section className="mb-4">
+            <SectionHeading>About Me</SectionHeading>
+            <p className="text-[10px] leading-relaxed text-[#444] m-0">
+              {response.Summary}
+            </p>
+          </section>
 
-      {/* SKILLS GRID */}
-      <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-2 uppercase pb-1 mt-8">
-        Skills
-      </h2>
-      <div className="grid grid-cols-4 gap-2 mb-8 mt-3">
-        {response.Skills?.map((skill, index) => (
-          <div
-            key={index}
-            className="text-sm text-gray-700 border-l-2 border-gray-200 pl-2"
-          >
-            {skill.value}
+          <div>
+            {/* SKILLS */}
+            {response.Skills?.length > 0 && (
+              <section className="mb-4">
+                <SectionHeading>Skills</SectionHeading>
+                <div className="grid  grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-[6px]">
+                  {response.Skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="text-[10px] font-semibold text-[#333] bg-gray-100 px-2 py-[3px] rounded text-center"
+                    >
+                      {skill.value}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* EXPERIENCE */}
+            {response.Experience?.length > 0 && (
+              <section>
+                <SectionHeading>Experience</SectionHeading>
+                {response.Experience.map((exp, i) => (
+                  <div key={i}>
+                    <div className="pb-[2px]">
+                      <p className="font-bold text-[11px] text-[#111] m-0 mb-[1px]">
+                        {exp.Role}
+                      </p>
+                      <p className="text-[11px] font-semibold text-blue-600 m-0 mb-1">
+                        {exp.CompanyName}
+                      </p>
+                      <div className="flex gap-3 text-[10px] text-[#888] mb-[1px]">
+                        <span>
+                          <CalIcon />
+                          {cleanDate(exp.StartDate)} — {cleanDate(exp.EndDate)}
+                        </span>
+                        <span>
+                          <PinIcon />
+                          Remote
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-[#555] m-0 leading-[1.55]">
+                        {exp.Description}
+                      </p>
+                    </div>
+                    {i < response.Experience.length - 1 && (
+                      <hr className="border-none border-t border-dashed border-gray-300 mb-[5px]" />
+                    )}
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {/* PROJECTS */}
+            {response.Projects?.length > 0 && (
+              <section>
+                <SectionHeading>Projects</SectionHeading>
+                {response.Projects.map((proj, i) => (
+                  <div key={i} className="mb-1">
+                    <p className="font-bold text-[11px] text-[#111] m-0 mb-[1px]">
+                      {proj.title}
+                    </p>
+                    <p className="text-[10px] text-[#555] m-0 mb-[2px] leading-[1.55]">
+                      {proj.description}
+                    </p>
+                    <div className="flex gap-[8px] text-[11px]">
+                      {proj.link && (
+                        <Link
+                          href={proj.link}
+                          target="_blank"
+                          className="text-blue-600 font-semibold no-underline"
+                        >
+                          Live
+                        </Link>
+                      )}
+                      {proj.Github && (
+                        <Link
+                          href={proj.Github}
+                          target="_blank"
+                          className="text-blue-600 font-semibold no-underline"
+                        >
+                          GitHub
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </section>
+            )}
           </div>
-        ))}
+
+          {/* EDUCATION */}
+          {response.Education?.length > 0 && (
+            <section className="my-4">
+              <SectionHeading>Education</SectionHeading>
+              {response.Education.map((edu, i) => (
+                <div key={i} className="mb-[2px]">
+                  <p className="font-bold text-[11px] text-[#111] m-0 mb-[2px]">
+                    {edu.degree}
+                    {edu.fieldOfStudy ? `in ${edu.fieldOfStudy}` : ""}
+                  </p>
+                  <p className="text-[10px] font-semibold text-blue-600 m-0 mb-1">
+                    {edu.nameOfInstitute}
+                  </p>
+                  <div className="flex gap-3 text-[10px] text-[#888]">
+                    <span>
+                      <CalIcon />
+                      {cleanDate(edu.graduationYear)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {/* CERTIFICATIONS */}
+          {response.Certifications?.length > 0 && (
+            <section>
+              <SectionHeading>Certifications</SectionHeading>
+              {response.Certifications.map((cert, i) => (
+                <div key={i} className="mb-2 pl-2 border-l-2 border-black">
+                  <p className="font-bold text-[11px] text-[#111] m-0 mb-[1px]">
+                    {cert.CertifcateName}
+                  </p>
+                  <p className="text-[1px] text-blue-600 m-0 mb-[2px]">
+                    {cert.nameOfInstitute}
+                  </p>
+                  <span className="text-[10px] text-[#888]">
+                    <CalIcon />
+                    {cleanDate(cert.IssueDate)}
+                  </span>
+                </div>
+              ))}
+            </section>
+          )}
+        </div>
       </div>
-
-      {/* EXPERIENCE */}
-      <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-2 uppercase pb-1 mt-8">
-        Experience
-      </h2>
-      {response.Experience?.map((exp, index) => (
-        <div key={index} className="mb-6">
-          <div className="flex justify-between items-baseline mt-4">
-            <h3 className="font-bold text-[15px] text-black">{exp.Role}</h3>
-            <span className="text-xs font-semibold text-gray-500 uppercase">
-              {cleanDate(exp.StartDate)} — {cleanDate(exp.EndDate) || "Present"}
-            </span>
-          </div>
-          <p className="text-sm font-medium text-gray-800 italic">
-            {exp.CompanyName}
-          </p>
-          <p className="text-sm text-gray-700 mt-2">{exp.Description}</p>
-        </div>
-      ))}
-
-      {/* PROJECTS */}
-      <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-2 uppercase pb-1 mt-8">
-        Projects
-      </h2>
-      {response.Projects?.map((proj, index) => (
-        <div key={index} className="mb-6">
-          <div className="flex justify-between items-baseline mt-4">
-            <h3 className="font-bold text-[15px] text-black">{proj.title}</h3>
-            <div className="flex gap-2">
-              <a
-                href={proj.link}
-                target="_blank"
-                className="text-blue-700 hover:underline text-xs"
-              >
-                Live Link
-              </a>
-              <a
-                href={proj.Github}
-                target="_blank"
-                className="text-blue-700 hover:underline text-xs"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-          <p className="text-sm text-gray-700 mt-1">{proj.description}</p>
-        </div>
-      ))}
-
-      {/* EDUCATION */}
-      <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-2 uppercase pb-1 mt-8">
-        Education
-      </h2>
-      {response.Education?.map((edu, index) => (
-        <div key={index} className="mb-4">
-          <div className="flex justify-between items-baseline">
-            <h3 className="font-bold text-[15px] text-black">
-              {edu.degree} in {edu.fieldOfStudy}
-            </h3>
-            <span className="text-xs font-semibold text-gray-500 uppercase">
-              {cleanDate(edu.graduationYear)}
-            </span>
-          </div>
-          <p className="text-sm text-gray-800">{edu.nameOfInstitute}</p>
-        </div>
-      ))}
     </div>
   );
 };

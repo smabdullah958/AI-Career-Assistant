@@ -3,13 +3,15 @@ import DownloadPDF from "@/Component/Buttons/DownloadPDF";
 import DisplayResume from "@/Component/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
 import ResumePreview from "@/Component/ResumePreview";
+import ResumeSkeleton from "@/Component/ResumeSkeleton";
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 const page = () => {
+  const previewRef = useRef(null); // Create the reference
   let dispatch = useDispatch();
-  let { success } = useSelector((state) => state.ResumeSlice);
+  let { success, loading } = useSelector((state) => state.ResumeSlice);
 
   //to preview the data in resume preview section
   const [previewData, setPreviewData] = useState({});
@@ -21,21 +23,34 @@ const page = () => {
     };
   }, [dispatch]);
 
+  // Automatically scroll when success becomes true
+  useEffect(() => {
+    if ((success || loading) && previewRef.current) {
+      previewRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [success, loading]);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       <div className=" flex justify-between">
         <h1 className="text-xl sm:text-3xl 2xl:text-4xl font-bold mb-6">
           Resume Details
         </h1>
-        <h2>
+        <h2 className="hidden lg:block">
           <DownloadPDF />
         </h2>
       </div>
 
       <div className="grid grid-cols-1  md:grid-cols-2">
         <ResumeForm onDataChange={setPreviewData} />
-        <div className="lg:block my-5 ">
-          {success === false ? (
+        <div ref={previewRef} className="lg:block my-5 ">
+          {/* when loading is true than show the resume skeleton  */}
+          {loading ? (
+            <ResumeSkeleton />
+          ) : success === false ? (
             //it will show preview
             <ResumePreview data={previewData} />
           ) : (

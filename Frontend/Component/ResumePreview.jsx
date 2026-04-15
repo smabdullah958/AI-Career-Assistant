@@ -8,7 +8,7 @@ const ResumePreview = ({ data }) => {
   return (
     <div
       id="resumePDF"
-      className="bg-white ml-5 border border-gray-200 shadow-xl p-10 max-w-[210mm] min-h-[297mm] mx-auto sticky top-8 text-[#333]"
+      className="bg-white ml-5 border border-gray-200 shadow-xl p-10 max-w-[210mm] min-h-[297mm] mx-auto sticky top-8 text-[#333] rounded-xl"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       {/* Header */}
@@ -67,7 +67,7 @@ const ResumePreview = ({ data }) => {
           <h2 className="text-lg font-bold text-black border-b border-gray-300 mb-3 uppercase">
             Skills
           </h2>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
             {data.Skills.map(
               (skill, i) =>
                 skill.value && (

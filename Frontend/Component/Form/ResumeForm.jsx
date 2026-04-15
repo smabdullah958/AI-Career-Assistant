@@ -1,4 +1,5 @@
 "use client";
+import DownloadPDF from "../Buttons/DownloadPDF";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResumeSchema } from "@/Libraries/ZodSchema";
@@ -186,7 +187,7 @@ const ResumeForm = ({ onDataChange }) => {
   let FormFunction = async (data) => {
     let result = await dispatch(ResumeThunck(data));
     console.log(result);
-    alert(result);
+    alert("cv is ready");
   };
 
   return (
@@ -292,10 +293,10 @@ const ResumeForm = ({ onDataChange }) => {
       </div>
 
       {/* skills */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg">
+      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg ">
         <h1 className="text-xl text-black font-bold mb-6">Skills</h1>
 
-        <div className="flex flex-col gap-4  mb-4 bg-white  p-4 pt-8 rounded-xl shadow-sm">
+        <div className="flex flex-col gap-4  mb-4 bg-white  p-4 pt-8 rounded-xl shadow-sm max-h-96  overflow-y-auto">
           {skillFields.map((field, index) => (
             <div key={field.id} className="flex items-start gap-3">
               {/* Input + Error */}
@@ -729,13 +730,17 @@ const ResumeForm = ({ onDataChange }) => {
           </button>
         )}
       </div>
-
-      <button
-        onClick={handleSubmit(FormFunction)}
-        className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300"
-      >
-        Submit
-      </button>
+      <div className="flex justify-between gap-3">
+        <button
+          onClick={handleSubmit(FormFunction)}
+          className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300"
+        >
+          Generate Resume
+        </button>
+        <div className=" block lg:hidden">
+          <DownloadPDF />
+        </div>
+      </div>
     </div>
   );
 };

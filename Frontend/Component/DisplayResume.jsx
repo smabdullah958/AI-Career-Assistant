@@ -58,8 +58,8 @@ const DisplayResume = () => {
   return (
     <div
       id="resumePDF"
-      className="bg-white ml-0 sm:ml-5 overflow-x-hidden  sticky top-8 text-[#222] w-full 
-      max-w-[900px] text-[13px]"
+      className="bg-white ml-0 sm:ml-5 overflow-x-hidden sticky top-8 text-[#222] w-full 
+      max-w-[900px]  text-[13px] rounded-xl "
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       {/* ── HEADER ── */}
@@ -73,11 +73,12 @@ const DisplayResume = () => {
         <div className="flex flex-wrap gap-y-1 gap-x-4 text-[12px] text-[#555]">
           {response.phone && <span>{response.phone}</span>}
           {response.email && <span>{response.email}</span>}
+
           {response.portfolio && (
             <Link
               href={response.portfolio}
               target="_blank"
-              className="text-[#555] no-underline"
+              className="text-[#555] no-underline  sm:w-[140px]  break-all"
             >
               {response.portfolio}
             </Link>
@@ -86,7 +87,7 @@ const DisplayResume = () => {
             <Link
               href={response.Linkedin}
               target="_blank"
-              className="text-[#555] no-underline"
+              className="text-[#555] no-underline  sm:w-[140px] break-all"
             >
               {response.Linkedin}
             </Link>
@@ -175,14 +176,16 @@ const DisplayResume = () => {
                           <Link
                             href={proj.link}
                             target="_blank"
-                            className="text-blue-600 font-semibold no-underline"
+                            className="text-blue-600 font-semibold no-underline w-[120px] break-all"
                           >
                             <span className="text-black ">live link</span>{" "}
-                            {proj.link}
+                            <span className="w-[120px] break-all">
+                              {proj.link}
+                            </span>
                           </Link>
                         )}
                       </div>
-                      <div>
+                      <div className="ml-2">
                         {proj.Github && (
                           <Link
                             href={proj.Github}
@@ -190,7 +193,9 @@ const DisplayResume = () => {
                             className="text-blue-600 font-semibold no-underline"
                           >
                             <span className="text-black ">Github link </span>{" "}
-                            {proj.Github}
+                            <span className="w-[120px] break-all">
+                              {proj.Github}
+                            </span>
                           </Link>
                         )}
                       </div>

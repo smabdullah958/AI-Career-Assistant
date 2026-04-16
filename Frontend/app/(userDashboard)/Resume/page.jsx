@@ -36,8 +36,8 @@ const page = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       <div className=" flex justify-between">
-        <h1 className="text-xl sm:text-3xl 2xl:text-4xl font-bold mb-6">
-          Resume Details
+        <h1 className="text-xl sm:text-3xl  xl:text-4xl font-bold mb-6 text-slate-800">
+          AI Resume Builder
         </h1>
         <h2 className="hidden lg:block">
           <DownloadPDF />

@@ -2,7 +2,7 @@ let { ChatPromptTemplate } = require("@langchain/core/prompts");
 let ResumePrompt = require("../../Prompts/ResumePrompts");
 let llm = require("../../Config/GroqConfigure");
 
-let GenerateResume = async (data) => {
+let ResumeService = async (data) => {
   try {
     //so this is a resume prompt and the prompt is present ina  ResumePrompt file
     let prompt = ChatPromptTemplate.fromTemplate(ResumePrompt);
@@ -34,12 +34,14 @@ let GenerateResume = async (data) => {
     console.log("response is generated ", response.content);
 
     let raw = response.content;
-    // remove ```json or ``` blocks
+
+    // remove, and other things like  ```json or ``` blocks
     raw = raw
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
 
+      //convert into a  json
     let parsed = JSON.parse(raw);
 
     return parsed;
@@ -48,4 +50,4 @@ let GenerateResume = async (data) => {
   }
 };
 
-module.exports = GenerateResume;
+module.exports = ResumeService;

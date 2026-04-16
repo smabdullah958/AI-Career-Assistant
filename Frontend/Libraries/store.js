@@ -8,11 +8,14 @@ import LogOutSlice from "@/Libraries/Slices/Auth/LogOutSlice";
 // for generating resume
 import ResumeSlice from "@/Libraries/Slices/Resume/ResumeSlice";
 
+//for interivew
+import InterviewSlice from "@/Libraries/Slices/Interview/InterviewSlice";
 export let store = configureStore({
   reducer: {
     SignUpSlice,
     LogInSlice,
     LogOutSlice,
     ResumeSlice,
+    InterviewSlice,
   },
 });

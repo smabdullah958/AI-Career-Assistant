@@ -1,7 +1,7 @@
 let { validationResult } = require("express-validator");
-let generateResume = require("../../Services/Resume/GenerateResume");
+let ResumeService = require("../../Services/Resume/ResumeService");
 
-let Resume = async (req, res) => {
+let ResumeController = async (req, res) => {
   try {
     let error = validationResult(req);
     if (!error.isEmpty()) {
@@ -10,7 +10,7 @@ let Resume = async (req, res) => {
     }
 
     //here the resume will be generated
-    let response = await generateResume(req.body);
+    let response = await ResumeService(req.body);
     console.log("this is a req body ", req.body);
     res.status(200).json({ message: "resume is being created", response });
   } catch (err) {
@@ -18,4 +18,4 @@ let Resume = async (req, res) => {
   }
 };
 
-module.exports = Resume;
+module.exports = ResumeController;

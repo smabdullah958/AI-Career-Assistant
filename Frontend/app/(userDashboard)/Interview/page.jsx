@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
 
 const InterviewPage = () => {
-  let { loading, response } = useSelector((state) => state.InterviewSlice);
+  let { loading, response, success } = useSelector(
+    (state) => state.InterviewSlice,
+  );
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
@@ -18,6 +20,17 @@ const InterviewPage = () => {
     },
   ]);
 
+  //  useEffect to catch the backend response when it arrives in Redux
+  useEffect(() => {
+    if (success && response) {
+      // Check if the message is already in the list to avoid duplicates
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage?.content !== response) {
+        setMessages((prev) => [...prev, { role: "ai", content: response }]);
+      }
+    }
+  }, [success, response]); // Triggers whenever response changes
+
   const InterviewFunction = async (e) => {
     if (e) e.preventDefault();
     if (!input.trim() || loading) return;
@@ -29,11 +42,7 @@ const InterviewPage = () => {
     setInput("");
 
     //call backend
-    await dispatch(
-      InterviewThunck({
-        Input: currentInput,
-      }),
-    );
+    await dispatch(InterviewThunck({ Input: currentInput }));
 
     //show teh  response from backend
     if (response) {

@@ -41,7 +41,7 @@ let ResumeService = async (data) => {
       .replace(/```/g, "")
       .trim();
 
-      //convert into a  json
+    //convert into a  json
     let parsed = JSON.parse(raw);
 
     return parsed;

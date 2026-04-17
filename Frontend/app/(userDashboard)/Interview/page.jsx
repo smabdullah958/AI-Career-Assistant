@@ -84,9 +84,9 @@ const InterviewPage = () => {
               </div>
             ))}
 
-            {/* ✅ Professional Loading indicator */}
+            {/*   Loading indicator */}
             {loading && (
-              <div className="flex justify-start items-center gap-3">
+              <div className="flex justify-end items-center gap-3">
                 <div className="bg-slate-100 px-5 py-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm flex gap-1">
                   <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce"></span>
                   <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>

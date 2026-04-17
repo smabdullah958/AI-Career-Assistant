@@ -1,4 +1,8 @@
 let { ChatPromptTemplate } = require("@langchain/core/prompts");
+const { RunnableWithMessageHistory } = require("@langchain/core/runnables");
+const {
+  ChatMessageHistory,
+} = require("@langchain/community/stores/message/in_memory");
 let InterviewPrompt = require("../../Prompts/InterviewPrompt");
 let UserPrompt = require("../../Prompts/InterviewPrompt");
 let llm = require("../../Config/GroqConfigure");

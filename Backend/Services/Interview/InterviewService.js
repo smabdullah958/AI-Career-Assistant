@@ -8,14 +8,13 @@ const {
 const { MessagesPlaceholder } = require("@langchain/core/prompts");
 
 let InterviewPrompt = require("../../Prompts/InterviewPrompt");
-// let UserPrompt = require("../../Prompts/InterviewPrompt");
 let llm = require("../../Config/GroqConfigure");
+
+//  This object stores history for DIFFERENT users separately
+const messageHistories = {};
 
 let InterviewService = async (input, sessionId = "user") => {
   try {
-    //  This object stores history for DIFFERENT users separately
-    const messageHistories = {};
-
     //prompt
     let promptTemplate = ChatPromptTemplate.fromMessages([
       ["system", InterviewPrompt],
@@ -44,6 +43,11 @@ let InterviewService = async (input, sessionId = "user") => {
     );
 
     console.log(response.content);
+
+    //check history
+    let history = await messageHistories[sessionId];
+    console.log("istory si ", history.messages);
+
     return response.content;
   } catch (err) {
     console.log("internal error questoins is not generated", err);

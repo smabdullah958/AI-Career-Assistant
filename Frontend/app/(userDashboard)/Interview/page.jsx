@@ -40,19 +40,13 @@ const InterviewPage = () => {
     setMessages((prev) => [...prev, userMessage]);
     const currentInput = input;
     setInput("");
-
     //call backend
     await dispatch(InterviewThunck({ Input: currentInput }));
-
-    //show teh  response from backend
-    if (response) {
-      setMessages((prev) => [...prev, { role: "ai", content: response }]);
-    }
   };
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-      {/* HERO */}
+      HERO
       <section className="max-w-5xl mx-auto w-full px-4 pt-10 pb-6 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
           Master Your{" "}
@@ -62,7 +56,6 @@ const InterviewPage = () => {
           Practice real-world questions with our AI assistant.
         </p>
       </section>
-
       <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full p-4 md:p-8 overflow-hidden">
         <div className="flex-1 bg-white rounded-[3rem] shadow-2xl shadow-indigo-100/50 border border-slate-200 flex flex-col overflow-hidden min-h-[500px]">
           {/* chat */}
@@ -107,10 +100,7 @@ const InterviewPage = () => {
 
           {/* INPUT AREA */}
           <div className="mt-auto p-6 bg-slate-50/50 border-t border-slate-100 backdrop-blur-sm">
-            <form
-              className="max-w-4xl mx-auto relative flex items-center gap-3"
-              onSubmit={InterviewFunction}
-            >
+            <form className="max-w-4xl mx-auto relative flex items-center gap-3">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -127,7 +117,7 @@ const InterviewPage = () => {
               />
 
               <button
-                type="submit"
+                onClick={InterviewFunction}
                 disabled={loading || !input.trim()}
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg transition-all active:scale-90 disabled:opacity-50 disabled:grayscale"
               >

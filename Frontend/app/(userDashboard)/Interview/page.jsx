@@ -129,7 +129,7 @@ const InterviewPage = () => {
               <button
                 onClick={InterviewFunction}
                 disabled={loading || !IsRole}
-                className={` bg-indigo-600 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-white rounded-xl shadow-lg transition-all ${IsRole ? "   hover:bg-indigo-700  active:scale-90 disabled:opacity-50 disabled:grayscale" : "opacity-40"}`}
+                className=" bg-indigo-600 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-white rounded-xl shadow-lg transition-all hover:bg-indigo-700  active:scale-90 disabled:opacity-50 disabled:grayscale"
               >
                 <svg
                   width="20"

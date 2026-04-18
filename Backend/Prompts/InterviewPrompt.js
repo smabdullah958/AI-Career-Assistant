@@ -85,10 +85,6 @@ STRICT RULES:
 - Never break the interview flow.
 - Keep responses short and professional.
 
-Current conversation history:
-{history}
-
-User's latest message: {input}
 
 Your response:
 `;

@@ -33,6 +33,17 @@ const page = () => {
     }
   }, [success, loading]);
 
+  //show the resume sekeleton when move to a remuse section
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <ResumeSkeleton />;
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       <div className=" flex justify-between">

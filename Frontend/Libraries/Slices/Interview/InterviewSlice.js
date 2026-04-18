@@ -11,7 +11,9 @@ let initialState = {
 let InterviewSlice = createSlice({
   name: "Interviewslice",
   initialState,
-  reducers: {},
+  reducers: {
+    ResetInterviewState:()=>initialState
+  },
   extraReducers: (builder) => {
     builder;
     builder.addCase(InterviewThunck.rejected, (state) => {
@@ -36,3 +38,5 @@ let InterviewSlice = createSlice({
 });
 
 export default InterviewSlice.reducer;
+
+export let {ResetInterviewState}=InterviewSlice.actions

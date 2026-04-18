@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
+import InterviewSkeleton from "@/Component/InterviewPageSkeleton";
+import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice";
 
 const InterviewPage = () => {
   let { loading, response, success } = useSelector(
@@ -54,9 +56,22 @@ const InterviewPage = () => {
     await dispatch(InterviewThunck({ Input: currentInput }));
   };
 
+  //reset the states when the page is load
+  useEffect(() => {
+    dispatch(ResetInterviewState());
+  }, []);
+
+  //show the chatbot loader when move to a intervew section
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <InterviewSkeleton />;
+
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-      HERO
       <section className="max-w-5xl mx-auto w-full px-4 pt-10 pb-6 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
           Master Your{" "}
@@ -117,7 +132,6 @@ const InterviewPage = () => {
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    InterviewFunction(e);
                   }
                 }}
                 rows="1"

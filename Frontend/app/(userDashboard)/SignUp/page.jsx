@@ -13,6 +13,7 @@ const page = () => {
     Name: "",
     Password: "",
     Email: "",
+    Role: "User",
   });
   let { loading, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store

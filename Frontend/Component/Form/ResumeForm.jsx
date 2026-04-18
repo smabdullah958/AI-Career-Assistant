@@ -6,7 +6,7 @@ import { ResumeSchema } from "@/Libraries/ZodSchema";
 import { useEffect } from "react";
 
 import ResumeThunck from "@/Libraries/Thuncks/Resume/ResumeThunck";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //use watch is alway use for a complex form for a watchin or preview
 import { useWatch } from "react-hook-form";
 
@@ -189,6 +189,12 @@ const ResumeForm = ({ onDataChange }) => {
     console.log(result);
     alert("cv is ready");
   };
+
+  //signup role
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
 
   return (
     <div>
@@ -732,8 +738,11 @@ const ResumeForm = ({ onDataChange }) => {
       </div>
       <div className="flex justify-between gap-3">
         <button
+          //when role is not disable
+          disabled={(Role || UserRole) !== "User"}
           onClick={handleSubmit(FormFunction)}
-          className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300"
+          className={`bg-indigo-500 text-white py-2 px-4 rounded-lg 
+            ${(Role || UserRole) === "User" ? " hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-50"}`}
         >
           Generate Resume
         </button>

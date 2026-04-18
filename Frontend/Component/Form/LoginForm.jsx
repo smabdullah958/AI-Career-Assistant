@@ -14,7 +14,7 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage, success } = useSelector(
+  let { loading, errorMessage, success, Role } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 
@@ -39,6 +39,7 @@ const LoginForm = ({ HideForm }) => {
     if (!success) return console.log("success is false", success);
     if (success) {
       HideForm();
+      alert(Role);
       router.push("/");
     }
     dispatch(DisplayLogout()); //to shwo the logout button

@@ -7,6 +7,13 @@ const InterviewPage = () => {
   let { loading, response, success } = useSelector(
     (state) => state.InterviewSlice,
   );
+
+  //signup role and userid
+  let { Role, UserId } = useSelector((state) => state.SignUpSlice);
+
+  //login role and userid
+  let { UserRole, UserID } = useSelector((state) => state.LogInSlice);
+
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
@@ -40,8 +47,14 @@ const InterviewPage = () => {
     setMessages((prev) => [...prev, userMessage]);
     const currentInput = input;
     setInput("");
+
+    //pass user id so that ai can not mix the multiple user chat
+    const activeUserId = UserID || UserId;
+
     //call backend
-    await dispatch(InterviewThunck({ Input: currentInput }));
+    await dispatch(
+      InterviewThunck({ Input: currentInput, sessionID: activeUserId }),
+    );
   };
 
   return (
@@ -118,8 +131,10 @@ const InterviewPage = () => {
 
               <button
                 onClick={InterviewFunction}
-                disabled={loading || !input.trim()}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg transition-all active:scale-90 disabled:opacity-50 disabled:grayscale"
+                disabled={
+                  loading || !input.trim() || (Role || UserRole) !== "User"
+                }
+                className={` bg-indigo-600 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-white rounded-xl shadow-lg transition-all ${(Role || UserRole) === "User" ? "   hover:bg-indigo-700  active:scale-90 disabled:opacity-50 disabled:grayscale" : "opacity-40"}`}
               >
                 <svg
                   width="20"

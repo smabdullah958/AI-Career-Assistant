@@ -19,7 +19,7 @@ let InterviewService = async (input, sessionID) => {
     let promptTemplate = ChatPromptTemplate.fromMessages([
       ["system", InterviewPrompt],
       new MessagesPlaceholder("history"),
-      ["human", `UserChat:{input} and the {history} `],
+      ["human", `{input}`],
     ]);
     //create chain
     let Chain = promptTemplate.pipe(llm);
@@ -33,7 +33,7 @@ let InterviewService = async (input, sessionID) => {
         }
   const history = messageHistories[id];
 
-  //  LIMIT TO on pass 10 MESSAGES in a history
+  //  LIMIT TO on pass last 10 MESSAGES in a history
   const maxMessages = 10;
 
   if (history.messages.length > maxMessages) {
@@ -47,6 +47,7 @@ let InterviewService = async (input, sessionID) => {
       historyMessagesKey: "history",
     });
 
+    //now invoke
     let response = await withHistoryChain.invoke(
       { input },
       { configurable: { sessionId: sessionID } },

@@ -4,7 +4,6 @@ import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 
 const savedRole = typeof window !== 'undefined' ? localStorage.getItem("UserRole") : null; //mainly we use it so that any one can not use a feature without alogin or signup
 
-const savedUserId  = typeof window !== 'undefined' ? localStorage.getItem("UserID") : null; //mainly we use it so that aI can not mix chat of a multiple user
 
 
 let initialState = {
@@ -12,7 +11,6 @@ let initialState = {
   loading: false,
   success: false,
   Role:savedRole,
-  UserId:savedUserId
 };
 
 
@@ -34,10 +32,7 @@ let SignUpSlice = createSlice({
         state.loading = false,
         state.Role=action?.payload?.Role
         localStorage.setItem("UserRole", action?.payload?.Role); //  Save role ina localstorage
-       
-        state.UserId=action?.payload?.UserId
-        localStorage.setItem("UserID", action?.payload?.UserID); //  Save UserId ina localstorage
-
+     
       })
     .addCase(SignUpThunck.pending,(state)=>{
         state.success=false,

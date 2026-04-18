@@ -1,11 +1,15 @@
 let InterviewService = require("../../Services/Interview/InterviewService");
 let InterviewController = async (req, res) => {
   try {
-    let { Input, sessionID } = req.body;
-    if ((!Input|| !sessionID)) {
+    let { Input } = req.body;
+    if (!Input) {
       return res.status(400).json({ message: "all field are requred" });
     }
-    let response = await InterviewService(Input, sessionID);
+    //get user id froma middleware
+    let SessionID = req.user.UserId;
+    console.log(SessionID);
+
+    let response = await InterviewService(Input, SessionID);
     console.log(response);
     res.status(200).json({ message: "input is present ", response });
   } catch (err) {

@@ -19,6 +19,7 @@ let Login = async (req, res) => {
     let token = jwt.sign(
       {
         Email,
+        UserId: ExistUser._id,
       },
       process.env.SecretKey,
       {
@@ -32,12 +33,11 @@ let Login = async (req, res) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //for 7 days
     });
-    console.log("user id "+ExistUser._id)
+    console.log("user id " + ExistUser._id);
     return res.status(200).json({
       message: "user is login",
       IsLoggIn: true,
       Role: ExistUser.Role,
-     UserID:ExistUser._id
     });
   } catch (error) {
     console.log("some thing went wrong", error);

@@ -7,8 +7,6 @@ false;
 //store role ina  localstorage
 const savedRole = typeof window !== 'undefined' ? localStorage.getItem("UserRole") : null;
 
-//store userid ina  localstorage
-const savedUserID = typeof window !== 'undefined' ? localStorage.getItem("UserID") : null;
 
 
 let initialState={
@@ -18,7 +16,6 @@ let initialState={
     success:false,
     IsLoggIn:savedIsLoggedIn,
     UserRole:savedRole,
-    UserID:savedUserID  //mainly i used a userid to store the memory during teh interview caht so that AI can not mix the multiple user chat 
 }
 
 let LogInSlice=createSlice({
@@ -41,7 +38,6 @@ let LogInSlice=createSlice({
         state.IsLoggIn=true
         localStorage.setItem("IsLoggIn","true");
         localStorage.removeItem("UserRole") //remove ther role when click ona  logout button
-        localStorage.removeItem("UserID")  //remove teh user id when user is logout
     }
     },
     extraReducers:(builder)=>{
@@ -65,8 +61,6 @@ let LogInSlice=createSlice({
             state.UserRole=action?.payload?.Role  
              localStorage.setItem("UserRole", action?.payload?.Role); //  Save role ina localstorage
          
-            state.UserID=action?.payload?.UserID  
-             localStorage.setItem("UserID", action?.payload?.UserID); //  Save userid ina localstorage
 
 
         })

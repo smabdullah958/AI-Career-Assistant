@@ -5,7 +5,7 @@ let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let SignUp = async (req, res) => {
   try {
-    let { Name, Email, Password } = req.body;
+    let { Name, Email, Password, Role } = req.body;
     if (!Name || !Email || !Password) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -21,6 +21,7 @@ let SignUp = async (req, res) => {
       Name,
       Email,
       Password: hashPassword,
+      Role,
     });
     await newUser.save();
 
@@ -38,9 +39,11 @@ let SignUp = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     console.log(token, newUser);
+    console.log("user id "+newUser._id)
     res.status(200).json({
       message: "User created successfully",
-      Role: newUser.Role,
+      Role,
+    UserID:newUser._id      
     });
   } catch (error) {
     console.error(error);

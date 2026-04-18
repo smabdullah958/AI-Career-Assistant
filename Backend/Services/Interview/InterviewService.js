@@ -13,13 +13,13 @@ let llm = require("../../Config/GroqConfigure");
 //  This object stores history for DIFFERENT users separately
 const messageHistories = {};
 
-let InterviewService = async (input, sessionId = "user") => {
+let InterviewService = async (input, sessionID) => {
   try {
     //prompt
     let promptTemplate = ChatPromptTemplate.fromMessages([
       ["system", InterviewPrompt],
       new MessagesPlaceholder("history"),
-      ["human", "{input}"],
+      ["human", `UserChat:{input} and the {history} `],
     ]);
     //create chain
     let Chain = promptTemplate.pipe(llm);
@@ -31,7 +31,17 @@ let InterviewService = async (input, sessionId = "user") => {
         if (messageHistories[id] === undefined) {
           messageHistories[id] = new ChatMessageHistory(); //if not chatmessage history than create new one
         }
-        return messageHistories[id];
+  const history = messageHistories[id];
+
+  //  LIMIT TO on pass 10 MESSAGES in a history
+  const maxMessages = 10;
+
+  if (history.messages.length > maxMessages) {
+    history.messages = history.messages.slice(-maxMessages);
+  }
+
+  return history;
+
       },
       inputMessagesKey: "input",
       historyMessagesKey: "history",
@@ -39,13 +49,13 @@ let InterviewService = async (input, sessionId = "user") => {
 
     let response = await withHistoryChain.invoke(
       { input },
-      { configurable: { sessionId: sessionId } },
+      { configurable: { sessionId: sessionID } },
     );
 
     console.log(response.content);
 
     //check history
-    let history = await messageHistories[sessionId];
+    let history = await messageHistories[sessionID];
     console.log("istory si ", history.messages);
 
     return response.content;

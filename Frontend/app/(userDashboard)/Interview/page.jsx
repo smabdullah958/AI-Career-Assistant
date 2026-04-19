@@ -81,8 +81,8 @@ const InterviewPage = () => {
           Practice real-world questions with our AI assistant.
         </p>
       </section>
-      <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full p-4 md:p-8 overflow-hidden">
-        <div className="flex-1 bg-white rounded-[3rem] shadow-2xl shadow-indigo-100/50 border border-slate-200 flex flex-col overflow-hidden min-h-[500px]">
+      <main className="flex-1 flex  flex-col md:max-w-[85%] 2xl:max-w-[65%] mx-auto w-full p-4 md:p-8 overflow-hidden">
+        <div className="flex-1 bg-white rounded-[3rem] shadow-2xl shadow-indigo-100/50 border border-slate-200 flex flex-col overflow-hidden min-h-[500px] ">
           {/* chat */}
           <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar">
             {messages.map((msg, index) => (
@@ -93,7 +93,7 @@ const InterviewPage = () => {
                 }`}
               >
                 <div
-                  className={`relative max-w-[85%] md:max-w-[70%] px-6 py-4 text-sm md:text-base transition-all duration-300 ${
+                  className={`relative max-w-[85%]  px-6 py-4 text-sm md:text-base transition-all duration-300 ${
                     msg.role === "user"
                       ? "bg-gradient-to-br from-indigo-600 to-blue-700 text-white rounded-2xl rounded-tr-none shadow-lg shadow-indigo-200"
                       : "bg-slate-50 text-slate-700 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm"
@@ -125,7 +125,7 @@ const InterviewPage = () => {
 
           {/* INPUT AREA */}
           <div className="mt-auto p-6 bg-slate-50/50 border-t border-slate-100 backdrop-blur-sm">
-            <form className="max-w-4xl mx-auto relative flex items-center gap-3">
+            <form className=" mx-auto relative flex items-center gap-3">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

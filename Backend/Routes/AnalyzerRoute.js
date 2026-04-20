@@ -4,6 +4,8 @@ let app = express.Router();
 let ResumeAnalyzer = require("../Controller/ResumeAnalyzer/AnalyzerController");
 let upload = require("../Config/MulterSetUp");
 
-app.post("/Analyzer", upload.single("File"), ResumeAnalyzer);
+let AuthMiddleWare = require("../MiddleWare/AuthMiddleware");
+
+app.post("/Analyzer", upload.single("File"), AuthMiddleWare, ResumeAnalyzer);
 
 module.exports = app;

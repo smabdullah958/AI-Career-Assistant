@@ -196,6 +196,8 @@ const ResumeForm = ({ onDataChange }) => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
+  let IsRole = Role === "User" || UserRole === "User";
+
   return (
     <div>
       <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 z-100 shadow-lg">
@@ -739,10 +741,10 @@ const ResumeForm = ({ onDataChange }) => {
       <div className="flex justify-between gap-3">
         <button
           //when role is not disable
-          disabled={(Role || UserRole) !== "User"}
+          disabled={!IsRole}
           onClick={handleSubmit(FormFunction)}
           className={`bg-indigo-500 text-white py-2 px-4 rounded-lg 
-            ${(Role || UserRole) === "User" ? " hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-50"}`}
+            ${IsRole ? " hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-30"}`}
         >
           Generate Resume
         </button>

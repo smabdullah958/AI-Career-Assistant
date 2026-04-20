@@ -11,7 +11,9 @@ let initialState = {
 let AnalyzeSlice = createSlice({
   name: "AnalyzeSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    ResetAnalyzer: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(AnalyzerThunck.fulfilled, (state, action) => {
       state.loading = false;
@@ -33,3 +35,4 @@ let AnalyzeSlice = createSlice({
 });
 
 export default AnalyzeSlice.reducer;
+export let { ResetAnalyzer } = AnalyzeSlice.actions;

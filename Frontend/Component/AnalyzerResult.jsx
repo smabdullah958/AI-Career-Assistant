@@ -103,7 +103,7 @@ const AnalyzerResult = () => {
           </div>
 
           {/* KEYWORDS TO ADD */}
-          <div className="bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl text-white relative group overflow-hidden">
+          <div className="bg-indigo-900 p-8 rounded-[2.5rem] shadow-2xl text-white relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
               <FaChartBar size={80} />
             </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   FaCloudUploadAlt,
   FaFilePdf,
@@ -11,6 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AnalyzerThunck from "@/Libraries/Thuncks/Analyzer/AnalyzerThunck";
 
 const ResumeAnalyzer = () => {
+  //these are used to ceck that if a user is login or signup or not if not than user can not use our feature
+  //signup role
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  const fileInputRef = useRef(null); // 2. Create the reference for a update the file
+
   let dispatch = useDispatch();
 
   const [formState, setFormState] = useState({
@@ -20,11 +29,6 @@ const ResumeAnalyzer = () => {
   });
 
   const [error, setError] = useState("");
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   //file handling
   const handleFileChange = (e) => {
@@ -55,9 +59,8 @@ const ResumeAnalyzer = () => {
   const isFormValid =
     formState.Role.trim() !== "" &&
     formState.File !== null &&
-    formState.Experience;
-
-  if (!isMounted) return null;
+    formState.Experience &&
+    (Role !== "User" || UserRole !== "User");
 
   // Handle input fildes
   const HandleFields = (e) => {
@@ -80,7 +83,7 @@ const ResumeAnalyzer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] p-4 md:p-10 font-sans">
+    <div className="min-h-screen xl:min-h-auto bg-[#f8fafc] p-4 md:p-10 font-sans">
       <section className="max-w-7xl mx-auto text-center mb-10">
         <h1 className="text-4xl font-extrabold text-slate-900">
           AI Resume <span className="text-indigo-600 font-black">Analyzer</span>
@@ -135,6 +138,15 @@ const ResumeAnalyzer = () => {
         {/* UPLOAD SECTION */}
         <div className="md:col-span-2">
           <div className="bg-white p-8 rounded-[3rem] shadow-2xl border border-slate-200 h-full flex flex-col justify-center">
+            {/* THE HIDDEN INPUT (Keep this outside the toggle logic) */}
+            <input
+              type="file"
+              ref={fileInputRef} // Attach the ref here
+              className="hidden"
+              accept=".pdf"
+              onChange={handleFileChange}
+            />
+
             {!formState.File ? (
               <label className="w-full flex flex-col items-center justify-center border-4 border-dashed border-slate-100 rounded-[2.5rem] py-16 cursor-pointer hover:bg-slate-50 transition-all group">
                 <FaCloudUploadAlt className="text-indigo-600 text-6xl group-hover:scale-110 transition-transform" />
@@ -161,7 +173,7 @@ const ResumeAnalyzer = () => {
 
                 <div className="mt-8 grid grid-cols-2 gap-3 text-sm sm:text-md lg:text-lg 2xl:text-xl">
                   <button
-                    onClick={HandleFields}
+                    onClick={() => fileInputRef.current.click()}
                     className="font-extrabold py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all"
                   >
                     Change PDF
@@ -169,7 +181,7 @@ const ResumeAnalyzer = () => {
                   <button
                     onClick={FormFunction}
                     disabled={!isFormValid}
-                    className={` py-4 text-white font-black rounded-2xl shadow-lg ${isFormValid ? " bg-indigo-600 disabled:opacity-50  transition-all flex items-center justify-center gap-2" : "bg-indigo-600 opacity-50   "}`}
+                    className={` py-4 text-white font-black rounded-2xl shadow-lg ${isFormValid ? " bg-indigo-600 disabled:opacity-50  transition-all flex items-center justify-center gap-2" : "bg-indigo-600 opacity-30 cursor-not-allowed   "}`}
                   >
                     Analyze Resume
                   </button>

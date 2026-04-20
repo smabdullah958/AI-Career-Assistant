@@ -3,7 +3,7 @@ let PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
 //main ai file
 let chain = require("../../Services/Analyzer/ResumeAnalyzer");
 
-let ResumAnalyzer = async (req, res) => {
+let AnalyzerController = async (req, res) => {
   try {
     let { Experience, Role } = req.body;
 
@@ -20,7 +20,7 @@ let ResumAnalyzer = async (req, res) => {
     }
 
     //pdf text extractor
-    let TextExtractor = PDFTextExtractor(req.file.buffer);
+    let TextExtractor = await PDFTextExtractor(req.file.buffer);
 
     //main ai/langchain
     let result = await chain(TextExtractor, Role, Experience);
@@ -34,4 +34,4 @@ let ResumAnalyzer = async (req, res) => {
   }
 };
 
-module.exports = ResumAnalyzer;
+module.exports = AnalyzerController;

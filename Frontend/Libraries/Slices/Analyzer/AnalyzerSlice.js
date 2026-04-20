@@ -17,7 +17,7 @@ let AnalyzeSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = true;
-      state.response = action?.payload?.result;
+      state.response = action?.payload;
     });
     builder.addCase(AnalyzerThunck.pending, (state) => {
       state.error = false;

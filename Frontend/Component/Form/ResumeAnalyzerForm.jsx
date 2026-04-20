@@ -79,10 +79,6 @@ const ResumeAnalyzer = () => {
     dispatch(AnalyzerThunck(data));
   };
 
-  let { loading, success, response } = useSelector(
-    (state) => state.AnalyzeSlice,
-  );
-
   return (
     <div className="min-h-screen bg-[#f8fafc] p-4 md:p-10 font-sans">
       <section className="max-w-7xl mx-auto text-center mb-10">

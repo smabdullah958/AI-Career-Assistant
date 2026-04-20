@@ -24,7 +24,7 @@ let InterviewService = async (input, sessionId) => {
     //create chain
     let Chain = promptTemplate.pipe(llm);
 
-    // 2. This logic manages memory automatically
+    //  This logic manages memory automatically
     const withHistoryChain = new RunnableWithMessageHistory({
       runnable: Chain, //connect with chain
       getMessageHistory: async (id) => {

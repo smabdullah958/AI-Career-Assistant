@@ -1,4 +1,8 @@
+//text extractor
 let PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
+//main ai file
+let chain = require("../../Services/Analyzer/ResumeAnalyzer");
+
 let ResumAnalyzer = async (req, res) => {
   try {
     let { Experience, Role } = req.body;
@@ -18,7 +22,12 @@ let ResumAnalyzer = async (req, res) => {
     //pdf text extractor
     let TextExtractor = PDFTextExtractor(req.file.buffer);
 
-    return res.status(200).json({ message: "all field are present" });
+    //main ai/langchain
+    let result = await chain(TextExtractor, Role, Experience);
+
+    console.log(result);
+
+    return res.status(200).json({ message: "all field are present", result });
   } catch (err) {
     console.log("internal error", err);
     res.status(500).json({ message: "interal errro" });

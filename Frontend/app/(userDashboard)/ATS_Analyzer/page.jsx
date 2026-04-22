@@ -30,7 +30,7 @@ const page = () => {
   }
 
   return (
-    <div>
+    <div className="xl:min-h-screen 2xl:overflow-y-auto">
       <ResumeAnalyzerFrom />
       {success ? <AnalyzerResult /> : loading && <AnalyzerSkeleton />}
     </div>

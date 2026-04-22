@@ -9,10 +9,15 @@ let ResumeController = async (req, res) => {
       return res.status(400).json({ error: error.array() });
     }
 
+    // get Role from a middleware so that any one can not use a feature withou login
+    let Role = req.user.Role;
+
     //here the resume will be generated
     let response = await ResumeService(req.body);
     console.log("this is a req body ", req.body);
-    res.status(200).json({ message: "resume is being created", response });
+    res
+      .status(200)
+      .json({ message: "resume is being created", response, Role });
   } catch (err) {
     console.log("internal error", err);
   }

@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 
 
-const savedRole = typeof window !== 'undefined' ? localStorage.getItem("UserRole") : null; //mainly we use it so that any one can not use a feature without alogin or signup
 
 
 
@@ -10,7 +9,7 @@ let initialState = {
   errorMessage: "",
   loading: false,
   success: false,
-  Role:savedRole,
+  Role:null,
 };
 
 
@@ -31,7 +30,6 @@ let SignUpSlice = createSlice({
         state.errorMessage = "",
         state.loading = false,
         state.Role=action?.payload?.Role
-        localStorage.setItem("UserRole", action?.payload?.Role); //  Save role ina localstorage
      
       })
     .addCase(SignUpThunck.pending,(state)=>{

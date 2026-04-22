@@ -60,7 +60,7 @@ const ResumeAnalyzer = () => {
     formState.Role.trim() !== "" &&
     formState.File !== null &&
     formState.Experience &&
-    (Role !== "User" || UserRole !== "User");
+    (Role === "User" || UserRole === "User");
 
   // Handle input fildes
   const HandleFields = (e) => {
@@ -85,8 +85,9 @@ const ResumeAnalyzer = () => {
   return (
     <div className="min-h-screen xl:min-h-auto bg-[#f8fafc] p-4 md:p-10 font-sans">
       <section className="max-w-7xl mx-auto text-center mb-10">
-        <h1 className="text-4xl font-extrabold text-slate-900">
-          AI Resume <span className="text-indigo-600 font-black">Analyzer</span>
+        <h1 className="text-4xl font-extrabold text-slate-900 xl:my-5 2xl:my-40 xl:text-5xl">
+          AI Resume{" "}
+          <span className="text-indigo-600 font-black ">Analyzer</span>
         </h1>
         {error && (
           <div className="mt-4 flex items-center justify-center gap-2 text-red-500 bg-red-50 py-2 px-4 rounded-lg border border-red-100 animate-shake">
@@ -99,7 +100,7 @@ const ResumeAnalyzer = () => {
       <main className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* INPUTS SECTION */}
         <div className="md:col-span-1 space-y-4">
-          <div className="bg-white p-6 rounded-[2rem] shadow-xl shadow-indigo-100/50 border border-slate-200">
+          <div className="bg-white p-6 rounded-[2rem] shadow-xl shadow-indigo-100/50 border border-slate-200 2xl:h-72 grid content-center">
             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
               Target Role
             </label>
@@ -137,7 +138,7 @@ const ResumeAnalyzer = () => {
 
         {/* UPLOAD SECTION */}
         <div className="md:col-span-2">
-          <div className="bg-white p-8 rounded-[3rem] shadow-2xl border border-slate-200 h-full flex flex-col justify-center">
+          <div className="bg-white p-8 rounded-[3rem] shadow-2xl border border-slate-200 h-full flex flex-col justify-center 2xl:h-96">
             {/* THE HIDDEN INPUT (Keep this outside the toggle logic) */}
             <input
               type="file"

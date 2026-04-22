@@ -5,7 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { ResetLogOutState } from "@/Libraries/Slices/Auth/LogOutSlice";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
+
 import { ResetLogOutRole } from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo  the login buutton
+
+import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
+
+import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice"; //to reset the interview all the state
+
+import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice"; //to reset all the state of a resume analyzer
+
 const LogoutButton = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -18,6 +26,9 @@ const LogoutButton = () => {
       router.push("/");
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
+      dispatch(ResetAnalyzer()); //reset the analyzer all the state
+      dispatch(ResetInterviewState()); //reset all the state ofa interview
+      dispatch(ResetResume()); //reset all the state of a resume
     }
   }, [success]);
 

@@ -4,8 +4,6 @@ import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
 const savedIsLoggedIn=typeof window !== 'undefined' ? localStorage.getItem("IsLoggIn") === "true" : 
 false;
 
-//store role ina  localstorage
-const savedRole = typeof window !== 'undefined' ? localStorage.getItem("UserRole") : null;
 
 
 
@@ -15,7 +13,7 @@ let initialState={
     errorMessage:"",
     success:false,
     IsLoggIn:savedIsLoggedIn,
-    UserRole:savedRole,
+    UserRole:null
 }
 
 let LogInSlice=createSlice({
@@ -37,7 +35,7 @@ let LogInSlice=createSlice({
     ResetLogOutRole:(state)=>{
         state.IsLoggIn=true
         localStorage.setItem("IsLoggIn","true");
-        localStorage.removeItem("UserRole") //remove ther role when click ona  logout button
+        state.UserRole=null //remove ther role when click ona  logout button
     }
     },
     extraReducers:(builder)=>{
@@ -59,10 +57,7 @@ let LogInSlice=createSlice({
             state.success=true,
             localStorage.setItem("IsLoggIn",action?.payload?.IsLoggIn) 
             state.UserRole=action?.payload?.Role  
-             localStorage.setItem("UserRole", action?.payload?.Role); //  Save role ina localstorage
          
-
-
         })
     }   
 })

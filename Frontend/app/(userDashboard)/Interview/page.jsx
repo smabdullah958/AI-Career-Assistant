@@ -73,7 +73,7 @@ const InterviewPage = () => {
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
       <section className="max-w-5xl mx-auto w-full px-4 pt-10 pb-6 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-4xl md:text-5xl xl:my-5 2xl:mt-32 2xl:mb-10 xl:text-5xl font-extrabold text-slate-900 tracking-tight">
           Master Your{" "}
           <span className="text-indigo-600 font-black">Interview</span>
         </h1>
@@ -143,7 +143,7 @@ const InterviewPage = () => {
               <button
                 onClick={InterviewFunction}
                 disabled={loading || !IsRole}
-                className=" bg-indigo-600 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-white rounded-xl shadow-lg transition-all hover:bg-indigo-700  active:scale-90 disabled:opacity-50 disabled:grayscale"
+                className={`p-2 sm:p-4 text-white font-black rounded-2xl shadow-lg ${IsRole ? " bg-indigo-600 disabled:opacity-50  transition-all flex items-center justify-center sm-gap-2" : "bg-indigo-600 opacity-30 cursor-not-allowed   "}`}
               >
                 <svg
                   width="20"

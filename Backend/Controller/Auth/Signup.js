@@ -31,6 +31,7 @@ let SignUp = async (req, res) => {
       {
         Email,
         UserId: newUser._id,
+        Role: newUser.Role,
       },
       key,
       { expiresIn: "1w" },

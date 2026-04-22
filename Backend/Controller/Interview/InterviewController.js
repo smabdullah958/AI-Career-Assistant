@@ -9,9 +9,12 @@ let InterviewController = async (req, res) => {
     let SessionID = req.user.UserId;
     console.log(SessionID);
 
+    // get Role from a middleware so that any one can not use a feature withou login
+    let Role = req.user.Role;
+
     let response = await InterviewService(Input, SessionID);
     console.log(response);
-    res.status(200).json({ message: "input is present ", response });
+    res.status(200).json({ message: "input is present ", response, Role });
   } catch (err) {
     console.log("internal error", err);
   }

@@ -27,12 +27,7 @@ let AnalyzerController = async (req, res) => {
 
     console.log(result);
 
-    // get Role from a middleware to hide the button so that any one can not use a feature withou login
-    let UserRole = req.user.Role;
-
-    return res
-      .status(200)
-      .json({ message: "all field are present", result, UserRole });
+    return res.status(200).json({ message: "all field are present", result });
   } catch (err) {
     console.log("internal error", err);
     res.status(500).json({ message: "interal errro" });

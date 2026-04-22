@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { ResetLogOutState } from "@/Libraries/Slices/Auth/LogOutSlice";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
 
+import { ClearSignUpRole } from "@/Libraries/Slices/Auth/SignUpSlice"; //reset the signup rol
+
 import { ResetLogOutRole } from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo  the login buutton
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
@@ -26,6 +28,8 @@ const LogoutButton = () => {
       router.push("/");
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
+
+      dispatch(ClearSignUpRole());
       dispatch(ResetAnalyzer()); //reset the analyzer all the state
       dispatch(ResetInterviewState()); //reset all the state ofa interview
       dispatch(ResetResume()); //reset all the state of a resume

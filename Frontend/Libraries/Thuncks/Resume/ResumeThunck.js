@@ -6,7 +6,7 @@ let ResumeThunck = createAsyncThunk("ResumeThunck", async (data) => {
     let result = await axios.post(`${url}/Resume/createResume`, data, {
       withCredentials: true,
     });
-    return result.data?.response;
+    return result.data;
   } catch (err) {
     console.log("internal error", err);
   }

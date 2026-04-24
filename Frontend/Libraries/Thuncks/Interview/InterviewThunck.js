@@ -8,7 +8,7 @@ let InterviewThunck = createAsyncThunk("InterviewThunck", async (Input) => {
       withCredentials: true,
     });
     console.log(result.data.response);
-    return result?.data.response;
+    return result?.data;
   } catch (err) {
     console.log("eror is occur data is not being fetch", err);
   }

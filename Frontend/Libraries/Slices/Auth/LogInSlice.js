@@ -37,6 +37,7 @@ let LogInSlice=createSlice({
         localStorage.setItem("IsLoggIn","true");
         state.UserRole=null //remove ther role when click ona  logout button
         localStorage.removeItem("UserRole") //remove ther role when click ona  logout button
+       localStorage.removeItem("AICredits"); //remove the Ai credits when a user is logout brohter
 
     }
     },

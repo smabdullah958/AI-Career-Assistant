@@ -6,13 +6,19 @@ let initialState = {
   error: false,
   response: null,
   success: false,
+  remainingCalls:null
 };
 
 let InterviewSlice = createSlice({
   name: "Interviewslice",
   initialState,
   reducers: {
-    ResetInterviewState:()=>initialState
+    ResetInterviewState:(state)=>{
+      state.error=false;
+                state.loading=false;
+                state.response=null;
+                state.success=false
+    }
   },
   extraReducers: (builder) => {
     builder;
@@ -32,7 +38,8 @@ let InterviewSlice = createSlice({
       state.loading = false,
         state.error = false,
         state.success = true,
-        state.response = action?.payload;
+        state.response = action?.payload?.response; //getresposne
+        state.remainingCalls=action?.payload?.remainingCalls;  //get remainning slice
     });
   },
 });

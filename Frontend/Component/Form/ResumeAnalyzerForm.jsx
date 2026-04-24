@@ -18,6 +18,9 @@ const ResumeAnalyzer = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
+  //remainingCalls is a number of  a remining api calls it is used here to hide the button
+  let { remainingCalls } = useSelector((state) => state.AnalyzeSlice);
+
   const fileInputRef = useRef(null); // 2. Create the reference for a update the file
 
   let dispatch = useDispatch();
@@ -57,10 +60,11 @@ const ResumeAnalyzer = () => {
 
   // Check if all fields are valid for the button
   const isFormValid =
-    formState.Role.trim() !== "" &&
-    formState.File !== null &&
-    formState.Experience &&
-    (Role === "User" || UserRole === "User");
+    (formState.Role.trim() !== "" &&
+      formState.File !== null &&
+      formState.Experience &&
+      (Role === "User" || UserRole === "User")) ||
+    remainingCalls === 0; //remainingCalls is a number of  aremining api calls it is used here to hide the button
 
   // Handle input fildes
   const HandleFields = (e) => {
@@ -85,7 +89,7 @@ const ResumeAnalyzer = () => {
   return (
     <div className="min-h-screen xl:min-h-auto bg-[#f8fafc] p-4 md:p-10 font-sans">
       <section className="max-w-7xl mx-auto text-center mb-10">
-        <h1 className="text-4xl font-extrabold text-slate-900 xl:my-5 2xl:my-40 xl:text-5xl">
+        <h1 className="text-4xl font-extrabold text-slate-900 my-10 2xl:my-40 xl:text-5xl">
           AI Resume{" "}
           <span className="text-indigo-600 font-black ">Analyzer</span>
         </h1>

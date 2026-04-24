@@ -18,7 +18,7 @@ let DailyUsageMiddleWare = async (req, res, next) => {
   if (record.ApiCallCount === 0) {
     return res.status(429).json({
       message: "Daily limit reached (10 requests/day)",
-      remaining: 0,
+      remainingCalls: 0,
     });
   }
 

@@ -6,13 +6,19 @@ let initialState={
     success:false,
     error:false,
     response:null,
+    remainingCalls:null
 }
 
 let ResumeSlice=createSlice({
     name:"ResumeSlice",
     initialState,
     reducers:{
-        ResetResume:()=>initialState
+        ResetResume:(state)=>{
+                state.error=false;
+                state.loading=false;
+                state.response=null;
+                state.success=false
+        }
     },
     extraReducers:(builder)=>{
         builder.addCase(ResumeThunck.rejected,(state)=>{
@@ -31,7 +37,8 @@ let ResumeSlice=createSlice({
             state.loading=false,
             state.error=false,
             state.success=true,
-            state.response=action?.payload
+            state.response=action?.payload?.response,  //get reponse
+            state.remainingCalls=action?.payload?.remainingCalls //get remaiing calls
         })
     }
 })

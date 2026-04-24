@@ -11,7 +11,11 @@ let InterviewController = async (req, res) => {
 
     let response = await InterviewService(Input, SessionID);
     console.log(response);
-    res.status(200).json({ message: "input is present ", response });
+    res.status(200).json({
+      message: "input is present ",
+      response,
+      remainingCalls: req.remainingCalls, // remaining calls is come from a middleware which si used to check the daily usage
+    });
   } catch (err) {
     console.log("internal error", err);
   }

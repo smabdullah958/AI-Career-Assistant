@@ -27,7 +27,11 @@ let AnalyzerController = async (req, res) => {
 
     console.log(result);
 
-    return res.status(200).json({ message: "all field are present", result });
+    return res.status(200).json({
+      message: "all field are present",
+      result,
+      remainingCalls: req.remainingCalls, // remaining calls is come from a middleware which si used to check the daily usage
+    });
   } catch (err) {
     console.log("internal error", err);
     res.status(500).json({ message: "interal errro" });

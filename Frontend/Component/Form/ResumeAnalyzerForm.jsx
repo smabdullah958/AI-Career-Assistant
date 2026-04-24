@@ -60,11 +60,11 @@ const ResumeAnalyzer = () => {
 
   // Check if all fields are valid for the button
   const isFormValid =
-    (formState.Role.trim() !== "" &&
-      formState.File !== null &&
-      formState.Experience &&
-      (Role === "User" || UserRole === "User")) ||
-    remainingCalls === 0; //remainingCalls is a number of  aremining api calls it is used here to hide the button
+    formState.Role.trim() !== "" &&
+    formState.File !== null &&
+    formState.Experience &&
+    (Role === "User" || UserRole === "User") &&
+    remainingCalls !== 0; //remainingCalls is a number of  aremining api calls it is used here to hide the button
 
   // Handle input fildes
   const HandleFields = (e) => {

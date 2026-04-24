@@ -51,7 +51,11 @@ const page = () => {
           <RemainingAPICalls remaining={remainingCalls} />
         )}
       <ResumeAnalyzerFrom />
-      {success ? <AnalyzerResult /> : loading && <AnalyzerSkeleton />}
+      {success ? (
+        <AnalyzerResult />
+      ) : (
+        loading && remainingCalls !== 0 && <AnalyzerSkeleton />
+      )}
     </div>
   );
 };

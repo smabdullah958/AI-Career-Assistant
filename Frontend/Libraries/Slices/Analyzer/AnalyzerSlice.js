@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AnalyzerThunck from "@/Libraries/Thuncks/Analyzer/AnalyzerThunck";
 
-const RemainingCalls =
+const RemainingCalls = //stoer teh remaining calls ina  local storage
   typeof window !== "undefined" &&
   localStorage.getItem("AICredits") &&
   Number(localStorage.getItem("AICredits"));
@@ -24,6 +24,7 @@ let AnalyzeSlice = createSlice({
       state.loading = false;
       state.response = null;
       state.success = false;
+      state.errorMessage = null;
     },
   },
   extraReducers: (builder) => {
@@ -45,8 +46,8 @@ let AnalyzeSlice = createSlice({
       state.error = true;
       state.success = false;
       state.loading = false;
-      state.errorMessage = action?.payload?.message; //get errror message
-      state.remainingCalls = action?.payload?.remainingCalls; //get remaining calls
+      state.errorMessage = action?.payload?.message; //get errror message from backend
+      state.remainingCalls = action?.payload?.remainingCalls; //get remaining calls from backend 
     });
   },
 });

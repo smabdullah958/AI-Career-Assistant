@@ -5,10 +5,11 @@ import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
 import InterviewSkeleton from "@/Component/InterviewPageSkeleton";
 import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice";
 
+import RemainingAPICalls from "@/Component/RemainingAPICalls";
+
 const InterviewPage = () => {
-  let { loading, response, success } = useSelector(
-    (state) => state.InterviewSlice,
-  );
+  let { loading, response, success, errorMessage, remainingCalls } =
+    useSelector((state) => state.InterviewSlice);
 
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);
@@ -16,7 +17,7 @@ const InterviewPage = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = Role === "User" || UserRole === "User";
+  let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
 
   const dispatch = useDispatch();
 
@@ -61,6 +62,12 @@ const InterviewPage = () => {
     dispatch(ResetInterviewState());
   }, []);
 
+  useEffect(() => {
+    if (errorMessage) {
+      alert(errorMessage);
+    }
+  }, [errorMessage]);
+
   //show the chatbot loader when move to a intervew section
   const [mounted, setMounted] = useState(false);
 
@@ -72,6 +79,11 @@ const InterviewPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
+      {(Role === "User" || UserRole === "User") &&
+        (success || errorMessage) && (
+          <RemainingAPICalls remaining={remainingCalls} />
+        )}
+
       <section className="max-w-5xl mx-auto w-full px-4 pt-10 pb-6 text-center">
         <h1 className="text-4xl md:text-5xl xl:my-5 2xl:mt-32 2xl:mb-10 xl:text-5xl font-extrabold text-slate-900 tracking-tight">
           Master Your{" "}

@@ -8,10 +8,16 @@ import ResumeSkeleton from "@/Component/ResumeSkeleton";
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+//remaining api calls per day
+import RemainingAPICalls from "@/Component/RemainingAPICalls";
+
 const page = () => {
   const previewRef = useRef(null); // Create the reference
   let dispatch = useDispatch();
-  let { success, loading } = useSelector((state) => state.ResumeSlice);
+  let { success, loading, errorMessage, remainingCalls } = useSelector(
+    (state) => state.ResumeSlice,
+  );
 
   //to preview the data in resume preview section
   const [previewData, setPreviewData] = useState({});
@@ -33,6 +39,18 @@ const page = () => {
     }
   }, [success, loading]);
 
+  //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  useEffect(() => {
+    if (errorMessage) {
+      alert(errorMessage);
+    }
+  }, [errorMessage]);
+
   //show the resume sekeleton when move to a remuse section
   const [mounted, setMounted] = useState(false);
 
@@ -46,11 +64,16 @@ const page = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
+      {(Role === "User" || UserRole === "User") &&
+        (success || errorMessage) && (
+          <RemainingAPICalls remaining={remainingCalls} />
+        )}
+
       <div className=" flex justify-between">
-        <h1 className="text-xl sm:text-3xl  xl:text-4xl font-bold mb-6 text-slate-800">
+        <h1 className="text-xl sm:text-3xl  xl:text-4xl font-bold my-6 lg:my-10 text-slate-800">
           AI Resume Builder
         </h1>
-        <h2 className="hidden lg:block">
+        <h2 className="hidden lg:block lg:my-10">
           <DownloadPDF />
         </h2>
       </div>

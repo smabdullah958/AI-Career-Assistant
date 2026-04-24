@@ -196,7 +196,9 @@ const ResumeForm = ({ onDataChange }) => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = Role === "User" || UserRole === "User";
+  let { remainingCalls } = useSelector((state) => state.ResumeSlice);
+
+  let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
 
   return (
     <div>

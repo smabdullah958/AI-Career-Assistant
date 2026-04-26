@@ -12,7 +12,10 @@ import { ResetLogOutRole } from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo 
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
 
-import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice"; //to reset the interview all the state
+import {
+  ResetInterviewState,
+  RetRemainingCalls,
+} from "@/Libraries/Slices/Interview/InterviewSlice"; //to reset the interview all the state
 
 import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice"; //to reset all the state of a resume analyzer
 
@@ -29,6 +32,7 @@ const LogoutButton = () => {
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
 
+      dispatch(RetRemainingCalls()); //to reset the remaining calls so that no one can access each other remining calls
       dispatch(ClearSignUpRole());
       dispatch(ResetAnalyzer()); //reset the analyzer all the state
       dispatch(ResetInterviewState()); //reset all the state ofa interview

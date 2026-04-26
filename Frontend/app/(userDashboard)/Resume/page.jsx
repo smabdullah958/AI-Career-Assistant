@@ -15,8 +15,13 @@ import RemainingAPICalls from "@/Component/RemainingAPICalls";
 const page = () => {
   const previewRef = useRef(null); // Create the reference
   let dispatch = useDispatch();
-  let { success, loading, errorMessage, remainingCalls } = useSelector(
+  let { success, loading, errorMessage } = useSelector(
     (state) => state.ResumeSlice,
+  );
+
+  // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
+  let { remainingCalls, ShowPopUp } = useSelector(
+    (state) => state.InterviewSlice,
   );
 
   //to preview the data in resume preview section
@@ -65,7 +70,11 @@ const page = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       {(Role === "User" || UserRole === "User") &&
-        (success || errorMessage) && (
+        (success ||
+          errorMessage ||
+          remainingCalls === 0 ||
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother 
+          ShowPopUp === true) && (
           <RemainingAPICalls remaining={remainingCalls} />
         )}
 

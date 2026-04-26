@@ -1,16 +1,24 @@
+import { setRemainingCalls } from "@/Libraries/Slices/Interview/InterviewSlice"; //fucntion to get  remining calls
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 let ResumeThunck = createAsyncThunk(
   "ResumeThunck",
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       let result = await axios.post(`${url}/Resume/createResume`, data, {
         withCredentials: true,
       });
+      // get remainingCalls from a backend to display the remaining calls
+      dispatch(setRemainingCalls(result.data?.remainingCalls));
+
       return result.data;
     } catch (err) {
-      console.log("internal error", err);
+      // get remainingCalls from a backend to display the remaining calls
+      console.log(err.data);
+      dispatch(setRemainingCalls(err?.response?.data?.remainingCalls));
+
       return rejectWithValue(err?.response?.data);
     }
   },

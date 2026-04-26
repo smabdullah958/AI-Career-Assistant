@@ -14,6 +14,7 @@ let initialState = {
   success: false,
   remainingCalls:RemainingCalls,
   errorMessage: null,
+  ShowPopUp:false
 };
 
 let InterviewSlice = createSlice({
@@ -26,6 +27,16 @@ let InterviewSlice = createSlice({
         state.response=null;
         state.success=false
         state.errorMessage=null
+    },
+//get reamaining calls from a backend
+    setRemainingCalls:(state,action)=>{
+      state.remainingCalls=action?.payload
+          localStorage.setItem("AICredits", action.payload); //store in a local storage when a page is reload or load
+      state.ShowPopUp=true
+    },
+    RetRemainingCalls:(state)=>{
+      localStorage.removeItem("AICredits")
+      state.ShowPopUp=false
     }
   },
   extraReducers: (builder) => {
@@ -36,7 +47,6 @@ let InterviewSlice = createSlice({
         state.success = false,
         state.response = null;
         state.errorMessage = action?.payload?.message; //get errror message from backend
-         state.remainingCalls = action?.payload?.remainingCalls; //get remaining calls from backend 
     });
     builder.addCase(InterviewThunck.pending, (state) => {
       state.loading = true,
@@ -49,13 +59,10 @@ let InterviewSlice = createSlice({
         state.error = false,
         state.success = true,
         state.response = action?.payload?.response; //getresposne
-          state.remainingCalls = action?.payload?.remainingCalls; //get remaining calls
-
-          localStorage.setItem("AICredits", action.payload?.remainingCalls); //store in a local storage when a page is reload or load
     });
   },
 });
 
 export default InterviewSlice.reducer;
 
-export let {ResetInterviewState}=InterviewSlice.actions
+export let {ResetInterviewState,setRemainingCalls,RetRemainingCalls}=InterviewSlice.actions

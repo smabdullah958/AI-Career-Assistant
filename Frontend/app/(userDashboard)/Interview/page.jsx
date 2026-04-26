@@ -8,7 +8,7 @@ import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice
 import RemainingAPICalls from "@/Component/RemainingAPICalls";
 
 const InterviewPage = () => {
-  let { loading, response, success, errorMessage, remainingCalls } =
+  let { loading, response, success, errorMessage, remainingCalls, ShowPopUp } =
     useSelector((state) => state.InterviewSlice);
 
   //signup role
@@ -65,6 +65,7 @@ const InterviewPage = () => {
   useEffect(() => {
     if (errorMessage) {
       alert(errorMessage);
+      dispatch(ResetInterviewState());
     }
   }, [errorMessage]);
 
@@ -80,7 +81,11 @@ const InterviewPage = () => {
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
       {(Role === "User" || UserRole === "User") &&
-        (success || errorMessage) && (
+        (success ||
+          errorMessage ||
+          remainingCalls === 0 ||
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother
+          ShowPopUp === true) && (
           <RemainingAPICalls remaining={remainingCalls} />
         )}
 

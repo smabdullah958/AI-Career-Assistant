@@ -196,7 +196,9 @@ const ResumeForm = ({ onDataChange }) => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let { remainingCalls } = useSelector((state) => state.ResumeSlice);
+  // get remainingCalls from a interivew slice and also here it is used to hide the button
+
+  let { remainingCalls } = useSelector((state) => state.InterviewSlice);
 
   let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
 
@@ -746,7 +748,7 @@ const ResumeForm = ({ onDataChange }) => {
           disabled={!IsRole}
           onClick={handleSubmit(FormFunction)}
           className={`bg-indigo-500 text-white py-2 px-4 rounded-lg 
-            ${IsRole ? " hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-30"}`}
+            ${IsRole ? " hover:bg-indigo- 600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-30 hover:cursor-not-allowed"}`}
         >
           Generate Resume
         </button>

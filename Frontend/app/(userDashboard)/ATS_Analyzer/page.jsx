@@ -12,8 +12,13 @@ import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
 import RemainingAPICalls from "@/Component/RemainingAPICalls";
 const page = () => {
   let dispatch = useDispatch();
-  let { success, loading, remainingCalls, errorMessage } = useSelector(
+  let { success, loading, errorMessage } = useSelector(
     (state) => state.AnalyzeSlice,
+  );
+
+  // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
+  let { remainingCalls, ShowPopUp } = useSelector(
+    (state) => state.InterviewSlice,
   );
 
   //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
@@ -47,7 +52,11 @@ const page = () => {
   return (
     <div className="xl:min-h-screen 2xl:overflow-y-auto">
       {(Role === "User" || UserRole === "User") &&
-        (success || errorMessage) && (
+        (success ||
+          errorMessage ||
+          remainingCalls === 0 ||
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother
+          ShowPopUp === true) && (
           <RemainingAPICalls remaining={remainingCalls} />
         )}
       <ResumeAnalyzerFrom />

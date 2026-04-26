@@ -19,7 +19,7 @@ const ResumeAnalyzer = () => {
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
   //remainingCalls is a number of  a remining api calls it is used here to hide the button
-  let { remainingCalls } = useSelector((state) => state.AnalyzeSlice);
+  let { remainingCalls } = useSelector((state) => state.InterviewSlice);
 
   const fileInputRef = useRef(null); // 2. Create the reference for a update the file
 

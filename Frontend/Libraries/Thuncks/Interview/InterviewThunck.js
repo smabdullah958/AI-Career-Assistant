@@ -1,18 +1,25 @@
+import { setRemainingCalls } from "@/Libraries/Slices/Interview/InterviewSlice";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 
 let InterviewThunck = createAsyncThunk(
   "InterviewThunck",
-  async (Input, { rejectWithValue }) => {
+  async (Input, { rejectWithValue, dispatch }) => {
     try {
       let result = await axios.post(`${url}/AiInterviews/Interview`, Input, {
         withCredentials: true,
       });
+      // get remainingCalls from a backend to display the remaining calls
+      dispatch(setRemainingCalls(result.data?.remainingCalls));
       console.log(result.data.response);
       return result?.data;
     } catch (err) {
-      console.log("eror is occur data is not being fetch", err);
+      // get remainingCalls from a backend to display the remaining calls
+      console.log(err.data);
+      dispatch(setRemainingCalls(err.response.data?.remainingCalls));
+
       return rejectWithValue(err?.response?.data);
     }
   },

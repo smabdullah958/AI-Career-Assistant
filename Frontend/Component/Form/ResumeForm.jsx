@@ -185,7 +185,7 @@ const ResumeForm = ({ onDataChange }) => {
   };
 
   let FormFunction = async (data) => {
-    let result = await dispatch(ResumeThunck(data));
+    await dispatch(ResumeThunck(data));
   };
 
   //signup role
@@ -200,560 +200,603 @@ const ResumeForm = ({ onDataChange }) => {
 
   let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
 
+  //when user press enter go to a next field
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      const form = e.target.form;
+      const index = Array.prototype.indexOf.call(form, e.target);
+
+      if (form.elements[index + 1]) {
+        form.elements[index + 1].focus();
+      }
+    }
+  };
+
   return (
     <div>
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 z-100 shadow-lg">
-        <h1 className="text-xl text-black font-bold">Personal Detail</h1>
+      <form>
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 z-100 shadow-lg">
+          <h1 className="text-xl text-black font-bold">Personal Detail</h1>
 
-        <section className="grid grid-cols-2  gap-4 sm:gap-6 justify-between my-5 sm:mt-7 md:mt-7 2xl:mt-10 sm:mb-3 bg-white p-4 pt-8 rounded-xl shadow-sm">
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">Full Name</label>
-            {errors.name && (
-              <p className="text-red-500 ">{errors.name.message}</p>
+          <section className="grid grid-cols-2  gap-4 sm:gap-6 justify-between my-5 sm:mt-7 md:mt-7 2xl:mt-10 sm:mb-3 bg-white p-4 pt-8 rounded-xl shadow-sm">
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">Full Name</label>
+              {errors.name && (
+                <p className="text-red-500 ">{errors.name.message}</p>
+              )}
+              <input
+                onKeyDown={handleEnter}
+                {...register("name")}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="name"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">Email</label>
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+              <input
+                {...register("email")}
+                onKeyDown={handleEnter}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="user@gmail.com"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">Phone</label>
+              {errors.phone && (
+                <p className="text-red-500 ">{errors.phone.message}</p>
+              )}
+              <input
+                onKeyDown={handleEnter}
+                {...register("phone")}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="03XXXXXXXX"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">Role</label>
+              {errors.Role && (
+                <p className="text-red-500">{errors.Role.message}</p>
+              )}
+              <input
+                onKeyDown={handleEnter}
+                {...register("Role")}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Manager"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">Portfolio</label>
+              {errors.portfolio && (
+                <p className="text-red-500">{errors.portfolio.message}</p>
+              )}
+              <input
+                onKeyDown={handleEnter}
+                {...register("portfolio")}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="https://www.google.com"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 ">LinkedIn</label>
+              {errors.Linkedin && (
+                <p className="text-red-500 ">{errors.Linkedin.message}</p>
+              )}
+              <input
+                onKeyDown={handleEnter}
+                {...register("Linkedin")}
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="https://www.linkedin.com"
+              />
+            </div>
+          </section>
+        </div>
+
+        {/* about or a summary or a description */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl  p-4 mb-4 z-100 shadow-lg ">
+          <h1 className="text-xl text-black font-bold mb-3 sm:mb-7 md:mb-7 2xl:mb-10 text-sm">
+            Professional Detail
+          </h1>
+          <section className="grid gap-4 items-start mb-4 bg-white p-4 pt-8 rounded-xl shadow-sm">
+            {errors.Summary && (
+              <p className="text-red-500">{errors.Summary.message}</p>
             )}
-            <input
-              {...register("name")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="name"
+
+            <textarea
+              onKeyDown={handleEnter}
+              {...register("Summary")}
+              placeholder="Write a Summary about yourself..."
+              rows={5}
+              className="w-full border-black border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none shadow-sm"
             />
+            <p className="text-gray-400 text-xs mt-1">
+              {summaryCharacter?.length || 0}/200 characters
+            </p>
+          </section>
+        </div>
+
+        {/* skills */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg ">
+          <h1 className="text-xl text-black font-bold mb-6">Skills</h1>
+
+          <div className="flex flex-col gap-4  mb-4 bg-white  p-4 pt-8 rounded-xl shadow-sm max-h-96  overflow-y-auto">
+            {skillFields.map((field, index) => (
+              <div key={field.id} className="flex items-start gap-3">
+                {/* Input + Error */}
+                <div className="flex flex-col w-full">
+                  {errors.Skills?.[index]?.value && (
+                    <p className="text-red-500  mb-1">
+                      {errors.Skills[index].value?.message}
+                    </p>
+                  )}
+
+                  <input
+                    onKeyDown={handleEnter}
+                    {...register(`Skills.${index}.value`)}
+                    placeholder={`Skill ${index + 1}`}
+                    className="border border-gray-400 w-full rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                </div>
+
+                {/* Remove Button */}
+                {skillFields.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeSkill(index)}
+                    className="bg-red-400 text-white px-3 py-2 rounded-lg hover:bg-red-500 transition-all "
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">Email</label>
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
-            <input
-              {...register("email")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="user@gmail.com"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">Phone</label>
-            {errors.phone && (
-              <p className="text-red-500 ">{errors.phone.message}</p>
-            )}
-            <input
-              {...register("phone")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="03XXXXXXXX"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">Role</label>
-            {errors.Role && (
-              <p className="text-red-500">{errors.Role.message}</p>
-            )}
-            <input
-              {...register("Role")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="Manager"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">Portfolio</label>
-            {errors.portfolio && (
-              <p className="text-red-500">{errors.portfolio.message}</p>
-            )}
-            <input
-              {...register("portfolio")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="https://www.google.com"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-gray-500 ">LinkedIn</label>
-            {errors.Linkedin && (
-              <p className="text-red-500 ">{errors.Linkedin.message}</p>
-            )}
-            <input
-              {...register("Linkedin")}
-              className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="https://www.linkedin.com"
-            />
-          </div>
-        </section>
-      </div>
-
-      {/* about or a summary or a description */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl  p-4 mb-4 z-100 shadow-lg ">
-        <h1 className="text-xl text-black font-bold mb-3 sm:mb-7 md:mb-7 2xl:mb-10 text-sm">
-          Professional Detail
-        </h1>
-        <section className="grid gap-4 items-start mb-4 bg-white p-4 pt-8 rounded-xl shadow-sm">
-          {errors.Summary && (
-            <p className="text-red-500">{errors.Summary.message}</p>
+          {skillFields.length < 20 && (
+            <button
+              type="button"
+              onClick={handleAddSkill}
+              className="mt-4 bg-indigo-500 text-white px-5 py-2 rounded-lg hover:bg-indigo-600 transition-all"
+            >
+              + Add Skill
+            </button>
           )}
 
-          <textarea
-            {...register("Summary")}
-            placeholder="Write a Summary about yourself..."
-            rows={5}
-            className="w-full border-black border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none shadow-sm"
-          />
-          <p className="text-gray-400 text-xs mt-1">
-            {summaryCharacter?.length || 0}/200 characters
+          <p className="text-gray-400 text-xs mt-2">
+            {skillFields.length}/20 skills
           </p>
-        </section>
-      </div>
+        </div>
 
-      {/* skills */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg ">
-        <h1 className="text-xl text-black font-bold mb-6">Skills</h1>
+        {/* project */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
+          <h1 className="text-xl text-black font-bold mb-3">Projects</h1>
 
-        <div className="flex flex-col gap-4  mb-4 bg-white  p-4 pt-8 rounded-xl shadow-sm max-h-96  overflow-y-auto">
-          {skillFields.map((field, index) => (
-            <div key={field.id} className="flex items-start gap-3">
-              {/* Input + Error */}
-              <div className="flex flex-col w-full">
-                {errors.Skills?.[index]?.value && (
-                  <p className="text-red-500  mb-1">
-                    {errors.Skills[index].value?.message}
+          {projectFields.map((field, index) => (
+            <section
+              key={field.id}
+              className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
+            >
+              {/* Left side: Title, Link, GitHub */}
+              <div className="flex flex-col ">
+                <h3 className="my-2">Title </h3>
+                {errors.Projects?.[index]?.title && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Projects[index].title?.message}
                   </p>
                 )}
 
                 <input
-                  {...register(`Skills.${index}.value`)}
-                  placeholder={`Skill ${index + 1}`}
-                  className="border border-gray-400 w-full rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  onKeyDown={handleEnter}
+                  {...register(`Projects.${index}.title`)}
+                  placeholder="Project Title"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <h3 className="my-2 ">Project Link </h3>
+                {errors.Projects?.[index]?.link && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Projects[index].link?.message}
+                  </p>
+                )}
+
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Projects.${index}.link`)}
+                  placeholder="Project Link"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <h3 className="my-2 ">GitHub Link </h3>
+
+                {errors.Projects?.[index]?.Github && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Projects[index].Github?.message}
+                  </p>
+                )}
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Projects.${index}.Github`)}
+                  placeholder="GitHub Link"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                {/* Remove button */}
+                {projectFields.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeProject(index)}
+                    className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
+                  >
+                    Remove Project
+                  </button>
+                )}
+              </div>
+              <section className="flex flex-col items-center justify-center content-center h-full ">
+                {/* Right side: Description */}
+
+                <h3 className="my-2 ">Description </h3>
+
+                {errors.Projects?.[index]?.description && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Projects[index].description?.message}
+                  </p>
+                )}
+                <textarea
+                  rows={6}
+                  {...register(`Projects.${index}.description`)}
+                  placeholder="Project Description"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+                />
+              </section>
+            </section>
+          ))}
+
+          {/* Add Project button */}
+          {projectFields.length < 3 && (
+            <button
+              type="button"
+              onClick={handleAddProject}
+              className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
+            >
+              + Add Project
+            </button>
+          )}
+        </div>
+
+        {/* //for Experience */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
+          <h1 className="text-xl text-black font-bold mb-3">Experience</h1>
+
+          {experienceFields.map((field, index) => (
+            <section
+              key={field.id}
+              className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
+            >
+              <div className="flex flex-col">
+                <h3 className="my-2 ">Company Name </h3>
+
+                {errors.Experience?.[index]?.CompanyName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Experience[index].CompanyName?.message}
+                  </p>
+                )}
+
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Experience.${index}.CompanyName`)}
+                  placeholder="Company name"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <h3 className="my-2 ">Role </h3>
+                {errors.Experience?.[index]?.Role && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Experience[index].Role?.message}
+                  </p>
+                )}
+
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Experience.${index}.Role`)}
+                  placeholder="Role"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <h3 className="my-2 ">Start Date </h3>
+
+                {errors.Experience?.[index]?.StartDate && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Experience[index].StartDate?.message}
+                  </p>
+                )}
+                <input
+                  onKeyDown={handleEnter}
+                  type="date"
+                  //state date must be smaller thana ending date
+                  max={
+                    watch(`Experience.${index}.EndDate`) ||
+                    new Date().toISOString().split("T")[0]
+                  }
+                  {...register(`Experience.${index}.StartDate`)}
+                  placeholder="Start Date"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                <h3 className="my-2 ">End Date </h3>
+                {errors.Experience?.[index]?.EndDate && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Experience[index].EndDate?.message}
+                  </p>
+                )}
+                <input
+                  onKeyDown={handleEnter}
+                  type="date"
+                  //ending date must be smaller than afuter date
+                  max={new Date().toISOString().split("T")[0]}
+                  {...register(`Experience.${index}.EndDate`)}
+                  placeholder="End Date"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+
+                {/* Remove button */}
+                {experienceFields.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeExperience(index)}
+                    className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
+                  >
+                    Remove Experience
+                  </button>
+                )}
+              </div>
+              <section className="flex flex-col items-center justify-center content-center h-full ">
+                {/* Right side: Description */}
+                <h3 className="my-2 ">Description </h3>
+
+                {errors.Experience?.[index]?.Description && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Experience[index].Description?.message}
+                  </p>
+                )}
+                <textarea
+                  rows={8}
+                  {...register(`Experience.${index}.Description`)}
+                  placeholder="Experience Description"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+                />
+              </section>
+            </section>
+          ))}
+
+          {/* Add experience button */}
+          {experienceFields.length < 3 && (
+            <button
+              type="button"
+              onClick={handleAddExperience}
+              className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
+            >
+              + Add Experience
+            </button>
+          )}
+        </div>
+
+        {/* //for Education */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
+          <h1 className="text-xl text-black font-bold mb-3">Education</h1>
+
+          {educationFields.map((field, index) => (
+            <section
+              key={field.id}
+              className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
+            >
+              <div className="flex flex-col">
+                <h3 className="my-2 ">Institution Name </h3>
+
+                {errors.Education?.[index]?.nameOfInstitute && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Education[index].nameOfInstitute?.message}
+                  </p>
+                )}
+
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Education.${index}.nameOfInstitute`)}
+                  placeholder="Institution name"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
               </div>
 
-              {/* Remove Button */}
-              {skillFields.length > 1 && (
+              <div className="flex flex-col">
+                <h3 className="my-2 ">Degree</h3>
+                {errors.Education?.[index]?.degree && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Education[index].degree?.message}
+                  </p>
+                )}
+
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Education.${index}.degree`)}
+                  placeholder="Degree i.e FSC"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="my-2 ">field Of Study </h3>
+
+                {errors.Education?.[index]?.fieldOfStudy && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Education[index].fieldOfStudy?.message}
+                  </p>
+                )}
+                <input
+                  onKeyDown={handleEnter}
+                  {...register(`Education.${index}.fieldOfStudy`)}
+                  placeholder="fieldOfStudy i.e CS"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="my-2 "> Graduation Year</h3>
+                {errors.Education?.[index]?.graduationYear && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Education[index].graduationYear?.message}
+                  </p>
+                )}
+                <input
+                  onKeyDown={handleEnter}
+                  type="date"
+                  {...register(`Education.${index}.graduationYear`)}
+                  placeholder="Graduation Year"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              {/* Remove button */}
+              {educationFields.length > 1 && (
                 <button
                   type="button"
-                  onClick={() => removeSkill(index)}
-                  className="bg-red-400 text-white px-3 py-2 rounded-lg hover:bg-red-500 transition-all "
+                  onClick={() => removeEducation(index)}
+                  className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
                 >
-                  ✕
+                  Remove Education
                 </button>
+              )}
+            </section>
+          ))}
+
+          {/* Add education button */}
+          {educationFields.length < 5 && (
+            <button
+              type="button"
+              onClick={handleAddEducation}
+              className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
+            >
+              + Add Education
+            </button>
+          )}
+        </div>
+
+        {/* for certification */}
+        <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg">
+          <h1 className="text-xl text-black font-bold mb-6">Certifications</h1>
+
+          {certificationsFields.map((field, index) => (
+            <div
+              key={field.id}
+              className="border border-gray-300 rounded-xl p-4 mb-4 bg-white shadow-sm flex flex-col gap-4"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Institution */}
+                <div className="flex flex-col">
+                  <label className=" text-gray-600 my-2">
+                    Institution Name
+                  </label>
+
+                  {errors.Certifications?.[index]?.nameOfInstitute && (
+                    <p className="text-red-500 text-sm ">
+                      {errors.Certifications[index].nameOfInstitute?.message}
+                    </p>
+                  )}
+
+                  <input
+                    onKeyDown={handleEnter}
+                    {...register(`Certifications.${index}.nameOfInstitute`)}
+                    placeholder="Institution name"
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                </div>
+
+                {/* Certificate Name */}
+                <div className="flex flex-col">
+                  <label className=" text-gray-600 my-2">
+                    Certificate Name
+                  </label>
+
+                  {errors.Certifications?.[index]?.CertifcateName && (
+                    <p className="text-red-500 text-sm ">
+                      {errors.Certifications[index].CertifcateName?.message}
+                    </p>
+                  )}
+
+                  <input
+                    onKeyDown={handleEnter}
+                    {...register(`Certifications.${index}.CertifcateName`)}
+                    placeholder="Certificate name"
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                </div>
+
+                {/* Issue Date */}
+                <div className="flex flex-col">
+                  <label className=" text-gray-600 my-2">Issue Date</label>
+
+                  {errors.Certifications?.[index]?.IssueDate && (
+                    <p className="text-red-500 text-sm">
+                      {errors.Certifications[index].IssueDate?.message}
+                    </p>
+                  )}
+
+                  <input
+                    type="date"
+                    {...register(`Certifications.${index}.IssueDate`)}
+                    //issue date must be smaller than afuture date
+                    max={new Date().toISOString().split("T")[0]}
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  />
+                </div>
+              </div>
+
+              {/* Remove Button*/}
+              {certificationsFields.length > 1 && (
+                <div className="flex justify-start">
+                  <button
+                    type="button"
+                    onClick={() => removeCertifications(index)}
+                    className="bg-red-400 text-white px-4 py-1.5 rounded-lg  hover:bg-red-500 transition"
+                  >
+                    Remove Certification
+                  </button>
+                </div>
               )}
             </div>
           ))}
+
+          {/* Add Button */}
+          {certificationsFields.length < 3 && (
+            <button
+              type="button"
+              onClick={handleAddCertifications}
+              className="mt-3 bg-indigo-500 text-white px-5 py-2 rounded-lg hover:bg-indigo-600 transition"
+            >
+              + Add Certificate
+            </button>
+          )}
         </div>
-
-        {skillFields.length < 20 && (
+        <div className="flex justify-between gap-3">
           <button
             type="button"
-            onClick={handleAddSkill}
-            className="mt-4 bg-indigo-500 text-white px-5 py-2 rounded-lg hover:bg-indigo-600 transition-all"
-          >
-            + Add Skill
-          </button>
-        )}
-
-        <p className="text-gray-400 text-xs mt-2">
-          {skillFields.length}/20 skills
-        </p>
-      </div>
-
-      {/* project */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
-        <h1 className="text-xl text-black font-bold mb-3">Projects</h1>
-
-        {projectFields.map((field, index) => (
-          <section
-            key={field.id}
-            className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
-          >
-            {/* Left side: Title, Link, GitHub */}
-            <div className="flex flex-col ">
-              <h3 className="my-2">Title </h3>
-              {errors.Projects?.[index]?.title && (
-                <p className="text-red-500 text-sm">
-                  {errors.Projects[index].title?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Projects.${index}.title`)}
-                placeholder="Project Title"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              <h3 className="my-2 ">Project Link </h3>
-              {errors.Projects?.[index]?.link && (
-                <p className="text-red-500 text-sm">
-                  {errors.Projects[index].link?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Projects.${index}.link`)}
-                placeholder="Project Link"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              <h3 className="my-2 ">GitHub Link </h3>
-
-              {errors.Projects?.[index]?.Github && (
-                <p className="text-red-500 text-sm">
-                  {errors.Projects[index].Github?.message}
-                </p>
-              )}
-              <input
-                {...register(`Projects.${index}.Github`)}
-                placeholder="GitHub Link"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              {/* Remove button */}
-              {projectFields.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeProject(index)}
-                  className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
-                >
-                  Remove Project
-                </button>
-              )}
-            </div>
-            <section className="flex flex-col items-center justify-center content-center h-full ">
-              {/* Right side: Description */}
-
-              <h3 className="my-2 ">Description </h3>
-
-              {errors.Projects?.[index]?.description && (
-                <p className="text-red-500 text-sm">
-                  {errors.Projects[index].description?.message}
-                </p>
-              )}
-              <textarea
-                rows={6}
-                {...register(`Projects.${index}.description`)}
-                placeholder="Project Description"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
-              />
-            </section>
-          </section>
-        ))}
-
-        {/* Add Project button */}
-        {projectFields.length < 3 && (
-          <button
-            type="button"
-            onClick={handleAddProject}
-            className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
-          >
-            + Add Project
-          </button>
-        )}
-      </div>
-
-      {/* //for Experience */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
-        <h1 className="text-xl text-black font-bold mb-3">Experience</h1>
-
-        {experienceFields.map((field, index) => (
-          <section
-            key={field.id}
-            className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
-          >
-            <div className="flex flex-col">
-              <h3 className="my-2 ">Company Name </h3>
-
-              {errors.Experience?.[index]?.CompanyName && (
-                <p className="text-red-500 text-sm">
-                  {errors.Experience[index].CompanyName?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Experience.${index}.CompanyName`)}
-                placeholder="Company name"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              <h3 className="my-2 ">Role </h3>
-              {errors.Experience?.[index]?.Role && (
-                <p className="text-red-500 text-sm">
-                  {errors.Experience[index].Role?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Experience.${index}.Role`)}
-                placeholder="Role"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              <h3 className="my-2 ">Start Date </h3>
-
-              {errors.Experience?.[index]?.StartDate && (
-                <p className="text-red-500 text-sm">
-                  {errors.Experience[index].StartDate?.message}
-                </p>
-              )}
-              <input
-                type="date"
-                //state date must be smaller thana ending date
-                max={
-                  watch(`Experience.${index}.EndDate`) ||
-                  new Date().toISOString().split("T")[0]
-                }
-                {...register(`Experience.${index}.StartDate`)}
-                placeholder="Start Date"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              <h3 className="my-2 ">End Date </h3>
-              {errors.Experience?.[index]?.EndDate && (
-                <p className="text-red-500 text-sm">
-                  {errors.Experience[index].EndDate?.message}
-                </p>
-              )}
-              <input
-                type="date"
-                //ending date must be smaller than afuter date
-                max={new Date().toISOString().split("T")[0]}
-                {...register(`Experience.${index}.EndDate`)}
-                placeholder="End Date"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-
-              {/* Remove button */}
-              {experienceFields.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeExperience(index)}
-                  className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
-                >
-                  Remove Experience
-                </button>
-              )}
-            </div>
-            <section className="flex flex-col items-center justify-center content-center h-full ">
-              {/* Right side: Description */}
-              <h3 className="my-2 ">Description </h3>
-
-              {errors.Experience?.[index]?.Description && (
-                <p className="text-red-500 text-sm">
-                  {errors.Experience[index].Description?.message}
-                </p>
-              )}
-              <textarea
-                rows={8}
-                {...register(`Experience.${index}.Description`)}
-                placeholder="Experience Description"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
-              />
-            </section>
-          </section>
-        ))}
-
-        {/* Add experience button */}
-        {experienceFields.length < 3 && (
-          <button
-            type="button"
-            onClick={handleAddExperience}
-            className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
-          >
-            + Add Experience
-          </button>
-        )}
-      </div>
-
-      {/* //for Education */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
-        <h1 className="text-xl text-black font-bold mb-3">Education</h1>
-
-        {educationFields.map((field, index) => (
-          <section
-            key={field.id}
-            className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
-          >
-            <div className="flex flex-col">
-              <h3 className="my-2 ">Institution Name </h3>
-
-              {errors.Education?.[index]?.nameOfInstitute && (
-                <p className="text-red-500 text-sm">
-                  {errors.Education[index].nameOfInstitute?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Education.${index}.nameOfInstitute`)}
-                placeholder="Institution name"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <h3 className="my-2 ">Degree</h3>
-              {errors.Education?.[index]?.degree && (
-                <p className="text-red-500 text-sm">
-                  {errors.Education[index].degree?.message}
-                </p>
-              )}
-
-              <input
-                {...register(`Education.${index}.degree`)}
-                placeholder="Degree i.e FSC"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
-            <div className="flex flex-col">
-              <h3 className="my-2 ">field Of Study </h3>
-
-              {errors.Education?.[index]?.fieldOfStudy && (
-                <p className="text-red-500 text-sm">
-                  {errors.Education[index].fieldOfStudy?.message}
-                </p>
-              )}
-              <input
-                {...register(`Education.${index}.fieldOfStudy`)}
-                placeholder="fieldOfStudy i.e CS"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
-            <div className="flex flex-col">
-              <h3 className="my-2 "> Graduation Year</h3>
-              {errors.Education?.[index]?.graduationYear && (
-                <p className="text-red-500 text-sm">
-                  {errors.Education[index].graduationYear?.message}
-                </p>
-              )}
-              <input
-                type="date"
-                {...register(`Education.${index}.graduationYear`)}
-                placeholder="Graduation Year"
-                className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-            </div>
-            {/* Remove button */}
-            {educationFields.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeEducation(index)}
-                className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 duration-300 w-fit mt-2"
-              >
-                Remove Education
-              </button>
-            )}
-          </section>
-        ))}
-
-        {/* Add education button */}
-        {educationFields.length < 5 && (
-          <button
-            type="button"
-            onClick={handleAddEducation}
-            className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
-          >
-            + Add Education
-          </button>
-        )}
-      </div>
-
-      {/* for certification */}
-      <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-5 mb-4 shadow-lg">
-        <h1 className="text-xl text-black font-bold mb-6">Certifications</h1>
-
-        {certificationsFields.map((field, index) => (
-          <div
-            key={field.id}
-            className="border border-gray-300 rounded-xl p-4 mb-4 bg-white shadow-sm flex flex-col gap-4"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Institution */}
-              <div className="flex flex-col">
-                <label className=" text-gray-600 my-2">Institution Name</label>
-
-                {errors.Certifications?.[index]?.nameOfInstitute && (
-                  <p className="text-red-500 text-sm ">
-                    {errors.Certifications[index].nameOfInstitute?.message}
-                  </p>
-                )}
-
-                <input
-                  {...register(`Certifications.${index}.nameOfInstitute`)}
-                  placeholder="Institution name"
-                  className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                />
-              </div>
-
-              {/* Certificate Name */}
-              <div className="flex flex-col">
-                <label className=" text-gray-600 my-2">Certificate Name</label>
-
-                {errors.Certifications?.[index]?.CertifcateName && (
-                  <p className="text-red-500 text-sm ">
-                    {errors.Certifications[index].CertifcateName?.message}
-                  </p>
-                )}
-
-                <input
-                  {...register(`Certifications.${index}.CertifcateName`)}
-                  placeholder="Certificate name"
-                  className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                />
-              </div>
-
-              {/* Issue Date */}
-              <div className="flex flex-col">
-                <label className=" text-gray-600 my-2">Issue Date</label>
-
-                {errors.Certifications?.[index]?.IssueDate && (
-                  <p className="text-red-500 text-sm">
-                    {errors.Certifications[index].IssueDate?.message}
-                  </p>
-                )}
-
-                <input
-                  type="date"
-                  {...register(`Certifications.${index}.IssueDate`)}
-                  //issue date must be smaller than afuture date
-                  max={new Date().toISOString().split("T")[0]}
-                  className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                />
-              </div>
-            </div>
-
-            {/* Remove Button*/}
-            {certificationsFields.length > 1 && (
-              <div className="flex justify-start">
-                <button
-                  type="button"
-                  onClick={() => removeCertifications(index)}
-                  className="bg-red-400 text-white px-4 py-1.5 rounded-lg  hover:bg-red-500 transition"
-                >
-                  Remove Certification
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Add Button */}
-        {certificationsFields.length < 3 && (
-          <button
-            onClick={handleAddCertifications}
-            className="mt-3 bg-indigo-500 text-white px-5 py-2 rounded-lg hover:bg-indigo-600 transition"
-          >
-            + Add Certificate
-          </button>
-        )}
-      </div>
-      <div className="flex justify-between gap-3">
-        <button
-          //when role is not disable
-          disabled={!IsRole}
-          onClick={handleSubmit(FormFunction)}
-          className={`bg-indigo-500 text-white py-2 px-4 rounded-lg 
+            //when role is not disable
+            disabled={!IsRole}
+            onClick={handleSubmit(FormFunction)}
+            className={`bg-indigo-500 text-white py-2 px-4 rounded-lg 
             ${IsRole ? " hover:bg-indigo- 600 focus:outline-none focus:ring-2 focus:ring-blue-300 duration-300" : "opacity-30 hover:cursor-not-allowed"}`}
-        >
-          Generate Resume
-        </button>
-        <div className=" block lg:hidden">
-          <DownloadPDF />
+          >
+            Generate Resume
+          </button>
+          <div className=" block lg:hidden">
+            <DownloadPDF />
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

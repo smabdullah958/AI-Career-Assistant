@@ -10,10 +10,9 @@ const DownloadPDF = () => {
   const download = async () => {
     const element = document.getElementById("resumePDF");
 
-    if (!element) {
-      alert("Generate resume first!");
-      return;
-    }
+    // We force the width to 1024px so mobile browsers don't compress the layout
+    const originalWidth = element.style.width;
+    element.style.width = "1024px";
 
     try {
       const dataUrl = await toPng(element, {
@@ -21,6 +20,8 @@ const DownloadPDF = () => {
         backgroundColor: "#ffffff",
         pixelRatio: 3,
       });
+
+      element.style.width = originalWidth;
 
       const pdf = new jsPDF("p", "mm", "a4");
       const img = new Image();

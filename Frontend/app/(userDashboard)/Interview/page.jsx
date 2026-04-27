@@ -151,7 +151,7 @@ const InterviewPage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
+                    InterviewFunction();
                   }
                 }}
                 rows="1"

@@ -1,18 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
 
-const RemainingCalls = //stoer teh remaining calls ina  local storage
-  typeof window !== "undefined" &&
-  localStorage.getItem("AICredits") &&
-  Number(localStorage.getItem("AICredits"));
-
-
 let initialState = {
   loading: false,
   error: false,
   response: null,
   success: false,
-  remainingCalls:RemainingCalls,
   errorMessage: null,
   ShowPopUp:false
 };
@@ -65,4 +58,4 @@ let InterviewSlice = createSlice({
 
 export default InterviewSlice.reducer;
 
-export let {ResetInterviewState,setRemainingCalls,ResetRemainingCalls}=InterviewSlice.actions
+export let {ResetInterviewState}=InterviewSlice.actions

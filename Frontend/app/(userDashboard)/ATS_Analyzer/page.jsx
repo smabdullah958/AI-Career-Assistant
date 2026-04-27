@@ -1,8 +1,9 @@
 "use client";
+import toast from "react-hot-toast";
 import AnalysisFormSkeleton from "@/Component/Loader/AnalysisFormSkeleton";
 import { useSelector, useDispatch } from "react-redux";
 import AnalyzerResult from "@/Component/AnalyzerResult";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ResumeAnalyzerFrom from "@/Component/Form/ResumeAnalyzerForm";
 
 import AnalyzerSkeleton from "@/Component/Loader/AnalyzisResultSkeleton";
@@ -12,9 +13,21 @@ import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
 import RemainingAPICalls from "@/Component/RemainingAPICalls";
 const page = () => {
   let dispatch = useDispatch();
+  //  the reference
+  const scrollRef = useRef(null);
   let { success, loading, errorMessage } = useSelector(
     (state) => state.AnalyzeSlice,
   );
+
+  // Automatically scroll when success or loading becomes true
+  useEffect(() => {
+    if ((success || loading) && scrollRef.current) {
+      scrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [success, loading]);
 
   // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
   let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
@@ -34,7 +47,7 @@ const page = () => {
 
   useEffect(() => {
     if (errorMessage) {
-      alert(errorMessage);
+      toast.error(errorMessage);
     }
   }, [errorMessage]);
 
@@ -58,11 +71,15 @@ const page = () => {
           <RemainingAPICalls remaining={remainingCalls} />
         )}
       <ResumeAnalyzerFrom />
-      {success ? (
-        <AnalyzerResult />
-      ) : (
-        loading && remainingCalls !== 0 && <AnalyzerSkeleton />
-      )}
+
+      {/*  ATTACH THE REF TO THE RESULTss AREA */}
+      <div ref={scrollRef} className="scroll-mt-10">
+        {success ? (
+          <AnalyzerResult />
+        ) : (
+          loading && remainingCalls !== 0 && <AnalyzerSkeleton />
+        )}
+      </div>
     </div>
   );
 };

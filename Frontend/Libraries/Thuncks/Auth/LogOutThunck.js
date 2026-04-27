@@ -4,7 +4,7 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 let LogOutThunck = createAsyncThunk(
   "LogOutthunck",
 
-  async (_, { rejectWithValue }) => {
+  async (_) => {
     try {
       let response = await axios.post(
         `${url}/Auth/logout`,
@@ -15,7 +15,7 @@ let LogOutThunck = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log("eror in a logout");
     }
   },
 );

@@ -186,8 +186,6 @@ const ResumeForm = ({ onDataChange }) => {
 
   let FormFunction = async (data) => {
     let result = await dispatch(ResumeThunck(data));
-    console.log(result);
-    alert("cv is ready");
   };
 
   //signup role

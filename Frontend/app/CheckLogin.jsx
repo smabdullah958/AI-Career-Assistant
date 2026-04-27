@@ -8,7 +8,6 @@ function CheckLogin() {
   useEffect(() => {
     console.log("useeffec is mounted");
     const role = localStorage.getItem("Role");
-    console.log(role);
 
     if (role === "Admin") {
       router.push("/AdminDashboard");

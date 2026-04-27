@@ -54,7 +54,6 @@ let LogInSlice=createSlice({
             state.success=false
         })
         .addCase(LogInThunck.fulfilled,(state,action)=>{
-            console.log("action loader",action?.payload)
             state.IsLoggIn=action?.payload?.IsLoggIn,
             state.errorMessage='',
             state.loading=false,

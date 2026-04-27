@@ -26,11 +26,8 @@ const page = () => {
     if (success) {
       router.push("/");
       dispatch(DisplayLogout()); //to show the logout button
-     // dispatch(ResetSignUpState())
     }
     dispatch(ResetSignUpState());
-    //to shwo a logout button
-   // dispatch(DisplayLogout());
   }, [success]);
 
   let FieldFunction = (e) => {

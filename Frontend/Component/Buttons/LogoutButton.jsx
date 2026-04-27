@@ -42,7 +42,6 @@ const LogoutButton = () => {
 
   let LogOutFunction = async (Data) => {
     let res = await dispatch(LogOutThunck(Data));
-    console.log(res);
   };
 
   return (

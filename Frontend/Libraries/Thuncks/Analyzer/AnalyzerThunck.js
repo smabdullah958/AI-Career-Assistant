@@ -1,4 +1,4 @@
-import { setRemainingCalls } from "@/Libraries/Slices/Interview/InterviewSlice"; //fucntion to get  remining calls and it is present ina  interview slice
+import { setRemainingCalls } from "@/Libraries/Slices/GlobalSlice"; //fucntion to get  remining calls and it is present ina  interview slice
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 let url = process.env.NEXT_PUBLIC_BackendURL;
@@ -18,7 +18,6 @@ let AnalyzerThunck = createAsyncThunk(
       return response.data;
     } catch (error) {
       // get remainingCalls from a backend to display the remaining calls
-      console.log(error.data);
       dispatch(setRemainingCalls(error.response.data?.remainingCalls));
 
       return rejectWithValue(error?.response?.data);

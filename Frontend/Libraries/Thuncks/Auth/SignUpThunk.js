@@ -7,12 +7,11 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 let SignUpThunck = createAsyncThunk(
   "SignupThunck",
   async (Data, { dispatch, rejectWithValue }) => {
-      
     try {
       let result = await axios.post(`${url}/Auth/signup`, Data, {
         withCredentials: true,
       });
-      console.log(result);
+      console.log("user is reggister");
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
       return result.data;
     } catch (error) {

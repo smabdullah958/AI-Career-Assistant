@@ -1,10 +1,13 @@
 "use client";
+import toast from "react-hot-toast";
 import DownloadPDF from "@/Component/Buttons/DownloadPDF";
 import DisplayResume from "@/Component/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
 import ResumePreview from "@/Component/ResumePreview";
-import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton"
-
+//to show the resume when the page i load
+import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton";
+//to show the resume when the result is prepared
+import ResumeSkeleton from "@/Component/Loader/ResumeResultSkeleton";
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 import { useState, useEffect, useRef } from "react";
@@ -33,7 +36,7 @@ const page = () => {
     };
   }, [dispatch]);
 
-  // Automatically scroll when success becomes true
+  // Automatically scroll when success or loading becomes true
   useEffect(() => {
     if ((success || loading) && previewRef.current) {
       previewRef.current.scrollIntoView({
@@ -51,7 +54,7 @@ const page = () => {
 
   useEffect(() => {
     if (errorMessage) {
-      alert(errorMessage);
+      toast.error(errorMessage);
     }
   }, [errorMessage]);
 

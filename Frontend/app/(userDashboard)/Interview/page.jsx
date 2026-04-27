@@ -1,4 +1,5 @@
 "use client";
+import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
@@ -66,7 +67,7 @@ const InterviewPage = () => {
 
   useEffect(() => {
     if (errorMessage) {
-      alert(errorMessage);
+      toast.error(errorMessage);
       dispatch(ResetInterviewState());
     }
   }, [errorMessage]);

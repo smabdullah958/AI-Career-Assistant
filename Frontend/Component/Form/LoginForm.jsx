@@ -36,15 +36,12 @@ const LoginForm = ({ HideForm }) => {
   };
 
   useEffect(() => {
-    if (!success) return console.log("success is false", success);
+    if (!success) return console.log("success is false");
     if (success) {
       HideForm();
-      alert(Role);
       router.push("/");
-      dispatch(DisplayLogout()) // to show the logout button
-      //dispatch(ResetLogInState());
+      dispatch(DisplayLogout()); // to show the logout button
     }
-   // dispatch(DisplayLogout()); //to shwo the logout button
     dispatch(ResetLogInState());
   }, [success]);
 

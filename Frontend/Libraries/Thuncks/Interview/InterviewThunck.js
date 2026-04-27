@@ -13,11 +13,11 @@ let InterviewThunck = createAsyncThunk(
       });
       // get remainingCalls from a backend to display the remaining calls
       dispatch(setRemainingCalls(result.data?.remainingCalls));
-      console.log(result.data.response);
+      console.log("inteview data");
       return result?.data;
     } catch (err) {
       // get remainingCalls from a backend to display the remaining calls
-      console.log(err.data);
+      console.log("error in a interview");
       dispatch(setRemainingCalls(err.response.data?.remainingCalls));
 
       return rejectWithValue(err?.response?.data);

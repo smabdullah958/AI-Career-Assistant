@@ -9,7 +9,7 @@ import {
   ResetLogInState,
   DisplayLogout,
 } from "@/Libraries/Slices/Auth/LogInSlice";
-import ButtonLoader from "../ButtonLoader";
+import ButtonLoader from "../Loader/ButtonLoader";
 const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -41,8 +41,10 @@ const LoginForm = ({ HideForm }) => {
       HideForm();
       alert(Role);
       router.push("/");
+      dispatch(DisplayLogout()) // to show the logout button
+      //dispatch(ResetLogInState());
     }
-    dispatch(DisplayLogout()); //to shwo the logout button
+   // dispatch(DisplayLogout()); //to shwo the logout button
     dispatch(ResetLogInState());
   }, [success]);
 

@@ -1,73 +1,53 @@
+
 const Loading = () => {
-  // Helper for repetitive lines
-  const SkeletonLine = ({ width = "w-full", height = "h-3" }) => (
-    <div
-      className={`${height} ${width} bg-gray-200 rounded animate-pulse mb-2`}
-    ></div>
-  );
-
   return (
-    <div className="bg-white p-10 w-full max-w-[210mm] min-h-[297mm] mx-auto rounded-xl border border-gray-100 shadow-sm">
-      {/* HEADER SKELETON */}
-      <div className="border-b-2 border-gray-100 pb-6 mb-8">
-        <div className="h-10 w-3/4 bg-gray-200 animate-pulse rounded mb-4"></div>
-        <div className="h-4 w-1/4 bg-blue-100 animate-pulse rounded mb-6"></div>
-
-        <div className="flex gap-4">
-          <div className="h-3 w-32 bg-gray-100 animate-pulse rounded"></div>
-          <div className="h-3 w-40 bg-gray-100 animate-pulse rounded"></div>
-          <div className="h-3 w-48 bg-gray-100 animate-pulse rounded"></div>
+    <div className="min-h-screen bg-[#f8fafc] p-4 md:p-8 font-sans">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* TOP NAV/HEADER AREA */}
+        <div className="flex justify-between items-center mb-12">
+          <div className="h-8 w-40 bg-indigo-100 animate-pulse rounded-lg"></div>
+          <div className="flex gap-4">
+            <div className="h-10 w-10 bg-slate-200 animate-pulse rounded-full"></div>
+            <div className="h-10 w-24 bg-slate-200 animate-pulse rounded-lg"></div>
+          </div>
         </div>
-      </div>
 
-      {/* ABOUT ME SKELETON */}
-      <div className="mb-8">
-        <div className="h-5 w-28 bg-gray-200 animate-pulse rounded mb-4"></div>
-        <SkeletonLine />
-        <SkeletonLine />
-        <SkeletonLine width="w-4/5" />
-      </div>
+        {/* HERO SECTION AREA */}
+        <div className="text-center space-y-4 py-10">
+          <div className="h-12 w-3/4 md:w-1/2 bg-slate-200 animate-pulse rounded-xl mx-auto"></div>
+          <div className="h-4 w-2/3 md:w-1/3 bg-slate-100 animate-pulse rounded-lg mx-auto"></div>
+        </div>
 
-      {/* SKILLS SKELETON (8 Skills as requested) */}
-      <div className="mb-8">
-        <div className="h-5 w-24 bg-gray-200 animate-pulse rounded mb-4"></div>
-        <div className="grid grid-cols-4 gap-4">
-          {[...Array(8)].map((_, i) => (
+        {/* FEATURE CARDS GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="h-8 bg-gray-50 border-l-2 border-gray-100 animate-pulse rounded-sm"
-            ></div>
-          ))}
-        </div>
-      </div>
-
-      {/* EXPERIENCE SKELETON */}
-      <div className="mb-8">
-        <div className="h-5 w-32 bg-gray-200 animate-pulse rounded mb-4"></div>
-        <div className="space-y-6">
-          {[...Array(2)].map((_, i) => (
-            <div key={i}>
-              <div className="flex justify-between mb-2">
-                <div className="h-4 w-40 bg-gray-200 animate-pulse rounded"></div>
-                <div className="h-3 w-24 bg-gray-100 animate-pulse rounded"></div>
+              className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 space-y-4"
+            >
+              {/* Icon Circle */}
+              <div className="h-12 w-12 bg-indigo-50 animate-pulse rounded-2xl"></div>
+              {/* Title */}
+              <div className="h-6 w-1/2 bg-slate-200 animate-pulse rounded-md"></div>
+              {/* Description Lines */}
+              <div className="space-y-2">
+                <div className="h-3 w-full bg-slate-100 animate-pulse rounded"></div>
+                <div className="h-3 w-full bg-slate-100 animate-pulse rounded"></div>
+                <div className="h-3 w-4/5 bg-slate-100 animate-pulse rounded"></div>
               </div>
-              <div className="h-3 w-32 bg-blue-50 animate-pulse rounded mb-3"></div>
-              <SkeletonLine />
-              <SkeletonLine width="w-5/6" />
             </div>
           ))}
         </div>
-      </div>
 
-      {/* PROJECTS SKELETON */}
-      <div>
-        <div className="h-5 w-28 bg-gray-200 animate-pulse rounded mb-4"></div>
-        <div className="flex justify-between mb-2">
-          <div className="h-4 w-48 bg-gray-200 animate-pulse rounded"></div>
-          <div className="h-3 w-20 bg-gray-100 animate-pulse rounded"></div>
+        {/* LARGE INTERACTIVE AREA SKELETON */}
+        <div className="bg-white p-8 rounded-[3rem] shadow-xl shadow-indigo-100/20 border border-slate-200 mt-12 min-h-[400px] flex flex-col items-center justify-center space-y-6">
+          <div className="h-16 w-16 bg-indigo-100 animate-pulse rounded-full"></div>
+          <div className="h-4 w-48 bg-slate-100 animate-pulse rounded-lg"></div>
+          <div className="w-full max-w-md space-y-3">
+            <div className="h-12 w-full bg-slate-50 animate-pulse rounded-2xl border border-slate-100"></div>
+            <div className="h-12 w-32 bg-indigo-600/10 animate-pulse rounded-2xl mx-auto"></div>
+          </div>
         </div>
-        <SkeletonLine width="w-full" />
-        <SkeletonLine width="w-3/4" />
       </div>
     </div>
   );

@@ -1,14 +1,19 @@
+//to show the credtis when a user is signup
+import { setRemainingCalls } from "@/Libraries/Slices/GlobalSlice";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 let SignUpThunck = createAsyncThunk(
   "SignupThunck",
-  async (Data, { rejectWithValue }) => {
+  async (Data, { dispatch, rejectWithValue }) => {
+      
     try {
       let result = await axios.post(`${url}/Auth/signup`, Data, {
         withCredentials: true,
       });
       console.log(result);
+      dispatch(setRemainingCalls(result?.data?.remainingCalls));
       return result.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);

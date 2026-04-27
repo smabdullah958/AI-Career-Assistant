@@ -1,4 +1,4 @@
-import { setRemainingCalls } from "@/Libraries/Slices/Interview/InterviewSlice"; //fucntion to get  remining calls
+import { setRemainingCalls } from "@/Libraries/Slices/GlobalSlice"; //fucntion to get  remining calls
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";

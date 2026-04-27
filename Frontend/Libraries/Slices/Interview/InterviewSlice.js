@@ -34,7 +34,7 @@ let InterviewSlice = createSlice({
           localStorage.setItem("AICredits", action.payload); //store in a local storage when a page is reload or load
       state.ShowPopUp=true
     },
-    RetRemainingCalls:(state)=>{
+    ResetRemainingCalls:(state)=>{
       localStorage.removeItem("AICredits")
       state.ShowPopUp=false
     }
@@ -65,4 +65,4 @@ let InterviewSlice = createSlice({
 
 export default InterviewSlice.reducer;
 
-export let {ResetInterviewState,setRemainingCalls,RetRemainingCalls}=InterviewSlice.actions
+export let {ResetInterviewState,setRemainingCalls,ResetRemainingCalls}=InterviewSlice.actions

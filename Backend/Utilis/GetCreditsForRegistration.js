@@ -8,7 +8,7 @@ let GetCreditsForLogIn = async (UserId) => {
   });
   if (!UsageRecord) {
     UsageRecord = await DailyUsageCredits.create({
-      UserID,
+      UserId  ,
       LastCallDate: today,
       ApiCallCount: 10,
     });

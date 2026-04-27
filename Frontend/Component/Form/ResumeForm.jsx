@@ -196,9 +196,9 @@ const ResumeForm = ({ onDataChange }) => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  // get remainingCalls from a interivew slice and also here it is used to hide the button
+  // get remainingCalls from a Global slice and also here it is used to hide the button
 
-  let { remainingCalls } = useSelector((state) => state.InterviewSlice);
+  let { remainingCalls } = useSelector((state) => state.GlobalSlice);
 
   let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
 

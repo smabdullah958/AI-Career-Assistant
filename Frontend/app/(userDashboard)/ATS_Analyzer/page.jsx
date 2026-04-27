@@ -1,11 +1,11 @@
 "use client";
-import AnalysisFormSkeleton from "@/Component/AnalysisFormSkeleton";
+import AnalysisFormSkeleton from "@/Component/Loader/AnalysisFormSkeleton";
 import { useSelector, useDispatch } from "react-redux";
 import AnalyzerResult from "@/Component/AnalyzerResult";
 import { useEffect, useState } from "react";
 import ResumeAnalyzerFrom from "@/Component/Form/ResumeAnalyzerForm";
 
-import AnalyzerSkeleton from "@/Component/AnalyzisSkeleton";
+import AnalyzerSkeleton from "@/Component/Loader/AnalyzisResultSkeleton";
 
 //to reset all teh state
 import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
@@ -17,9 +17,7 @@ const page = () => {
   );
 
   // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
-  let { remainingCalls, ShowPopUp } = useSelector(
-    (state) => state.InterviewSlice,
-  );
+  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
 
   //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
   let { Role } = useSelector((state) => state.SignUpSlice);

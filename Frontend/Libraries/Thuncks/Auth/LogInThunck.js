@@ -1,5 +1,5 @@
 //to show the credtis when a user is login
-import { setRemainingCalls } from "@/Libraries/Slices/Interview/InterviewSlice";
+import { setRemainingCalls } from "@/Libraries/Slices/GlobalSlice";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";

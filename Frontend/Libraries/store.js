@@ -14,6 +14,8 @@ import InterviewSlice from "@/Libraries/Slices/Interview/InterviewSlice";
 // for Analyze resume
 import AnalyzeSlice from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
 
+//to get and reset the remaining api call
+import GlobalSlice from "@/Libraries/Slices/GlobalSlice";
 export let store = configureStore({
   reducer: {
     SignUpSlice,
@@ -22,5 +24,6 @@ export let store = configureStore({
     ResumeSlice,
     InterviewSlice,
     AnalyzeSlice,
+    GlobalSlice,
   },
 });

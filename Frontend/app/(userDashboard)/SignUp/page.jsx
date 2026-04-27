@@ -5,7 +5,7 @@ import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
 import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
-import ButtonLoader from "@/Component/ButtonLoader";
+import ButtonLoader from "@/Component/Loader/ButtonLoader";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -25,10 +25,12 @@ const page = () => {
   useEffect(() => {
     if (success) {
       router.push("/");
+      dispatch(DisplayLogout()); //to show the logout button
+     // dispatch(ResetSignUpState())
     }
     dispatch(ResetSignUpState());
     //to shwo a logout button
-    dispatch(DisplayLogout());
+   // dispatch(DisplayLogout());
   }, [success]);
 
   let FieldFunction = (e) => {

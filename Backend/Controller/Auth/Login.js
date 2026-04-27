@@ -1,4 +1,5 @@
-let GetCreditsForLogIn = require("../../Utilis/GetCreditsForLogIn");
+//it is used to get credits for a login
+let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
 let UserModel = require("../../Model/Auth");
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
@@ -36,7 +37,8 @@ let Login = async (req, res) => {
     });
 
     //check the credits through user id
-    let remainingCalls = await GetCreditsForLogIn(ExistUser._id);
+    let remainingCalls = await GetCreditsForRegistration(ExistUser._id);
+
     console.log(remainingCalls);
     return res.status(200).json({
       message: "user is login",

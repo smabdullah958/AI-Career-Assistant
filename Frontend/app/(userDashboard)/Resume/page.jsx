@@ -3,7 +3,8 @@ import DownloadPDF from "@/Component/Buttons/DownloadPDF";
 import DisplayResume from "@/Component/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
 import ResumePreview from "@/Component/ResumePreview";
-import ResumeSkeleton from "@/Component/ResumeSkeleton";
+import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton"
+
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 import { useState, useEffect, useRef } from "react";
@@ -20,9 +21,7 @@ const page = () => {
   );
 
   // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
-  let { remainingCalls, ShowPopUp } = useSelector(
-    (state) => state.InterviewSlice,
-  );
+  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
 
   //to preview the data in resume preview section
   const [previewData, setPreviewData] = useState({});
@@ -64,7 +63,7 @@ const page = () => {
   }, []);
 
   if (!mounted) {
-    return <ResumeSkeleton />;
+    return <ResumeFormSkeleton />;
   }
 
   return (
@@ -73,7 +72,7 @@ const page = () => {
         (success ||
           errorMessage ||
           remainingCalls === 0 ||
-          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother 
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother
           ShowPopUp === true) && (
           <RemainingAPICalls remaining={remainingCalls} />
         )}

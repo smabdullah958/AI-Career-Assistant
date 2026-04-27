@@ -2,15 +2,17 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
-import InterviewSkeleton from "@/Component/InterviewPageSkeleton";
+import InterviewSkeleton from "@/Component/Loader/InterviewPageSkeleton";
 import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice";
 
 import RemainingAPICalls from "@/Component/RemainingAPICalls";
 
 const InterviewPage = () => {
-  let { loading, response, success, errorMessage, remainingCalls, ShowPopUp } =
-    useSelector((state) => state.InterviewSlice);
+  let { loading, response, success, errorMessage } = useSelector(
+    (state) => state.InterviewSlice,
+  );
 
+  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);
 

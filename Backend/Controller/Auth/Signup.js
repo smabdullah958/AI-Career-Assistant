@@ -1,3 +1,6 @@
+//it is used to get credits for a signup
+let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
+
 let userModel = require("../../Model/Auth");
 require("dotenv").config();
 let key = process.env.SecretKey;
@@ -42,9 +45,14 @@ let SignUp = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     console.log(token, newUser);
+
+    //check the credits through user id
+    let remainingCalls = await GetCreditsForRegistration(newUser._id);
+    console.log(remainingCalls);
     res.status(200).json({
       message: "User created successfully",
       Role,
+      remainingCalls,
     });
   } catch (error) {
     console.error(error);

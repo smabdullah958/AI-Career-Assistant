@@ -1,3 +1,4 @@
+let GetCreditsForLogIn = require("../../Utilis/GetCreditsForLogIn");
 let UserModel = require("../../Model/Auth");
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
@@ -33,11 +34,15 @@ let Login = async (req, res) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //for 7 days
     });
-    console.log("user id " + ExistUser._id);
+
+    //check the credits through user id
+    let remainingCalls = await GetCreditsForLogIn(ExistUser._id);
+    console.log(remainingCalls);
     return res.status(200).json({
       message: "user is login",
       IsLoggIn: true,
       Role: ExistUser.Role,
+      remainingCalls,
     });
   } catch (error) {
     console.log("some thing went wrong", error);

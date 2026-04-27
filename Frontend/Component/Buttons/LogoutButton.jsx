@@ -33,6 +33,7 @@ const LogoutButton = () => {
       dispatch(ResetLogOutState());
 
       dispatch(RetRemainingCalls()); //to reset the remaining calls so that no one can access each other remining calls
+
       dispatch(ClearSignUpRole());
       dispatch(ResetAnalyzer()); //reset the analyzer all the state
       dispatch(ResetInterviewState()); //reset all the state ofa interview

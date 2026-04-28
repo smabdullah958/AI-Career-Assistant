@@ -166,7 +166,7 @@ npm start
 3. User can practice answers
 4. Helps improve confidence and preparation
 
-![Interview](ScreenShots/interview.png)
+![Interview](ScreenShot/interview.png)
 
 ---
 
@@ -182,7 +182,6 @@ npm start
 
 - Each user has limited daily credits
 - Middleware tracks API usage
-- Prevents abuse of AI features
 
 ---
 

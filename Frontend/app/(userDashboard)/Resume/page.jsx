@@ -1,9 +1,9 @@
 "use client";
 import toast from "react-hot-toast";
 import DownloadPDF from "@/Component/Buttons/DownloadPDF";
-import DisplayResume from "@/Component/DisplayResume";
+import DisplayResume from "@/Features/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
-import ResumePreview from "@/Component/ResumePreview";
+import ResumePreview from "@/Features/ResumePreview";
 //to show the resume when the page i load
 import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton";
 //to show the resume when the result is prepared
@@ -14,7 +14,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 //remaining api calls per day
-import RemainingAPICalls from "@/Component/RemainingAPICalls";
+import RemainingAPICalls from "@/Features/RemainingAPICalls";
 
 const page = () => {
   const previewRef = useRef(null); // Create the reference

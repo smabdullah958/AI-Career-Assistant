@@ -2,7 +2,7 @@
 import toast from "react-hot-toast";
 import AnalysisFormSkeleton from "@/Component/Loader/AnalysisFormSkeleton";
 import { useSelector, useDispatch } from "react-redux";
-import AnalyzerResult from "@/Component/AnalyzerResult";
+import AnalyzerResult from "@/Features/AnalyzerResult";
 import { useEffect, useState, useRef } from "react";
 import ResumeAnalyzerFrom from "@/Component/Form/ResumeAnalyzerForm";
 
@@ -10,7 +10,7 @@ import AnalyzerSkeleton from "@/Component/Loader/AnalyzisResultSkeleton";
 
 //to reset all teh state
 import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
-import RemainingAPICalls from "@/Component/RemainingAPICalls";
+import RemainingAPICalls from "@/Features/RemainingAPICalls";
 const page = () => {
   let dispatch = useDispatch();
   //  the reference

@@ -21,16 +21,6 @@ let InterviewSlice = createSlice({
         state.success=false
         state.errorMessage=null
     },
-//get reamaining calls from a backend
-    setRemainingCalls:(state,action)=>{
-      state.remainingCalls=action?.payload
-          localStorage.setItem("AICredits", action.payload); //store in a local storage when a page is reload or load
-      state.ShowPopUp=true
-    },
-    ResetRemainingCalls:(state)=>{
-      localStorage.removeItem("AICredits")
-      state.ShowPopUp=false
-    }
   },
   extraReducers: (builder) => {
     builder;

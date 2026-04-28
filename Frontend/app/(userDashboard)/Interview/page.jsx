@@ -6,7 +6,7 @@ import InterviewThunck from "@/Libraries/Thuncks/Interview/InterviewThunck";
 import InterviewSkeleton from "@/Component/Loader/InterviewPageSkeleton";
 import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice";
 
-import RemainingAPICalls from "@/Component/RemainingAPICalls";
+import RemainingAPICalls from "@/Features/RemainingAPICalls";
 
 const InterviewPage = () => {
   let { loading, response, success, errorMessage } = useSelector(

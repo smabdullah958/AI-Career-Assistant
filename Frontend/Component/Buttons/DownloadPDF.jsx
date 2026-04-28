@@ -77,6 +77,7 @@ const DownloadPDF = () => {
 
   return (
     <button
+      type="button"
       onClick={download}
       disabled={!success}
       className={`px-4 py-2 rounded-lg text-white font-bold

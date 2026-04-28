@@ -10,7 +10,7 @@ let ResumeService = async (data) => {
     //creaet chain
     let chain = prompt.pipe(llm);
 
-    let response = await chain.invoke({
+    let response = await chain.stream({
       Name: data.name,
       Email: data.email,
       Phone: data.phone,
@@ -33,7 +33,14 @@ let ResumeService = async (data) => {
 
     console.log("response is generated ", response.content);
 
-    let raw = response.content;
+    let fullContent = "";
+    //to get data through chunks
+    for await (const chunk of response) {
+      const content = chunk.content;
+      fullContent += content;
+    }
+
+    let raw = fullContent;
 
     // remove, and other things like  ```json or ``` blocks
     raw = raw

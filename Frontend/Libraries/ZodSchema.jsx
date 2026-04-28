@@ -7,18 +7,23 @@ export const ResumeSchema = z.object({
     .nonempty("name is required")
     .min(5, "Name must be at least 5 characters")
     .max(50, "Name must be less than 50 characters long"),
+
   email: z
     .string()
     .nonempty("email is required")
     .email("invalid email address"),
+
   phone: z
     .string()
     .nonempty("phone no is required")
     .regex(/^\d{11}$/, "Phone number must be a 11-digit number"),
+
   Role: z
     .string()
     .nonempty("Role is required")
-    .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+    .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed")
+    .max(50, "Role must be less than 50 characters long"),
+
   portfolio: z
     .string()
     .url("Portfolio URL must be a valid URL")
@@ -64,11 +69,13 @@ export const ResumeSchema = z.object({
           .string()
           .nonempty("Project description is required")
           .max(120, "Description must be less than 120 characters"),
+
         link: z
           .string()
           .url("Project link must be a valid URL")
           .or(z.literal(""))
           .optional({ checkFalsy: true }),
+
         Github: z
           .string()
           .url("GitHub URL must be a valid URL")
@@ -88,6 +95,7 @@ export const ResumeSchema = z.object({
           .max(50, "Role must be less than 50 characters long")
           .nonempty("Role is required")
           .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+
         CompanyName: z
           .string()
           .max(50, "Company name must be less than 50 characters long")
@@ -102,7 +110,8 @@ export const ResumeSchema = z.object({
           .max(120, "Description must be less than 120 characters"),
       }),
     )
-    .max(3, "You can add up to 3 certifications only"),
+    .min(1, "You can add at least 1 experience only")
+    .max(3, "You can add up to 3 experience only"),
 
   Certifications: z
     .array(

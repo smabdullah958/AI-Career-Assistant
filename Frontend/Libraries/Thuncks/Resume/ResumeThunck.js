@@ -16,7 +16,7 @@ let ResumeThunck = createAsyncThunk(
       return result.data;
     } catch (err) {
       // get remainingCalls from a backend to display the remaining calls
-      console.log("error ina  resume");
+      console.log("error ina  resume", err);
       dispatch(setRemainingCalls(err?.response?.data?.remainingCalls));
 
       return rejectWithValue(err?.response?.data);

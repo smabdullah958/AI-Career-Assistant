@@ -16,6 +16,7 @@ let ResumeValidator = [
     .withMessage("email is required")
     .isEmail()
     .withMessage("invalid  format"),
+
   body("phone")
     .notEmpty()
     .withMessage("Phone number is required")
@@ -63,14 +64,12 @@ let ResumeValidator = [
     .withMessage("only alphabet are allowed"),
 
   // project
-  body("Projects")
-    .isArray({ min: 1, max: 3 })
-    .withMessage("Projects must be 1 to 3"),
+  body("Projects").isArray({ max: 3 }).withMessage("Projects must be 1 to 3"),
 
   body("Projects.*.title")
     .notEmpty()
     .withMessage("Project title is required")
-    .isLength({ max: 30 })
+    .isLength({ max: 50 })
     .withMessage("Max 30 characters")
     .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
@@ -94,7 +93,7 @@ let ResumeValidator = [
   // experience
   body("Experience")
     .notEmpty()
-    .isArray({ min: 1, max: 3 })
+    .isArray({ max: 3 })
     .withMessage("Experience is allowed between 1 to 3"),
 
   body("Experience.*.Role")

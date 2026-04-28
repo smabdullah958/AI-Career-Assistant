@@ -9,10 +9,18 @@ let Analyzer = async (PDFText, Role, Experience) => {
 
     //create chain
     let chain = prompt.pipe(LLM);
-    let response = await chain.invoke({ PDFText, Role, Experience });
+    let response = await chain.stream({ PDFText, Role, Experience });
     console.log("this si amain file of a chain");
 
-    let raw = response.content;
+    let fullContent = "";
+
+    //to get data through chunks
+    for await (const chunk of response) {
+      const content = chunk.content;
+      fullContent += content;
+    }
+
+    let raw = fullContent;
 
     // remove, and other things like  ```json or ``` blocks
     raw = raw

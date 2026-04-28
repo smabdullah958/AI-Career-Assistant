@@ -81,7 +81,7 @@ cd AI-Career-Assistant
 
 ---
 
-## ▶️ Run Frontend
+## ▶️ Frontend
 
 ```bash
 cd Frontend
@@ -102,7 +102,7 @@ npm run dev
 
 ---
 
-## ▶️ Run Backend
+## ▶️ Backend
 
 ```bash
 cd Backend
@@ -129,28 +129,60 @@ npm start
 
 ## 🔄 How It Works
 
-1. User uploads resume (PDF)
-2. System extracts text from PDF
-3. AI analyzes resume based on role & experience
+### 🧠 1. AI Resume Generator
+
+1. User fills a form (skills, education, experience)
+2. Data is sent to backend
+3. AI (Groq + LangChain) generates a professional resume
+4. Resume is displayed and can be downloaded as PDF
+
+![Resume 1](ScreenShot/resume1.png)
+![Resume 2](ScreenShot/resume2.png)
+
+---
+
+### 📄 2. AI Resume Analyzer (ATS Based)
+
+1. User uploads a resume (PDF)
+2. Backend extracts text from PDF
+3. AI analyzes resume based on:
+   - Job role
+   - Experience level
+
 4. Returns:
-   - Score
-   - Suggestions
-   - Improvements
+   - Resume score
+   - Weak areas
+   - Improvement suggestions
+
+![Analyzer 1](ScreenShot/resumeAnalyzer1.png)
+![Analyzer 2](ScreenShot/resumeAnalyzer2.png)
 
 ---
 
-## 📸 Screenshots
+### 💼 3. Interview Preparation
 
-> ⚠️ Add screenshots here (very important for portfolio)
+1. User selects role / field
+2. AI generates interview questions
+3. User can practice answers
+4. Helps improve confidence and preparation
+
+![Interview](ScreenShots/interview.png)
 
 ---
 
-## 🚀 Future Improvements
+### 🔐 4. Authentication System
 
-- 🔍 Job Recommendation System
-- 📈 Career Path Prediction
-- 🌐 Multi-language Support
-- 📊 Analytics Dashboard
+- User can Sign Up / Login
+- JWT-based authentication
+- Secure routes for protected features
+
+---
+
+### 📊 5. Usage Tracking System
+
+- Each user has limited daily credits
+- Middleware tracks API usage
+- Prevents abuse of AI features
 
 ---
 

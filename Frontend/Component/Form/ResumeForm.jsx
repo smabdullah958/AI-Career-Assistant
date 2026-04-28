@@ -60,7 +60,7 @@ const ResumeForm = ({ onDataChange }) => {
       // Certifications
       Certifications: [
         {
-          nameOfInstitute: "",
+          NameOfInstitute: "",
           CertifcateName: "",
           IssueDate: "",
         },
@@ -177,7 +177,7 @@ const ResumeForm = ({ onDataChange }) => {
   const handleAddCertifications = () => {
     if (certificationsFields.length < 3) {
       addCertifications({
-        nameOfInstitute: "",
+        NameOfInstitute: "",
         CertifcateName: "",
         IssueDate: "",
       });
@@ -319,7 +319,7 @@ const ResumeForm = ({ onDataChange }) => {
               className="w-full border-black border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none shadow-sm"
             />
             <p className="text-gray-400 text-xs mt-1">
-              {summaryCharacter?.length || 0}/200 characters
+              {summaryCharacter?.length || 0}/500 characters
             </p>
           </section>
         </div>
@@ -596,7 +596,7 @@ const ResumeForm = ({ onDataChange }) => {
           {educationFields.map((field, index) => (
             <section
               key={field.id}
-              className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
             >
               <div className="flex flex-col">
                 <h3 className="my-2 ">Institution Name </h3>
@@ -701,15 +701,15 @@ const ResumeForm = ({ onDataChange }) => {
                     Institution Name
                   </label>
 
-                  {errors.Certifications?.[index]?.nameOfInstitute && (
+                  {errors.Certifications?.[index]?.NameOfInstitute && (
                     <p className="text-red-500 text-sm ">
-                      {errors.Certifications[index].nameOfInstitute?.message}
+                      {errors.Certifications[index].NameOfInstitute?.message}
                     </p>
                   )}
 
                   <input
                     onKeyDown={handleEnter}
-                    {...register(`Certifications.${index}.nameOfInstitute`)}
+                    {...register(`Certifications.${index}.NameOfInstitute`)}
                     placeholder="Institution name"
                     className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   />

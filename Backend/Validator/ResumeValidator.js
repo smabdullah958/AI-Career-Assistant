@@ -48,8 +48,8 @@ let ResumeValidator = [
   body("Summary")
     .notEmpty()
     .withMessage("Summary is required")
-    .isLength({ max: 200 })
-    .withMessage("maximum 200 character is allowed"),
+    .isLength({ max: 500 })
+    .withMessage("maximum 500 character is allowed"),
 
   // skills
   body("Skills")
@@ -137,7 +137,7 @@ let ResumeValidator = [
     .isArray({ min: 1, max: 3 })
     .withMessage("Certifications must be an array"),
 
-  body("Certifications.*.nameOfInstitute")
+  body("Certifications.*.NameOfInstitute")
     .notEmpty()
     .withMessage("Institution name is required")
     .isLength({ max: 50 })

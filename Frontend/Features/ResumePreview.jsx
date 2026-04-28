@@ -204,7 +204,7 @@ const ResumePreview = ({ data }) => {
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 italic">
-                      {cert.nameOfInstitute}
+                      {cert.NameOfInstitute}
                     </p>
                   </div>
                 ),

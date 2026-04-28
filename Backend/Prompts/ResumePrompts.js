@@ -56,7 +56,7 @@ Format:
     {{
       "CertifcateName": "",
       "IssueDate": "",
-      "nameOfInstitute": ""
+      "NameOfInstitute": ""
     }}
   ]
 }}

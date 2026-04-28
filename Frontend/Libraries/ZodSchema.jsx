@@ -40,7 +40,7 @@ export const ResumeSchema = z.object({
   Summary: z
     .string()
     .nonempty("Summary is required")
-    .max(200, "Summary must be less than 200 characters"),
+    .max(500, "Summary must be less than 500 characters"),
 
   //skills and projects
   Skills: z
@@ -89,26 +89,44 @@ export const ResumeSchema = z.object({
   //experience and certifications
   Experience: z
     .array(
-      z.object({
-        Role: z
-          .string()
-          .max(50, "Role must be less than 50 characters long")
-          .nonempty("Role is required")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+      z
+        .object({
+          Role: z
+            .string()
+            .max(50, "Role must be less than 50 characters long")
+            .nonempty("Role is required")
+            .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
 
-        CompanyName: z
-          .string()
-          .max(50, "Company name must be less than 50 characters long")
-          .nonempty("Company name is required")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+          Description: z
+            .string()
+            .nonempty("Description is required")
+            .max(120, "Description must be less than 120 characters"),
 
-        StartDate: z.string().nonempty("Start date is required"),
-        EndDate: z.string().optional({ checkFalsy: true }),
-        Description: z
-          .string()
-          .nonempty("Description is required")
-          .max(120, "Description must be less than 120 characters"),
-      }),
+          CompanyName: z
+            .string()
+            .max(50, "Company name must be less than 50 characters long")
+            .nonempty("Company name is required")
+            .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+
+          StartDate: z.string().nonempty("Start date is required"),
+          EndDate: z.string().optional({ checkFalsy: true }),
+        })
+        .refine(
+          (data) => {
+            // If there is no EndDate (e.g., "Present"), we consider it valid
+            if (!data.EndDate) return true;
+
+            const start = new Date(data.StartDate);
+            const end = new Date(data.EndDate);
+
+            // Check if EndDate is after StartDate
+            return end >= start;
+          },
+          {
+            message: "End date must be greater then start date",
+            path: ["EndDate"], // This sets the error specifically on the EndDate field
+          },
+        ),
     )
     .min(1, "You can add at least 1 experience only")
     .max(3, "You can add up to 3 experience only"),
@@ -116,7 +134,7 @@ export const ResumeSchema = z.object({
   Certifications: z
     .array(
       z.object({
-        nameOfInstitute: z
+        NameOfInstitute: z
           .string()
           .nonempty("Institution name is required")
           .max(50, "Institution name must be less than 50 characters")

@@ -37,9 +37,8 @@ const DownloadPDF = () => {
         const imgHeight = (img.height * imgWidth) / img.width;
 
         let heightLeft = imgHeight;
-        let pageCount = 1;
 
-        // --- PAGE 1 ---
+        // pg1
         // Add the image starting at the top padding
         pdf.addImage(img, "PNG", 0, padding, imgWidth, imgHeight);
 
@@ -51,22 +50,22 @@ const DownloadPDF = () => {
         heightLeft -= effectivePageHeight;
 
         // --- PAGE 2 ---
-        if (heightLeft > 0 && pageCount < 2) {
-          pdf.addPage();
+        // if (heightLeft > 0 && pageCount < 2) {
+        //   pdf.addPage();
 
-          // To stop repeating lines, we shift by the exact content height shown on Page 1
-          // Then add 'padding' to respect the top gap of Page 2
-          const position = -effectivePageHeight + padding;
+        //   // To stop repeating lines, we shift by the exact content height shown on Page 1
+        //   // Then add 'padding' to respect the top gap of Page 2
+        //   const position = -effectivePageHeight + padding;
 
-          pdf.addImage(img, "PNG", 0, position, imgWidth, imgHeight);
+        //   pdf.addImage(img, "PNG", 0, position, imgWidth, imgHeight);
 
-          // CLEANUP PAGE 2: Cover the top and bottom padding with white bars
-          pdf.setFillColor(255, 255, 255);
-          pdf.rect(0, 0, 210, padding, "F"); // Top cover
-          pdf.rect(0, pageHeight - padding, 210, padding, "F"); // Bottom cover
+        //   // CLEANUP PAGE 2: Cover the top and bottom padding with white bars
+        //   pdf.setFillColor(255, 255, 255);
+        //   pdf.rect(0, 0, 210, padding, "F"); // Top cover
+        //   pdf.rect(0, pageHeight - padding, 210, padding, "F"); // Bottom cover
 
-          pageCount++;
-        }
+        //   pageCount++;
+        // }
 
         pdf.save("Resume.pdf");
       };

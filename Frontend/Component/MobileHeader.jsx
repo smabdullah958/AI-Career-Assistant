@@ -21,7 +21,7 @@ const AdminMobileHeader = () => {
         <div className="relative w-16 h-20">
           <Image
             loading="lazy"
-            src="/logo.avif"
+            src="/logo.png"
             alt="logo"
             fill
             className="object-contain"

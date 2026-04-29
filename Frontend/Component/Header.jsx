@@ -10,7 +10,7 @@ const Header = () => {
         <div className="relative size-10 2xl:size-36">
           <Image
             loading="lazy"
-            src="/logo.avif"
+            src="/logo.png"
             alt="logo"
             fill
             className="object-contain"

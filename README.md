@@ -122,7 +122,7 @@ Groq_API=your_groq_api_key
 Run backend:
 
 ```bash
-npm start
+npm run start
 ```
 
 ---

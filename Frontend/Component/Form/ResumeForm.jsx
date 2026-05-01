@@ -229,8 +229,8 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 onKeyDown={handleEnter}
                 {...register("name")}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="name"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
+                placeholder="Username"
               />
             </div>
 
@@ -242,7 +242,7 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 {...register("email")}
                 onKeyDown={handleEnter}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 placeholder="user@gmail.com"
               />
             </div>
@@ -255,7 +255,7 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 onKeyDown={handleEnter}
                 {...register("phone")}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 placeholder="03XXXXXXXX"
               />
             </div>
@@ -268,7 +268,7 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 onKeyDown={handleEnter}
                 {...register("Role")}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 placeholder="Manager"
               />
             </div>
@@ -281,7 +281,7 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 onKeyDown={handleEnter}
                 {...register("portfolio")}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 placeholder="https://www.google.com"
               />
             </div>
@@ -294,7 +294,7 @@ const ResumeForm = ({ onDataChange }) => {
               <input
                 onKeyDown={handleEnter}
                 {...register("Linkedin")}
-                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 placeholder="https://www.linkedin.com"
               />
             </div>
@@ -316,7 +316,7 @@ const ResumeForm = ({ onDataChange }) => {
               {...register("Summary")}
               placeholder="Write a Summary about yourself..."
               rows={5}
-              className="w-full border-black border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none shadow-sm"
+              className="w-full border-black border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none shadow-sm text-gray-500"
             />
             <p className="text-gray-400 text-xs mt-1">
               {summaryCharacter?.length || 0}/500 characters
@@ -343,7 +343,7 @@ const ResumeForm = ({ onDataChange }) => {
                     onKeyDown={handleEnter}
                     {...register(`Skills.${index}.value`)}
                     placeholder={`Skill ${index + 1}`}
-                    className="border border-gray-400 w-full rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="border border-gray-400 w-full rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                   />
                 </div>
 
@@ -387,7 +387,7 @@ const ResumeForm = ({ onDataChange }) => {
             >
               {/* Left side: Title, Link, GitHub */}
               <div className="flex flex-col ">
-                <h3 className="my-2">Title </h3>
+                <h3 className="my-2 text-gray-500">Title </h3>
                 {errors.Projects?.[index]?.title && (
                   <p className="text-red-500 text-sm">
                     {errors.Projects[index].title?.message}
@@ -398,10 +398,10 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Projects.${index}.title`)}
                   placeholder="Project Title"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
-                <h3 className="my-2 ">Project Link </h3>
+                <h3 className="my-2 text-gray-500">Project Link </h3>
                 {errors.Projects?.[index]?.link && (
                   <p className="text-red-500 text-sm">
                     {errors.Projects[index].link?.message}
@@ -412,10 +412,10 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Projects.${index}.link`)}
                   placeholder="Project Link"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
-                <h3 className="my-2 ">GitHub Link </h3>
+                <h3 className="my-2 text-gray-500">GitHub Link </h3>
 
                 {errors.Projects?.[index]?.Github && (
                   <p className="text-red-500 text-sm">
@@ -426,7 +426,7 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Projects.${index}.Github`)}
                   placeholder="GitHub Link"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
                 {/* Remove button */}
@@ -443,7 +443,7 @@ const ResumeForm = ({ onDataChange }) => {
               <section className="flex flex-col items-center justify-center content-center h-full ">
                 {/* Right side: Description */}
 
-                <h3 className="my-2 ">Description </h3>
+                <h3 className="my-2 text-gray-500">Description </h3>
 
                 {errors.Projects?.[index]?.description && (
                   <p className="text-red-500 text-sm">
@@ -454,7 +454,7 @@ const ResumeForm = ({ onDataChange }) => {
                   rows={6}
                   {...register(`Projects.${index}.description`)}
                   placeholder="Project Description"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none text-gray-500"
                 />
               </section>
             </section>
@@ -482,7 +482,7 @@ const ResumeForm = ({ onDataChange }) => {
               className="grid grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
             >
               <div className="flex flex-col">
-                <h3 className="my-2 ">Company Name </h3>
+                <h3 className="my-2 text-gray-500">Company Name </h3>
 
                 {errors.Experience?.[index]?.CompanyName && (
                   <p className="text-red-500 text-sm">
@@ -494,10 +494,10 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Experience.${index}.CompanyName`)}
                   placeholder="Company name"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
-                <h3 className="my-2 ">Role </h3>
+                <h3 className="my-2 text-gray-500">Role </h3>
                 {errors.Experience?.[index]?.Role && (
                   <p className="text-red-500 text-sm">
                     {errors.Experience[index].Role?.message}
@@ -508,10 +508,10 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Experience.${index}.Role`)}
                   placeholder="Role"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
-                <h3 className="my-2 ">Start Date </h3>
+                <h3 className="my-2 text-gray-500">Start Date </h3>
 
                 {errors.Experience?.[index]?.StartDate && (
                   <p className="text-red-500 text-sm">
@@ -528,10 +528,10 @@ const ResumeForm = ({ onDataChange }) => {
                   }
                   {...register(`Experience.${index}.StartDate`)}
                   placeholder="Start Date"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
-                <h3 className="my-2 ">End Date </h3>
+                <h3 className="my-2 text-gray-500">End Date </h3>
                 {errors.Experience?.[index]?.EndDate && (
                   <p className="text-red-500 text-sm">
                     {errors.Experience[index].EndDate?.message}
@@ -544,7 +544,7 @@ const ResumeForm = ({ onDataChange }) => {
                   max={new Date().toISOString().split("T")[0]}
                   {...register(`Experience.${index}.EndDate`)}
                   placeholder="End Date"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
 
                 {/* Remove button */}
@@ -560,7 +560,7 @@ const ResumeForm = ({ onDataChange }) => {
               </div>
               <section className="flex flex-col items-center justify-center content-center h-full ">
                 {/* Right side: Description */}
-                <h3 className="my-2 ">Description </h3>
+                <h3 className="my-2 text-gray-500">Description </h3>
 
                 {errors.Experience?.[index]?.Description && (
                   <p className="text-red-500 text-sm">
@@ -571,7 +571,7 @@ const ResumeForm = ({ onDataChange }) => {
                   rows={8}
                   {...register(`Experience.${index}.Description`)}
                   placeholder="Experience Description"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none text-gray-500"
                 />
               </section>
             </section>
@@ -591,7 +591,7 @@ const ResumeForm = ({ onDataChange }) => {
 
         {/* //for Education */}
         <div className="bg-slate-100 border-2 border-gray-300 rounded-2xl p-4 mb-4 shadow-lg">
-          <h1 className="text-xl text-black font-bold mb-3">Education</h1>
+          <h1 className="text-xl text-black font-bold mb-3 ">Education</h1>
 
           {educationFields.map((field, index) => (
             <section
@@ -599,7 +599,7 @@ const ResumeForm = ({ onDataChange }) => {
               className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start mb-4 bg-white p-4 rounded-xl shadow-sm"
             >
               <div className="flex flex-col">
-                <h3 className="my-2 ">Institution Name </h3>
+                <h3 className="my-2 text-gray-500">Institution Name </h3>
 
                 {errors.Education?.[index]?.nameOfInstitute && (
                   <p className="text-red-500 text-sm">
@@ -611,12 +611,12 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Education.${index}.nameOfInstitute`)}
                   placeholder="Institution name"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
               </div>
 
               <div className="flex flex-col">
-                <h3 className="my-2 ">Degree</h3>
+                <h3 className="my-2 text-gray-500">Degree</h3>
                 {errors.Education?.[index]?.degree && (
                   <p className="text-red-500 text-sm">
                     {errors.Education[index].degree?.message}
@@ -627,11 +627,11 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Education.${index}.degree`)}
                   placeholder="Degree i.e FSC"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
               </div>
               <div className="flex flex-col">
-                <h3 className="my-2 ">field Of Study </h3>
+                <h3 className="my-2 text-gray-500">field Of Study </h3>
 
                 {errors.Education?.[index]?.fieldOfStudy && (
                   <p className="text-red-500 text-sm">
@@ -642,11 +642,11 @@ const ResumeForm = ({ onDataChange }) => {
                   onKeyDown={handleEnter}
                   {...register(`Education.${index}.fieldOfStudy`)}
                   placeholder="fieldOfStudy i.e CS"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
               </div>
               <div className="flex flex-col">
-                <h3 className="my-2 "> Graduation Year</h3>
+                <h3 className="my-2 text-gray-500"> Graduation Year</h3>
                 {errors.Education?.[index]?.graduationYear && (
                   <p className="text-red-500 text-sm">
                     {errors.Education[index].graduationYear?.message}
@@ -657,7 +657,7 @@ const ResumeForm = ({ onDataChange }) => {
                   type="date"
                   {...register(`Education.${index}.graduationYear`)}
                   placeholder="Graduation Year"
-                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                 />
               </div>
               {/* Remove button */}
@@ -697,7 +697,7 @@ const ResumeForm = ({ onDataChange }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Institution */}
                 <div className="flex flex-col">
-                  <label className=" text-gray-600 my-2">
+                  <label className=" text-gray-600 my-2 text-gray-500">
                     Institution Name
                   </label>
 
@@ -711,13 +711,13 @@ const ResumeForm = ({ onDataChange }) => {
                     onKeyDown={handleEnter}
                     {...register(`Certifications.${index}.NameOfInstitute`)}
                     placeholder="Institution name"
-                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                   />
                 </div>
 
                 {/* Certificate Name */}
                 <div className="flex flex-col">
-                  <label className=" text-gray-600 my-2">
+                  <label className=" text-gray-600 my-2 text-gray-500">
                     Certificate Name
                   </label>
 
@@ -731,13 +731,15 @@ const ResumeForm = ({ onDataChange }) => {
                     onKeyDown={handleEnter}
                     {...register(`Certifications.${index}.CertifcateName`)}
                     placeholder="Certificate name"
-                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                   />
                 </div>
 
                 {/* Issue Date */}
                 <div className="flex flex-col">
-                  <label className=" text-gray-600 my-2">Issue Date</label>
+                  <label className=" text-gray-600 my-2 text-gray-500">
+                    Issue Date
+                  </label>
 
                   {errors.Certifications?.[index]?.IssueDate && (
                     <p className="text-red-500 text-sm">
@@ -750,7 +752,7 @@ const ResumeForm = ({ onDataChange }) => {
                     {...register(`Certifications.${index}.IssueDate`)}
                     //issue date must be smaller than afuture date
                     max={new Date().toISOString().split("T")[0]}
-                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-500"
                   />
                 </div>
               </div>

@@ -157,7 +157,7 @@ const InterviewPage = () => {
                 rows="1"
                 placeholder="Type your answer here..."
                 disabled={loading}
-                className="w-full bg-white text-slate-700 text-sm rounded-2xl border border-slate-200 p-4 pr-16 shadow-inner outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none min-h-[60px] flex items-center"
+                className="w-full bg-white text-slate-700 text-sm rounded-2xl border border-slate-200 p-4 pr-16 shadow-inner outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none min-h-[60px] flex items-center h-auto scroll-auto"
               />
 
               <button

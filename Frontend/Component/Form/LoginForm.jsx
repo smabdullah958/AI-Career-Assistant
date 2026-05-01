@@ -84,7 +84,7 @@ const LoginForm = ({ HideForm }) => {
               onChange={FormFunction}
               name="Email"
               value={Field.Email}
-              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-gray-500"
             />
           </div>
 
@@ -99,7 +99,7 @@ const LoginForm = ({ HideForm }) => {
               value={Field.Password}
               onChange={FormFunction}
               name="Password"
-              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+              className="border border-blue-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-gray-500"
             />
           </div>
 

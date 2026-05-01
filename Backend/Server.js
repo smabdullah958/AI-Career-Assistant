@@ -11,7 +11,7 @@ app.use(
     origin: process.env.Frontend,
     credentials: true,
   }),
-);
+);  
 let ConnectDB = require("./Config/db");
 let AuthRoute = require("./Routes/Auth");
 let ResumeRoute = require("./Routes/ResumeRoute");

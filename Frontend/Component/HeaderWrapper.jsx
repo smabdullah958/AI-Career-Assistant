@@ -15,7 +15,7 @@ const HeaderWrapper = () => {
 
   if (!isClient) return null;
 
-  return <div className="flex gap-2">{IsLoggIn ? <LogIn /> : <LogOut />}</div>;
+  return <div className="flex gap-2">{IsLoggIn ? <LogOut /> : <LogIn />}</div>;
 };
 
 export default HeaderWrapper;

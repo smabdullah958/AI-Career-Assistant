@@ -25,16 +25,16 @@ let LogInSlice=createSlice({
     state.loading = false,
     state.success = false;
     },
-    //to shwo  the logout button 
+    //to shwo  the logout button  it mean that whena user is login
     DisplayLogout:(state)=>{
-        state.IsLoggIn=false
-        localStorage.setItem("IsLoggIn","false");
-
-    },
-    //to show the login button 
-    ResetLogOutRole:(state)=>{
         state.IsLoggIn=true
         localStorage.setItem("IsLoggIn","true");
+
+    },
+    //to show the login button  it means that when a user is logout
+    ResetLogOutRole:(state)=>{
+        state.IsLoggIn=false
+        localStorage.setItem("IsLoggIn","false");
         state.UserRole=null //remove ther role when click ona  logout button
         localStorage.removeItem("UserRole") //remove ther role when click ona  logout button
        localStorage.removeItem("AICredits"); //remove the Ai credits when a user is logout brohter

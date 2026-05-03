@@ -14,7 +14,7 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage, success, Role } = useSelector(
+  let { loading, errorMessage, success} = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 

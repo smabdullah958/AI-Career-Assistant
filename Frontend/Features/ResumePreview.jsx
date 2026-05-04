@@ -7,7 +7,7 @@ import Link from "next/link";
 const ResumePreview = ({ data }) => {
   return (
     <>
-      <h1 className="md:hidden text-xl sm:text-3xl pl-10 pb-5 xl:text-4xl font-bold  text-slate-800">
+      <h1 className="md:hidden text-2xl sm:text-3xl pl-10 pb-5 xl:text-4xl font-bold  text-slate-800">
         Live Preview
       </h1>
 

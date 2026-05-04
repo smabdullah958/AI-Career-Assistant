@@ -795,7 +795,7 @@ const ResumeForm = ({ onDataChange }) => {
           >
             Generate Resume
           </button>
-          <div className=" block lg:hidden">
+          <div className=" block md:hidden">
             <DownloadPDF />
           </div>
         </div>

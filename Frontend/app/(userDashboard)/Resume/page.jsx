@@ -80,16 +80,21 @@ const page = () => {
           <RemainingAPICalls remaining={remainingCalls} />
         )}
 
-      <div className=" flex justify-between">
+      <div className=" flex justify-between ">
         <h1 className="text-xl sm:text-3xl  xl:text-4xl font-bold my-6 lg:my-10 text-slate-800">
           AI Resume Builder
         </h1>
-        <h2 className="hidden lg:block lg:my-10">
+
+        <h1 className="hidden md:block md:my-5 lg:my-10 md:text-3xl  xl:text-4xl font-bold  text-slate-800">
+          Live Preview
+        </h1>
+
+        <h2 className="hidden md:block md:my-5 lg:my-10 ">
           <DownloadPDF />
         </h2>
       </div>
 
-      <div className="grid grid-cols-1  md:grid-cols-2">
+      <div className="grid grid-cols-1  md:grid-cols-2 md:gap-10 lg:gap-16 2xl:gap-20">
         <ResumeForm onDataChange={setPreviewData} />
         <div ref={previewRef} className="lg:block my-5 ">
           {/* when loading is true than show the resume skeleton  */}

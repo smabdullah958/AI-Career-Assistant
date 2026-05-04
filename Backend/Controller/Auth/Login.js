@@ -42,7 +42,7 @@ let Login = async (req, res) => {
     console.log(remainingCalls);
     return res.status(200).json({
       message: "user is login",
-      IsLoggIn: true,
+      IsLoggIn: true, //when user is login than pass the islogin true
       Role: ExistUser.Role,
       remainingCalls,
     });

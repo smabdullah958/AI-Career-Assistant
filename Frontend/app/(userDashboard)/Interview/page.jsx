@@ -31,7 +31,7 @@ const InterviewPage = () => {
     {
       role: "ai",
       content:
-        "Who would you like to be interviewed by? (HR / Technical / CEO)",
+        "Welcome! What is your profession or field? (e.g., Software Engineer, Doctor, Digital Marketer, Teacher, Accountant, Lawyer, Data Scientist, etc.)",
     },
   ]);
 

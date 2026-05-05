@@ -22,7 +22,7 @@ const ResumePreview = ({ data }) => {
             {data.name || "User Name"}
           </h1>
           <p className="text-md font-semibold text-gray-700 mt-1 uppercase tracking-wide">
-            {data.Role || "Contact Detail"}
+            {data.Role || "User Role"}
           </p>
 
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600 mt-3">

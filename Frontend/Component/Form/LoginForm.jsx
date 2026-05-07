@@ -14,7 +14,7 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage, success} = useSelector(
+  let { loading, errorMessage, success } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 
@@ -36,14 +36,14 @@ const LoginForm = ({ HideForm }) => {
   };
 
   useEffect(() => {
-    if (!success) return console.log("success is false");
     if (success) {
-      HideForm();
+      dispatch(ResetLogInState());
+      // dispatch(DisplayLogout()); // to show the logout button
+      HideForm(); //hide the form
+
       router.push("/");
-      dispatch(DisplayLogout()); // to show the logout button
     }
-    dispatch(ResetLogInState());
-  }, [success]);
+  }, [success, dispatch, router, HideForm]);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">

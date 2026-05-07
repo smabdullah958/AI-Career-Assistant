@@ -29,7 +29,7 @@ let LogOutSlice=createSlice({
             state.loading=false,
             state.error=true
         }) 
-            .addCase(LogOutThunck.fulfilled,(state,action)=>{
+            .addCase(LogOutThunck.fulfilled,(state)=>{
             state.success=true,
             state.loading=false,
             state.error=false

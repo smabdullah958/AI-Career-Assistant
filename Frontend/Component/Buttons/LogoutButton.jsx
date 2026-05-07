@@ -8,7 +8,10 @@ import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
 
 import { ClearSignUpRole } from "@/Libraries/Slices/Auth/SignUpSlice"; //reset the signup rol
 
-import { ResetLogOutRole } from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo  the login buutton
+import {
+  ResetLogOutRole,
+  ResetLogInState,
+} from "@/Libraries/Slices/Auth/LogInSlice"; //to shwo  the login buutton and also reset the login state when click on a logout button
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
 
@@ -30,6 +33,7 @@ const LogoutButton = () => {
       router.push("/");
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
+      dispatch(ResetLogInState()); // to reset the login state
 
       dispatch(ResetRemainingCalls()); //to reset the remaining calls so that no one can access each other remining calls
 

@@ -1,5 +1,15 @@
+"use client";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 const CTA = () => {
+  //signup role
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  let IsRole = Role === "User" || UserRole === "User";
+
   return (
     <section className="py-24 px-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-center relative overflow-hidden">
       <h3 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
@@ -13,7 +23,7 @@ const CTA = () => {
 
       <div className="flex justify-center gap-4 flex-wrap">
         <Link
-          href="/Resume"
+          href={IsRole ? "/Resume" : "/SignUp"}
           className="bg-white text-indigo-600 px-8 py-4 rounded-2xl font-semibold 
           hover:bg-gray-100 transition shadow-xl hover:shadow-2xl shadow-indigo-500 text-lg hover:-translate-y-1 "
         >

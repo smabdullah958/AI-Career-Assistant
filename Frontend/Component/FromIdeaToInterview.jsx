@@ -1,6 +1,16 @@
+"use client";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const HowWorks = () => {
+  //signup role
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  let IsRole = Role === "User" || UserRole === "User";
+
   return (
     <section className=" sm:pt-16 pb-1 px-6 bg-white text-center">
       <h3 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
@@ -55,7 +65,7 @@ const HowWorks = () => {
 
       <div className="mt-6 mb-10 flex justify-center ">
         <Link
-          href="/Resume"
+          href={IsRole ? "/Resume" : "/SignUp"} //if the user is login  than it will go to resume page otherwise it will go to a signup page
           className="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 shadow-indigo-400 shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
         >
           Try Now

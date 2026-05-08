@@ -45,7 +45,7 @@ const LogoutButton = () => {
   }, [success]);
 
   let LogOutFunction = async (Data) => {
-    let res = await dispatch(LogOutThunck(Data));
+    await dispatch(LogOutThunck(Data));
   };
 
   return (
@@ -53,7 +53,7 @@ const LogoutButton = () => {
       <button
         disabled={loading}
         onClick={LogOutFunction}
-        className={`px-6 py-2 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ${
+        className={`px-6 py-2 text-white font-semibold rounded-lg shadow-md transition-all duration-200 hover:cursor-pointer ${
           loading
             ? "bg-blue-400 opacity-50 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700 active:scale-95"

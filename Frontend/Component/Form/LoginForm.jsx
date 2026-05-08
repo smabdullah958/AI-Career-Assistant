@@ -1,20 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
-import {
-  ResetLogInState,
-  DisplayLogout,
-} from "@/Libraries/Slices/Auth/LogInSlice";
+import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../Loader/ButtonLoader";
 const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage, success } = useSelector(
+  let { loading, errorMessage } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 
@@ -31,19 +28,17 @@ const LoginForm = ({ HideForm }) => {
 
   //disable button when  loading or a name or a email or a password is not
   let DisableButton = loading || !Field.Email || !Field.Password;
+
   let LogInFunction = async (Data) => {
-    await dispatch(LogInThunck(Data));
-  };
+    let result = await dispatch(LogInThunck(Data));
 
-  useEffect(() => {
-    if (success) {
-      dispatch(ResetLogInState());
-      // dispatch(DisplayLogout()); // to show the logout button
-      HideForm(); //hide the form
+    if (LogInThunck.fulfilled.match(result)) {
+      // to check that can the thunck is successfully or not if yes than replace the page to home page
+      router.replace("/");
 
-      router.push("/");
+      HideForm();
     }
-  }, [success, dispatch, router, HideForm]);
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">

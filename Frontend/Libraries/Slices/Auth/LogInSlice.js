@@ -23,7 +23,7 @@ let LogInSlice = createSlice({
   initialState,
   reducers: {
     ResetLogInState: (state) => {
-      state.errorMessage = "";
+      state.errorMessage = null;
       state.loading = false;
       state.success = false;
     },

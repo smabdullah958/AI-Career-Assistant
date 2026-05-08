@@ -117,7 +117,9 @@ const LoginForm = ({ HideForm }) => {
         <p className="text-center text-gray-400 text-sm mt-6">
           Don't have an account?{" "}
           <Link
-            onClick={HideForm}
+            onClick={() => {
+              (HideForm(), dispatch(ResetLogInState()));
+            }}
             href="/SignUp"
             className="text-blue-500 hover:text-blue-600 duration-300 transition-all hover:text-[15px]"
           >

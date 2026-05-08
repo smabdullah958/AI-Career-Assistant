@@ -44,7 +44,7 @@ let LogInSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(LogInThunck.pending, (state) => {
-        state.errorMessage = "";
+        state.errorMessage = null;
         state.loading = true;
         state.success = false;
         console.log("this is a pending state of login thunck");

@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 const HeaderWrapper = () => {
   // Get status from BOTH slices
-  const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn);
+  const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn); //get role frm
+  let IsLoggedIn = useSelector((state) => state.GlobalSlice.Role); //get role from a checklogin
   console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
   const [isClient, setIsClient] = useState(false);
   const state = useSelector((state) => state);
@@ -17,7 +18,11 @@ const HeaderWrapper = () => {
 
   if (!isClient) return null;
 
-  return <div className="flex gap-2">{IsLoggIn ? <LogOut /> : <LogIn />}</div>;
+  return (
+    <div className="flex gap-2">
+      {IsLoggIn || IsLoggedIn ? <LogOut /> : <LogIn />}
+    </div>
+  );
 };
 
 export default HeaderWrapper;

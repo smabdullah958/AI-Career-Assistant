@@ -24,8 +24,9 @@ const page = () => {
   // redirect after success
   useEffect(() => {
     if (success) {
+      console.log("any");
       router.push("/");
-      dispatch(DisplayLogout()); //to show the logout button
+      // dispatch(DisplayLogout()); //to show the logout button
     }
     dispatch(ResetSignUpState());
   }, [success]);

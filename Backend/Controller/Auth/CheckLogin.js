@@ -22,7 +22,7 @@ const CheckAuth = async (req, res) => {
     console.log("record", req.user, req.user.Role);
 
     return res.status(200).json({
-      IsLoggedIn: true,
+      IsLoggIn: true,
       Role: req.user.Role,
       RemainingCalls: record.ApiCallCount,
     });

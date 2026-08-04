@@ -1,18 +1,25 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { useDispatch, useSelector } from "react-redux";
+import CheckLoginThunk from "@/Libraries/Thuncks/Auth/CheckLoginThunck";
 function CheckLogin() {
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("useeffec is mounted");
-    const role = "any";
+  const Role = useSelector((state) => state.GlobalSlice.Role);
 
-    if (role === "Admin") {
+  // Runs once when the website opens
+  useEffect(() => {
+    dispatch(CheckLoginThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (Role === "Admin") {
       router.push("/AdminDashboard");
     }
-  }, []);
+    router.push("/");
+  }, [Role, router]);
 
   return null;
 }

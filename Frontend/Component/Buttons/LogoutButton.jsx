@@ -15,7 +15,11 @@ import {
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
 
-import { ResetRemainingCalls } from "@/Libraries/Slices/GlobalSlice"; //to reset the interview all the state
+//ResetGlobalAuth is used to reset the is loign role and oather things brher as well as the remaiin credtis brother
+import {
+  ResetRemainingCalls,
+  ResetGlobalAuth,
+} from "@/Libraries/Slices/GlobalSlice"; //to reset the interview all the state
 
 import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice"; //to reset the intrivew state
 
@@ -31,6 +35,7 @@ const LogoutButton = () => {
     if (success) {
       // so here we can reset the role and also islogin so that it show a login button
       router.push("/");
+      dispatch(ResetGlobalAuth());
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
       dispatch(ResetLogInState()); // to reset the login state

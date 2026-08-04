@@ -19,18 +19,20 @@ const CheckAuth = async (req, res) => {
       });
     }
 
-    console.log("record", req.user, req.user.Role);
+    console.log("record", req.user);
 
     return res.status(200).json({
       IsLoggIn: true,
       Role: req.user.Role,
       RemainingCalls: record.ApiCallCount,
+      ShowPopUp: true,
     });
   } catch (error) {
     console.log(error);
 
     return res.status(500).json({
       message: "Something went wrong",
+      ShowPopUp: false,
     });
   }
 };

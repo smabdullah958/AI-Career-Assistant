@@ -45,12 +45,12 @@ let SignUp = async (req, res) => {
       sameSite: "none", //  "Lax" works well on local project
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    console.log("this is tokend", token, "this is a new user ", newUser);
+    console.log("this is a new user ", newUser);
 
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
     console.log(remainingCalls);
-    console.log(newUser.Role);
+    // console.log(newUser.Role);
     res.status(200).json({
       message: "User created successfully",
       Role: newUser.Role,

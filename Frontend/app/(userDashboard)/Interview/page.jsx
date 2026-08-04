@@ -20,7 +20,11 @@ const InterviewPage = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
+  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
+  let IsRole =
+    (Role === "User" || UserRole === "User" || role === "User") &&
+    remainingCalls !== 0;
 
   const dispatch = useDispatch();
 
@@ -83,7 +87,7 @@ const InterviewPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-      {(Role === "User" || UserRole === "User") &&
+      {(Role === "User" || UserRole === "User" || role === "User") &&
         (success ||
           errorMessage ||
           remainingCalls === 0 ||

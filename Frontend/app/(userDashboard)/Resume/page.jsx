@@ -52,6 +52,8 @@ const page = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
+  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
   useEffect(() => {
     if (errorMessage) {
       toast.error(errorMessage);
@@ -71,7 +73,7 @@ const page = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
-      {(Role === "User" || UserRole === "User") &&
+      {(Role === "User" || UserRole === "User" || role === "User") &&
         (success ||
           errorMessage ||
           remainingCalls === 0 ||

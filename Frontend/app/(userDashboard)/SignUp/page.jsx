@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
-import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
+// import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/Loader/ButtonLoader";
 const page = () => {
   let dispatch = useDispatch();
@@ -15,7 +15,7 @@ const page = () => {
     Email: "",
     Role: "User",
   });
-  let { loading, errorMessage, success, Role } = useSelector(
+  let { loading, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
   );
 

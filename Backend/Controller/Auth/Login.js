@@ -22,6 +22,7 @@ let Login = async (req, res) => {
       {
         Email,
         UserId: ExistUser._id,
+        Role: ExistUser.Role,
       },
       process.env.SecretKey,
       {

@@ -15,7 +15,7 @@ const page = () => {
     Email: "",
     Role: "User",
   });
-  let { loading, errorMessage, success } = useSelector(
+  let { loading, errorMessage, success, Role } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
   );
 
@@ -48,7 +48,7 @@ const page = () => {
     }
     SetCheckPassword("");
     let res = await dispatch(SignUpThunck(Data));
-    console.log(res);
+    // console.log(res);
   };
 
   useEffect(() => {

@@ -24,7 +24,7 @@ let SignUp = async (req, res) => {
       Name,
       Email,
       Password: hashPassword,
-      Role,
+      Role: "User",
     });
     await newUser.save();
 
@@ -34,6 +34,7 @@ let SignUp = async (req, res) => {
       {
         Email,
         UserId: newUser._id,
+        Role: newUser.Role,
       },
       key,
       { expiresIn: "1w" },
@@ -41,7 +42,7 @@ let SignUp = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none", // ✅ "Lax" works well on local project
+      sameSite: "none", //  "Lax" works well on local project
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     console.log("this is tokend", token, "this is a new user ", newUser);
@@ -49,10 +50,12 @@ let SignUp = async (req, res) => {
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
     console.log(remainingCalls);
+    console.log(newUser.Role);
     res.status(200).json({
       message: "User created successfully",
-      Role,
+      Role: newUser.Role,
       remainingCalls,
+      IsLoggIn: true,
     });
   } catch (error) {
     console.error(error);

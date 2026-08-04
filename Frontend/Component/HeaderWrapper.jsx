@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 const HeaderWrapper = () => {
   // Get status from BOTH slices
   const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn);
-
+  console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
   const [isClient, setIsClient] = useState(false);
+  const state = useSelector((state) => state);
 
+  console.log(state);
   useEffect(() => {
     setIsClient(true);
   }, []);

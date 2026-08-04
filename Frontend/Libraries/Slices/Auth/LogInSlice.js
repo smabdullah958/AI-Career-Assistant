@@ -1,21 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
 
-const savedIsLoggedIn =
-  typeof window !== "undefined"
-    ? localStorage.getItem("IsLoggIn") === "true"
-    : false;
-
-//store role ina  localstorage
-const savedRole =
-  typeof window !== "undefined" ? localStorage.getItem("UserRole") : null;
-
 let initialState = {
   loading: false,
   errorMessage: "",
   success: false,
-  IsLoggIn: savedIsLoggedIn,
-  UserRole: savedRole,
+  IsLoggIn: false,
+  UserRole: null,
 };
 
 let LogInSlice = createSlice({
@@ -28,17 +19,17 @@ let LogInSlice = createSlice({
       state.success = false;
     },
     //to shwo  the logout button  it mean that whena user is login
-    DisplayLogout: (state) => {
-      state.IsLoggIn = true;
-      localStorage.setItem("IsLoggIn", "true");
+    DisplayLogout: (state, action) => {
+      console.log("DisplayLogout Payload:", action.payload);
+      state.IsLoggIn = action?.payload?.IsLoggIn;
+      state.UserRole = action?.payload?.Role;
+      console.log(state.IsLoggIn, state.UserRole);
     },
     //to show the login button  it means that when a user is logout
     ResetLogOutRole: (state) => {
       state.IsLoggIn = false;
-      localStorage.setItem("IsLoggIn", "false");
       state.UserRole = null; //remove ther role when click ona  logout button
-      localStorage.removeItem("UserRole"); //remove ther role when click ona  logout button
-      localStorage.removeItem("AICredits"); //remove the Ai credits when a user is logout brohter
+      console.log(state.IsLoggIn, state.UserRole);
     },
   },
   extraReducers: (builder) => {
@@ -60,10 +51,12 @@ let LogInSlice = createSlice({
         state.errorMessage = "";
         state.loading = false;
         state.success = true;
-        localStorage.setItem("IsLoggIn", action?.payload?.IsLoggIn);
         state.UserRole = action?.payload?.Role;
-        localStorage.setItem("UserRole", action?.payload?.Role); //  Save role ina localstorage
-        console.log("this is a fulfilled state of login thunck");
+        console.log(
+          "this is a fulfilled state of login thunck",
+          state.UserRole,
+          state.IsLoggIn,
+        );
       });
   },
 });

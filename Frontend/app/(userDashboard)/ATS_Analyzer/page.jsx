@@ -29,16 +29,19 @@ const page = () => {
     }
   }, [success, loading]);
 
-  // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
-  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
+  // get role remainingCalls from a global slice and also here it is used to show the remining number of a calls role froma gloabl slice and also it run when we can open  website or  reload a website
+  let {
+    remainingCalls,
+    ShowPopUp,
+    success: Success,
+    Role: role,
+  } = useSelector((state) => state.GlobalSlice);
 
   //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
   let { Role } = useSelector((state) => state.SignUpSlice);
 
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
-
-  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
 
   //show the analysiz skeleton sekeleton when move to a remuse section
   const [mounted, setMounted] = useState(false);
@@ -66,6 +69,7 @@ const page = () => {
     <div className="xl:min-h-screen 2xl:overflow-y-auto">
       {(Role === "User" || UserRole === "User" || role === "User") &&
         (success ||
+          Success || //here the Succes is come from a global slice
           errorMessage ||
           remainingCalls === 0 ||
           //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother

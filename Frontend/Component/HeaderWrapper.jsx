@@ -7,7 +7,7 @@ const HeaderWrapper = () => {
   // Get status from BOTH slices
   const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn); //get role frm
   let IsLoggedIn = useSelector((state) => state.GlobalSlice.Role); //get role from a checklogin
-  console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
+  // console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
   const [isClient, setIsClient] = useState(false);
   const state = useSelector((state) => state);
 

@@ -21,7 +21,7 @@ let GlobalSlice = createSlice({
     // Update remaining credits
     setRemainingCalls: (state, action) => {
       state.remainingCalls = action.payload;
-      state.ShowPopUp = true;
+      state.ShowPopUp = action.payload?.ShowPopUp || true;
     },
 
     // Reset credits
@@ -35,6 +35,7 @@ let GlobalSlice = createSlice({
       state.IsLoggIn = false;
       state.Role = null;
       state.remainingCalls = 0;
+      state.ShowPopUp = false;
     },
   },
 
@@ -51,12 +52,13 @@ let GlobalSlice = createSlice({
         state.IsLoggIn = action.payload?.IsLoggIn;
         state.Role = action.payload?.Role;
         state.remainingCalls = action.payload?.RemainingCalls;
-        console.log(
-          "the role and remaining calls and islogin is ",
-          state.IsLoggIn,
-          state.Role,
-          state.remainingCalls,
-        );
+        state.ShowPopUp = action.payload?.ShowPopUp;
+        // console.log(
+        //   "the role and remaining calls and islogin is ",
+        //   state.IsLoggIn,
+        //   state.Role,
+        //   state.remainingCalls,
+        // );
       })
 
       .addCase(CheckLoginThunk.rejected, (state, action) => {

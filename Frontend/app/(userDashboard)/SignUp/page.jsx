@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
 // import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/Loader/ButtonLoader";
+import { GoogleLogin } from "@react-oauth/google";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -124,7 +125,7 @@ const page = () => {
         <button
           disabled={DisableButton}
           onClick={() => SignupFunction({ ...field, Role: "User" })}
-          className={`w-full text-white font-semibold py-3 rounded-lg shadow-md mt-5 transition-all duration-200 ${
+          className={`w-full text-white font-semibold py-3 rounded-lg shadow-md my-5 sm:my-4 transition-all duration-200   ${
             DisableButton
               ? "bg-blue-200 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 active:scale-95"
@@ -132,6 +133,14 @@ const page = () => {
         >
           {loading ? <ButtonLoader /> : "Sign Up"}
         </button>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
       </div>
     </div>
   );

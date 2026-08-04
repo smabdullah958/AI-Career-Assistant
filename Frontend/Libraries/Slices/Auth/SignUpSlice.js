@@ -28,7 +28,7 @@ let SignUpSlice = createSlice({
         state.errorMessage = "",
         state.loading = false,
         state.Role=action?.payload?.Role;
-        console.log(state.Role)
+        // console.log(state.Role)
 
       })
     .addCase(SignUpThunck.pending,(state)=>{

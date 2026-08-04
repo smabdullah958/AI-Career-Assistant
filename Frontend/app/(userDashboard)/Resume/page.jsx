@@ -23,8 +23,16 @@ const page = () => {
     (state) => state.ResumeSlice,
   );
 
-  // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
-  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
+  // // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
+  // let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
+
+  // get role remainingCalls from a global slice and also here it is used to show the remining number of a calls role froma gloabl slice and also it run when we can open  website or  reload a website
+  let {
+    remainingCalls,
+    ShowPopUp,
+    success: Success,
+    Role: role,
+  } = useSelector((state) => state.GlobalSlice);
 
   //to preview the data in resume preview section
   const [previewData, setPreviewData] = useState({});
@@ -52,7 +60,7 @@ const page = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+  // let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
 
   useEffect(() => {
     if (errorMessage) {
@@ -75,6 +83,7 @@ const page = () => {
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       {(Role === "User" || UserRole === "User" || role === "User") &&
         (success ||
+          Success || //here the Successs is come from a global slice it is run wehna  user is reload a webite
           errorMessage ||
           remainingCalls === 0 ||
           //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother

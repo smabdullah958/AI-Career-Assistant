@@ -12,7 +12,7 @@ let SignUpThunck = createAsyncThunk(
       let result = await axios.post(`${url}/Auth/signup`, Data, {
         withCredentials: true,
       });
-      console.log("user is reggister");
+      // console.log("user is reggister");
       dispatch(
         //to show a logout button when a user is signup
         DisplayLogout({
@@ -20,7 +20,7 @@ let SignUpThunck = createAsyncThunk(
           Role: result.data.Role,
         }),
       );
-      console.log("result data ", result.data?.IsLoggIn, result.data?.Role);
+      // console.log("result data ", result.data?.IsLoggIn, result.data?.Role);
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
       return result.data;
     } catch (error) {

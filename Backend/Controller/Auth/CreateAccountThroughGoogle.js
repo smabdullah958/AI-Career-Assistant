@@ -18,7 +18,7 @@ const CreateAccountThroughGoogle = async (req, res) => {
     if (user) {
       return res
         .status(400)
-        .json({ message: "Your Google account already exists. Please login." });
+        .json({ message: "Your account already exists. Please login." });
     }
 
     user = await User.create({

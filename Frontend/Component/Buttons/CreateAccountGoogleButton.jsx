@@ -8,34 +8,14 @@ import { useRouter } from "next/navigation";
 import GoogleThunk from "@/Libraries/Thuncks/Auth/CreateAccountGoogleThunck";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import axios from "axios";
 const GoogleButton = ({ Provider = "Google" }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  let { error, errorMessage } = useSelector((state) => state.GoogleSlice);
+  let { errorMessage } = useSelector((state) => state.GoogleSlice);
 
-  // const GoogleSuccess = async (credentialResponse) => {
-  //   try {
-  //     const user = jwtDecode(credentialResponse.credential);
-  //     console.log("decode the google id", user);
-  //     const result = await dispatch(
-  //       GoogleThunk({
-  //         Name: user.name,
-  //         Email: user.email,
-  //         GoogleId: user.sub,
-  //         Provider,
-  //       }),
-  //     );
-
-  //     if (GoogleThunk.fulfilled.match(result)) {
-  //       router.replace("/");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const login = useGoogleLogin({
+  const signup = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         const { data } = await axios.get(
@@ -80,7 +60,7 @@ const GoogleButton = ({ Provider = "Google" }) => {
   return (
     <div className="mt-3">
       <button
-        onClick={() => login()}
+        onClick={() => signup()}
         className="
     w-full
     mt-3

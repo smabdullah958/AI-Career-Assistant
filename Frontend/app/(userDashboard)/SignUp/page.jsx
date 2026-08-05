@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
 // import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/Loader/ButtonLoader";
-import { GoogleLogin } from "@react-oauth/google";
+import GoogleButton from "@/Component/Buttons/GoogleButton";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -15,6 +15,7 @@ const page = () => {
     Password: "",
     Email: "",
     Role: "User",
+    Provider: "Local",
   });
   let { loading, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
@@ -43,11 +44,14 @@ const page = () => {
   let [CheckPassword, SetCheckPassword] = useState("");
 
   let SignupFunction = async (Data) => {
-    // for check the length ofa  passsword
-    if (field.Password?.length < 6) {
-      SetCheckPassword("Password must be at least 6 character");
-      return;
+    // if provider is local it means tht user is not signup through google  than check the  length ofa  passsword
+    if (field.Provider === "Local") {
+      if (field.Password?.length < 6) {
+        SetCheckPassword("Password must be at least 6 character");
+        return;
+      }
     }
+
     SetCheckPassword("");
     let res = await dispatch(SignUpThunck(Data));
     // console.log(res);
@@ -133,14 +137,7 @@ const page = () => {
         >
           {loading ? <ButtonLoader /> : "Sign Up"}
         </button>
-        <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
+        <GoogleButton />
       </div>
     </div>
   );

@@ -1,64 +1,50 @@
-// "use client";
-
-// import { FcGoogle } from "react-icons/fc";
-
-// const GoogleButton = () => {
-//   return (
-//     <button
-//       type="button"
-//       className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
-//     >
-//       <FcGoogle size={22} />
-//       Continue with Google
-//     </button>
-//   );
-// };
-
-// export default GoogleButton;
-
 "use client";
 
-import { FcGoogle } from "react-icons/fc";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
-const GoogleButton = ({ onClick, loading = false }) => {
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+
+import GoogleThunk from "@/Libraries/Thuncks/Auth/GoogleThunck";
+
+const GoogleButton = ({ Provider = "Google" }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const GoogleSuccess = async (credentialResponse) => {
+    try {
+      const user = jwtDecode(credentialResponse.credential);
+      console.log("decode the google id", user);
+      const result = await dispatch(
+        GoogleThunk({
+          Name: user.name,
+          Email: user.email,
+          GoogleId: user.sub,
+          Provider,
+        }),
+      );
+
+      if (GoogleThunk.fulfilled.match(result)) {
+        router.replace("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={loading}
-      className="
-        group
-        mt-2
-        flex
-        w-full
-        items-center
-        justify-center
-        gap-3
-        rounded-lg
-        border
-        border-blue-200
-        bg-white
-        px-4
-        py-3
-        font-medium
-        text-blue-700
-        shadow-sm
-        transition-all
-        duration-300
-        hover:border-blue-500
-        hover:bg-blue-50
-        hover:shadow-md
-        active:scale-[0.98]
-        disabled:cursor-not-allowed
-        disabled:opacity-60
-      "
-    >
-      <div className="rounded-full bg-white p-1 shadow-sm">
-        <FcGoogle size={22} />
-      </div>
-
-      <span className="text-sm font-semibold">Continue with Google</span>
-    </button>
+    <div className="mt-3">
+      <GoogleLogin
+        theme="outline"
+        size="large"
+        width="100%"
+        text="continue_with"
+        shape="rectangular"
+        onSuccess={GoogleSuccess}
+        onError={() => console.log("Google Login Failed")}
+      />
+    </div>
   );
 };
 

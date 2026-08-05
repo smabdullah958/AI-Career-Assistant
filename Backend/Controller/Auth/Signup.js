@@ -8,10 +8,17 @@ let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let SignUp = async (req, res) => {
   try {
-    let { Name, Email, Password, Role } = req.body;
-    if (!Name || !Email || !Password) {
+    let { Name, Email, Password, Role, Provider } = req.body;
+    if (!Name || !Email || !Password || !Provider) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
+    if (Password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "passwod must be at least 6 character" });
+    }
+
     let user = await userModel.findOne({ Email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
@@ -25,11 +32,12 @@ let SignUp = async (req, res) => {
       Email,
       Password: hashPassword,
       Role: "User",
+      Provider,
     });
     await newUser.save();
 
     console.log("user id : " + newUser._id);
-
+    //generate token
     let token = jwt.sign(
       {
         Email,
@@ -39,6 +47,7 @@ let SignUp = async (req, res) => {
       key,
       { expiresIn: "1w" },
     );
+    //stoer incooke
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,

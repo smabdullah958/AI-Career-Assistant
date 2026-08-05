@@ -9,9 +9,7 @@ const HeaderWrapper = () => {
   let IsLoggedIn = useSelector((state) => state.GlobalSlice.Role); //get role from a checklogin
   // console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
   const [isClient, setIsClient] = useState(false);
-  const state = useSelector((state) => state);
 
-  console.log(state);
   useEffect(() => {
     setIsClient(true);
   }, []);

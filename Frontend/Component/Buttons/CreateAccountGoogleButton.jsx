@@ -1,8 +1,7 @@
 "use client";
 
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
-
+import { useGoogleLogin } from "@react-oauth/google";
+import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -15,26 +14,62 @@ const GoogleButton = ({ Provider = "Google" }) => {
 
   let { error, errorMessage } = useSelector((state) => state.GoogleSlice);
 
-  const GoogleSuccess = async (credentialResponse) => {
-    try {
-      const user = jwtDecode(credentialResponse.credential);
-      console.log("decode the google id", user);
-      const result = await dispatch(
-        GoogleThunk({
-          Name: user.name,
-          Email: user.email,
-          GoogleId: user.sub,
-          Provider,
-        }),
-      );
+  // const GoogleSuccess = async (credentialResponse) => {
+  //   try {
+  //     const user = jwtDecode(credentialResponse.credential);
+  //     console.log("decode the google id", user);
+  //     const result = await dispatch(
+  //       GoogleThunk({
+  //         Name: user.name,
+  //         Email: user.email,
+  //         GoogleId: user.sub,
+  //         Provider,
+  //       }),
+  //     );
 
-      if (GoogleThunk.fulfilled.match(result)) {
-        router.replace("/");
+  //     if (GoogleThunk.fulfilled.match(result)) {
+  //       router.replace("/");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const { data } = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          },
+        );
+
+        console.log(data);
+
+        const result = await dispatch(
+          GoogleThunk({
+            Name: data.name,
+            Email: data.email,
+            GoogleId: data.sub,
+            Provider,
+          }),
+        );
+
+        if (GoogleThunk.fulfilled.match(result)) {
+          router.replace("/");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    },
+
+    onError: () => {
+      console.log("some thing went wrong");
+    },
+  });
 
   useEffect(() => {
     if (errorMessage) {
@@ -44,15 +79,33 @@ const GoogleButton = ({ Provider = "Google" }) => {
 
   return (
     <div className="mt-3">
-      <GoogleLogin
-        theme="outline"
-        size="large"
-        width="100%"
-        text="continue_with"
-        shape="rectangular"
-        onSuccess={GoogleSuccess}
-        onError={() => console.log("Google Login Failed")}
-      />
+      <button
+        onClick={() => login()}
+        className="
+    w-full
+    mt-3
+    flex
+    items-center
+    justify-center
+    gap-3
+    rounded-lg
+    border
+    border-blue-200
+    bg-white
+    py-3
+    text-blue-700
+    font-semibold
+    shadow-sm
+    transition
+    duration-300
+    hover:bg-blue-50
+    hover:border-blue-400
+    active:scale-95
+  "
+      >
+        <FcGoogle size={24} />
+        Continue with Google
+      </button>
     </div>
   );
 };

@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { ResetLogOutState } from "@/Libraries/Slices/Auth/LogOutSlice";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
-import { ClearRole } from "@/Libraries/Slices/Auth/GoogleSlice"; //clear the role if a create accoung the a google
+import { ClearRole } from "@/Libraries/Slices/Auth/CreateAccountGoogleSlice"; //clear the role if a create accoung the a google
+import { ClearUserRole } from "@/Libraries/Slices/Auth/LogInWithGoogle"; //to clear a user role
 
 import { ClearSignUpRole } from "@/Libraries/Slices/Auth/SignUpSlice"; //reset the signup rol
 
@@ -41,6 +42,7 @@ const LogoutButton = () => {
       dispatch(ResetLogOutState());
       dispatch(ResetLogInState()); // to reset the login state
       dispatch(ClearRole()); //clear role if create accoung through google
+      dispatch(ClearUserRole()); //clear the user role
 
       dispatch(ResetRemainingCalls()); //to reset the remaining calls so that no one can access each other remining calls
 

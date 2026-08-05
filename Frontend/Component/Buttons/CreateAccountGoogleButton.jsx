@@ -3,14 +3,17 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-import GoogleThunk from "@/Libraries/Thuncks/Auth/GoogleThunck";
-
+import GoogleThunk from "@/Libraries/Thuncks/Auth/CreateAccountGoogleThunck";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 const GoogleButton = ({ Provider = "Google" }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  let { error, errorMessage } = useSelector((state) => state.GoogleSlice);
 
   const GoogleSuccess = async (credentialResponse) => {
     try {
@@ -32,6 +35,12 @@ const GoogleButton = ({ Provider = "Google" }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+  }, [errorMessage]);
 
   return (
     <div className="mt-3">

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
 // import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/Loader/ButtonLoader";
-import GoogleButton from "@/Component/Buttons/GoogleButton";
+import GoogleButton from "@/Component/Buttons/CreateAccountGoogleButton";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();

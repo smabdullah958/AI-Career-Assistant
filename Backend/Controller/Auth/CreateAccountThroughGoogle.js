@@ -8,7 +8,7 @@ const CreateAccountThroughGoogle = async (req, res) => {
 
     if (!Name || !Email || !GoogleId || !Provider) {
       return res.status(400).json({
-        message: "all field are required",
+        message: "Required information is missing. Please try again.",
       });
     }
 
@@ -16,23 +16,22 @@ const CreateAccountThroughGoogle = async (req, res) => {
     let user = await User.findOne({ Email });
 
     if (user) {
-      return res.status(400).json({ message: "user is already exist" });
+      return res
+        .status(400)
+        .json({ message: "Your Google account already exists. Please login." });
     }
 
-    // if user is not exist than  Create new account
-    if (!user) {
-      user = await User.create({
-        Name,
-        Email,
-        GoogleId,
-        Provider,
-        Password: null,
-        Role: "User",
-      });
+    user = await User.create({
+      Name,
+      Email,
+      GoogleId,
+      Provider,
+      Password: null,
+      Role: "User",
+    });
 
-      // Give free credits only once
-      await GetCreditsForRegistration(user._id);
-    }
+    // Give free credits only once
+    await GetCreditsForRegistration(user._id);
 
     // Generate JWT
     const token = jwt.sign(

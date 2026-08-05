@@ -1,0 +1,88 @@
+// it is used to get credits for login
+let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
+let UserModel = require("../../Model/Auth");
+let jwt = require("jsonwebtoken");
+
+let LogInThroughGoogle = async (req, res) => {
+  try {
+    let { Email, GoogleId, Provider } = req.body;
+
+    // Validation
+    if (!Email || !GoogleId) {
+      console.log("allf ield are required");
+
+      return res.status(400).json({
+        message: "Required information is missing. Please try again.",
+      });
+    }
+
+    // Check user
+    let ExistUser = await UserModel.findOne({ Email });
+
+    if (!ExistUser) {
+      console.log("account not found");
+
+      return res.status(400).json({
+        message: "No account found. Please  create your account first.",
+      });
+    }
+
+    // Check provider
+    if (ExistUser.Provider !== "Google") {
+      console.log("user is not login with a google ");
+
+      return res.status(400).json({
+        message:
+          "This account was created using email and password. Please sign in with your password instead of Google.",
+      });
+    }
+
+    // Verify GoogleId
+    if (ExistUser.GoogleId !== GoogleId) {
+      console.log("google vaerification is failed");
+      return res.status(401).json({
+        message:
+          "Google account verification failed. Please try signing in again.",
+      });
+    }
+
+    // Generate JWT
+    let token = jwt.sign(
+      {
+        Email: ExistUser.Email,
+        UserId: ExistUser._id,
+        Role: ExistUser.Role,
+      },
+      process.env.SecretKey,
+      {
+        expiresIn: "1w",
+      },
+    );
+
+    // Save Cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    // Get Remaining Credits
+    let remainingCalls = await GetCreditsForRegistration(ExistUser._id);
+
+    return res.status(200).json({
+      message: "Google login successful",
+      IsLoggIn: true,
+      Role: ExistUser.Role,
+      remainingCalls,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+};
+
+module.exports = LogInThroughGoogle;

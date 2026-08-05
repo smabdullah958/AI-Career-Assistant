@@ -1,49 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
-import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
+import GoogleThunck from "@/Libraries/Thuncks/Auth/CreateAccountGoogleThunck";
 
 let initialState = {
   errorMessage: "",
   loading: false,
   success: false,
+  error:false,
   Role:null,
 };
 
-let SignUpSlice = createSlice({
+let GoogleSlice = createSlice({
   name: "signupslice",
   initialState,
   reducers: {
-    ResetSignUpState: (state) => {
+    ResetState: (state) => {
       state.errorMessage = "",
     state.loading = false,
     state.success = false;
+    state.error=false;
     },
-    ClearSignUpRole:(state)=>{
+    ClearRole:(state)=>{
       state.Role=null;
     }
   },
   extraReducers: (builder) => {
     builder
-    .addCase(SignUpThunck.fulfilled, (state, action) => {
+    .addCase(GoogleThunck.fulfilled, (state, action) => {
       state.success = true,
         state.errorMessage = "",
         state.loading = false,
         state.Role=action?.payload?.Role;
-        // console.log(state.Role)
-
+      state.error=false
+        
       })
-    .addCase(SignUpThunck.pending,(state)=>{
+    .addCase(GoogleThunck.pending,(state)=>{
         state.success=false,
         state.loading=true,
         state.errorMessage=""
+              state.error=false
+
     })
-    .addCase(SignUpThunck.rejected,(state,action)=>{
+    .addCase(GoogleThunck.rejected,(state,action)=>{
         state.success=false,
         state.loading=false,
         state.errorMessage=action?.payload
+        state.error=true
+
     })
   },
 });
 
 
-export let {ResetSignUpState,ClearSignUpRole}=SignUpSlice.actions;
-export default SignUpSlice.reducer
+export let {ResetState,ClearRole}=GoogleSlice.actions;
+export default GoogleSlice.reducer

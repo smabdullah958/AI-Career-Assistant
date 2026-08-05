@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { ResetLogOutState } from "@/Libraries/Slices/Auth/LogOutSlice";
 import LogOutThunck from "@/Libraries/Thuncks/Auth/LogOutThunck";
+import { ClearRole } from "@/Libraries/Slices/Auth/CreateAccountGoogleSlice"; //clear the role if a create accoung the a google
+import { ClearUserRole } from "@/Libraries/Slices/Auth/LogInWithGoogle"; //to clear a user role
 
 import { ClearSignUpRole } from "@/Libraries/Slices/Auth/SignUpSlice"; //reset the signup rol
 
@@ -15,7 +17,11 @@ import {
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice"; //to reset the resume all the state
 
-import { ResetRemainingCalls } from "@/Libraries/Slices/GlobalSlice"; //to reset the interview all the state
+//ResetGlobalAuth is used to reset the is loign role and oather things brher as well as the remaiin credtis brother
+import {
+  ResetRemainingCalls,
+  ResetGlobalAuth,
+} from "@/Libraries/Slices/GlobalSlice"; //to reset the interview all the state
 
 import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice"; //to reset the intrivew state
 
@@ -31,9 +37,12 @@ const LogoutButton = () => {
     if (success) {
       // so here we can reset the role and also islogin so that it show a login button
       router.push("/");
+      dispatch(ResetGlobalAuth());
       dispatch(ResetLogOutRole()); //to show the login button
       dispatch(ResetLogOutState());
       dispatch(ResetLogInState()); // to reset the login state
+      dispatch(ClearRole()); //clear role if create accoung through google
+      dispatch(ClearUserRole()); //clear the user role
 
       dispatch(ResetRemainingCalls()); //to reset the remaining calls so that no one can access each other remining calls
 

@@ -18,6 +18,8 @@ const ResumeAnalyzer = () => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
+  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
   //remainingCalls is a number of  a remining api calls it is used here to hide the button
   let { remainingCalls } = useSelector((state) => state.GlobalSlice);
 
@@ -63,7 +65,7 @@ const ResumeAnalyzer = () => {
     formState.Role.trim() !== "" &&
     formState.File !== null &&
     formState.Experience &&
-    (Role === "User" || UserRole === "User") &&
+    (Role === "User" || UserRole === "User" || role === "User") &&
     remainingCalls !== 0; //remainingCalls is a number of  aremining api calls it is used here to hide the button
 
   // Handle input fildes

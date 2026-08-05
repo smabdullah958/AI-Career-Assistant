@@ -194,11 +194,15 @@ const ResumeForm = ({ onDataChange }) => {
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
+  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
   // get remainingCalls from a Global slice and also here it is used to hide the button
 
   let { remainingCalls } = useSelector((state) => state.GlobalSlice);
 
-  let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
+  let IsRole =
+    (Role === "User" || UserRole === "User" || role === "User") &&
+    remainingCalls !== 0;
 
   //when user press enter go to a next field
   const handleEnter = (e) => {

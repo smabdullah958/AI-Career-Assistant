@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
 import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../Loader/ButtonLoader";
+import LoginWithGoogle from "../Buttons/LoginWithGoogle";
+
 const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -111,6 +113,8 @@ const LoginForm = ({ HideForm }) => {
           >
             {loading ? <ButtonLoader /> : "Login"}
           </button>
+
+          <LoginWithGoogle />
         </form>
 
         {/* Signup redirect */}

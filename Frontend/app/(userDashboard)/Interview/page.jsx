@@ -13,14 +13,25 @@ const InterviewPage = () => {
     (state) => state.InterviewSlice,
   );
 
-  let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
+  // get role remainingCalls from a global slice and also here it is used to show the remining number of a calls role froma gloabl slice and also it run when we can open  website or  reload a website
+  let {
+    remainingCalls,
+    ShowPopUp,
+    success: Success,
+    Role: role,
+  } = useSelector((state) => state.GlobalSlice);
+
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);
 
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = (Role === "User" || UserRole === "User") && remainingCalls !== 0;
+  // let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
+  let IsRole =
+    (Role === "User" || UserRole === "User" || role === "User") &&
+    remainingCalls !== 0;
 
   const dispatch = useDispatch();
 
@@ -83,8 +94,9 @@ const InterviewPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-      {(Role === "User" || UserRole === "User") &&
+      {(Role === "User" || UserRole === "User" || role === "User") &&
         (success ||
+          Success ||
           errorMessage ||
           remainingCalls === 0 ||
           //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother

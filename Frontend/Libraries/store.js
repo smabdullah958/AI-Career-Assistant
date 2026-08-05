@@ -4,6 +4,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import SignUpSlice from "@/Libraries/Slices/Auth/SignUpSlice";
 import LogInSlice from "@/Libraries/Slices/Auth/LogInSlice";
 import LogOutSlice from "@/Libraries/Slices/Auth/LogOutSlice";
+import GoogleSlice from "@/Libraries/Slices/Auth/CreateAccountGoogleSlice";
+import LogInWithGoogleSlice from "@/Libraries/Slices/Auth/LogInWithGoogle"
 
 // for generating resume
 import ResumeSlice from "@/Libraries/Slices/Resume/ResumeSlice";
@@ -21,6 +23,8 @@ export let store = configureStore({
     SignUpSlice,
     LogInSlice,
     LogOutSlice,
+    GoogleSlice,  //creat acount through a google brtohe r
+    LogInWithGoogleSlice, //login witha google
     ResumeSlice,
     InterviewSlice,
     AnalyzeSlice,

@@ -14,23 +14,28 @@ import Header from "@/Component/Header";
 import MobileHeader from "@/Component/MobileHeader";
 import Footer from "@/Component/Footer";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <StoreProvider>
-          <CheckLogin />
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        >
+          <StoreProvider>
+            <CheckLogin />
 
-          {/* header and also mobile heaer */}
-          <MobileHeader />
-          <Header />
+            {/* header and also mobile heaer */}
+            <MobileHeader />
+            <Header />
 
-          {children}
-
-          {/* toast an also foother */}
-          <Toaster position="top-center" reverseOrder={false} />
-          <Footer />
-        </StoreProvider>
+            {children}
+            {/* toast an also foother */}
+            <Toaster position="top-center" reverseOrder={false} />
+            <Footer />
+          </StoreProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

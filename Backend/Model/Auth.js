@@ -11,12 +11,19 @@ let Schema = new mongoose.Schema({
   },
   Password: {
     type: String,
-    required: true,
-    min: 6,
+    default: null,
   },
   Role: {
     type: String,
     enum: ["User"],
+  },
+  GoogleId: {
+    type: String,
+  },
+  Provider: {
+    type: String,
+    enum: ["Local", "Google"],
+    default: "Local",
   },
 });
 

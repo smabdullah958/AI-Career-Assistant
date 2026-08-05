@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import SignUpThunck from "@/Libraries/Thuncks/Auth/SignUpThunk";
 import { useRouter } from "next/navigation";
 import { ResetSignUpState } from "@/Libraries/Slices/Auth/SignUpSlice";
-import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
+// import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "@/Component/Loader/ButtonLoader";
+import GoogleButton from "@/Component/Buttons/CreateAccountGoogleButton";
 const page = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -14,6 +15,7 @@ const page = () => {
     Password: "",
     Email: "",
     Role: "User",
+    Provider: "Local",
   });
   let { loading, errorMessage, success } = useSelector(
     (state) => state.SignUpSlice, //SignUpSlice is come from a store
@@ -24,8 +26,9 @@ const page = () => {
   // redirect after success
   useEffect(() => {
     if (success) {
+      console.log("any");
       router.push("/");
-      dispatch(DisplayLogout()); //to show the logout button
+      // dispatch(DisplayLogout()); //to show the logout button
     }
     dispatch(ResetSignUpState());
   }, [success]);
@@ -41,14 +44,17 @@ const page = () => {
   let [CheckPassword, SetCheckPassword] = useState("");
 
   let SignupFunction = async (Data) => {
-    // for check the length ofa  passsword
-    if (field.Password?.length < 6) {
-      SetCheckPassword("Password must be at least 6 character");
-      return;
+    // if provider is local it means tht user is not signup through google  than check the  length ofa  passsword
+    if (field.Provider === "Local") {
+      if (field.Password?.length < 6) {
+        SetCheckPassword("Password must be at least 6 character");
+        return;
+      }
     }
+
     SetCheckPassword("");
     let res = await dispatch(SignUpThunck(Data));
-    console.log(res);
+    // console.log(res);
   };
 
   useEffect(() => {
@@ -123,7 +129,7 @@ const page = () => {
         <button
           disabled={DisableButton}
           onClick={() => SignupFunction({ ...field, Role: "User" })}
-          className={`w-full text-white font-semibold py-3 rounded-lg shadow-md mt-5 transition-all duration-200 ${
+          className={`w-full text-white font-semibold py-3 rounded-lg shadow-md my-5 sm:my-4 transition-all duration-200   ${
             DisableButton
               ? "bg-blue-200 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 active:scale-95"
@@ -131,6 +137,7 @@ const page = () => {
         >
           {loading ? <ButtonLoader /> : "Sign Up"}
         </button>
+        <GoogleButton />
       </div>
     </div>
   );

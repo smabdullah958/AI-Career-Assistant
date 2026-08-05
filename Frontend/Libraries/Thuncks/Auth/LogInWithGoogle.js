@@ -5,11 +5,11 @@ import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
-let SignUpThunck = createAsyncThunk(
-  "SignupThunck",
+let LogInWithGoogleThunck = createAsyncThunk(
+  "Loginwithgoglethunck",
   async (Data, { dispatch, rejectWithValue }) => {
     try {
-      let result = await axios.post(`${url}/Auth/signup`, Data, {
+      let result = await axios.post(`${url}/Auth/LogInThroughGoogle`, Data, {
         withCredentials: true,
       });
       // console.log("user is reggister");
@@ -29,4 +29,4 @@ let SignUpThunck = createAsyncThunk(
   },
 );
 
-export default SignUpThunck;
+export default LogInWithGoogleThunck;

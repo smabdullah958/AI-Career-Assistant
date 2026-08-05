@@ -8,10 +8,17 @@ let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let SignUp = async (req, res) => {
   try {
-    let { Name, Email, Password, Role } = req.body;
-    if (!Name || !Email || !Password) {
+    let { Name, Email, Password, Role, Provider } = req.body;
+    if (!Name || !Email || !Password || !Provider) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
+    if (Password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "passwod must be at least 6 character" });
+    }
+
     let user = await userModel.findOne({ Email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
@@ -24,35 +31,40 @@ let SignUp = async (req, res) => {
       Name,
       Email,
       Password: hashPassword,
-      Role,
+      Role: "User",
+      Provider,
     });
     await newUser.save();
 
     console.log("user id : " + newUser._id);
-
+    //generate token
     let token = jwt.sign(
       {
         Email,
         UserId: newUser._id,
+        Role: newUser.Role,
       },
       key,
       { expiresIn: "1w" },
     );
+    //stoer incooke
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none", // ✅ "Lax" works well on local project
+      sameSite: "none", //  "Lax" works well on local project
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    console.log("this is tokend", token, "this is a new user ", newUser);
+    console.log("this is a new user ", newUser);
 
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
     console.log(remainingCalls);
+    // console.log(newUser.Role);
     res.status(200).json({
       message: "User created successfully",
-      Role,
+      Role: newUser.Role,
       remainingCalls,
+      IsLoggIn: true,
     });
   } catch (error) {
     console.error(error);

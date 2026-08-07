@@ -1,9 +1,9 @@
 "use client";
 import toast from "react-hot-toast";
 import DownloadPDF from "@/Component/Buttons/DownloadPDF";
-import DisplayResume from "@/Features/DisplayResume";
 import ResumeForm from "@/Component/Form/ResumeForm";
-import ResumePreview from "@/Component/ResumeTemplate/ClassicalCV";
+import ClassicalCV from "@/Component/ResumeTemplate/Classical/DIsplayClassicalCV"; //result of a calssical cv which we can download
+import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCVPreview"; //preview of a classical cv
 //to show the resume when the page i load
 import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton";
 //to show the resume when the result is prepared
@@ -113,9 +113,9 @@ const page = () => {
             <ResumeSkeleton />
           ) : success === false ? (
             //it will show preview and it is show during when we fill the form
-            <ResumePreview data={previewData} />
+            <ClassicalCVPreview data={previewData} />
           ) : (
-            <ResumePreview data={previewData} />
+            <ClassicalCV data={previewData} /> //when we can click on a downlod than this wil be show
           )}
         </div>
       </div>

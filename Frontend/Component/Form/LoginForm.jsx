@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -8,8 +8,10 @@ import LogInThunck from "@/Libraries/Thuncks/Auth/LogInThunck";
 import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../Loader/ButtonLoader";
 import LoginWithGoogle from "../Buttons/LoginWithGoogle";
+import toast from "react-hot-toast";
 
 const LoginForm = ({ HideForm }) => {
+  let [hideErrorMessage, SethideErrorMessage] = useState(false);
   let dispatch = useDispatch();
   let router = useRouter();
 
@@ -42,6 +44,16 @@ const LoginForm = ({ HideForm }) => {
     }
   };
 
+  useEffect(() => {
+    if (
+      errorMessage ===
+      "This account was created with Google. Please sign in with Google"
+    ) {
+      toast.error(errorMessage);
+      SethideErrorMessage(true);
+    }
+  }, [errorMessage]);
+
   return (
     <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
       <div className="bg-blue-50 shadow-2xl rounded-2xl p-8 w-[90vw] sm:w-[400px] border border-amber-200 relative">
@@ -51,6 +63,7 @@ const LoginForm = ({ HideForm }) => {
             onClick={() => {
               HideForm();
               dispatch(ResetLogInState());
+              SethideErrorMessage(false);
             }}
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 active:scale-95 transition-all duration-200 text-blue-700 font-bold text-lg"
           >
@@ -66,7 +79,7 @@ const LoginForm = ({ HideForm }) => {
 
         {/* Form */}
         <form className="flex flex-col gap-5">
-          {errorMessage && (
+          {errorMessage && hideErrorMessage === false && (
             <p className="text-red-500 text-sm mt-3 text-center">
               {errorMessage}
             </p>

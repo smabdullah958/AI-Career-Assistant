@@ -46,10 +46,7 @@ export const ResumeSchema = z.object({
   Skills: z
     .array(
       z.object({
-        value: z
-          .string()
-          .nonempty("Skill is required")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+        value: z.string().nonempty("Skill is required"),
       }),
     )
     .nonempty("At least one skill is required")
@@ -62,13 +59,12 @@ export const ResumeSchema = z.object({
         title: z
           .string()
           .nonempty("Project title is required")
-          .max(30, "Project title must be less than 30 characters long")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+          .max(50, "Project title must be less than 50 characters long"),
 
         description: z
           .string()
           .nonempty("Project description is required")
-          .max(120, "Description must be less than 120 characters"),
+          .max(200, "Description must be less than 200 characters"),
 
         link: z
           .string()
@@ -94,19 +90,17 @@ export const ResumeSchema = z.object({
           Role: z
             .string()
             .max(50, "Role must be less than 50 characters long")
-            .nonempty("Role is required")
-            .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+            .nonempty("Role is required"),
 
           Description: z
             .string()
             .nonempty("Description is required")
-            .max(120, "Description must be less than 120 characters"),
+            .max(200, "Description must be less than 200 characters"),
 
           CompanyName: z
             .string()
             .max(50, "Company name must be less than 50 characters long")
-            .nonempty("Company name is required")
-            .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+            .nonempty("Company name is required"),
 
           StartDate: z.string().nonempty("Start date is required"),
           EndDate: z.string().optional({ checkFalsy: true }),
@@ -137,14 +131,13 @@ export const ResumeSchema = z.object({
         NameOfInstitute: z
           .string()
           .nonempty("Institution name is required")
-          .max(50, "Institution name must be less than 50 characters")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+          .max(50, "Institution name must be less than 50 characters"),
 
         CertifcateName: z
           .string()
           .nonempty("Certificate name is required")
-          .max(50, "Certificate name must be less than 50 characters")
-          .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+          .max(50, "Certificate name must be less than 50 characters"),
+
         IssueDate: z.string().nonempty("Date is required"),
       }),
     )
@@ -156,20 +149,17 @@ export const ResumeSchema = z.object({
       nameOfInstitute: z
         .string()
         .nonempty("Institution name is required")
-        .max(50, "Institution name must be less than 50 characters long")
-        .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+        .max(50, "Institution name must be less than 50 characters long"),
 
       degree: z
         .string()
         .nonempty("Degree is required")
-        .max(50, "Degree must be less than 50 characters long")
-        .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+        .max(50, "Degree must be less than 50 characters long"),
 
       fieldOfStudy: z
         .string()
         .nonempty("Field of study is required")
-        .max(50, "Field of study must be less than 50 characters long")
-        .regex(/^[a-zA-Z\s]+$/, "only alphabet are allowed"),
+        .max(50, "Field of study must be less than 50 characters long"),
 
       graduationYear: z.string().nonempty("Graduation year is required"),
     }),

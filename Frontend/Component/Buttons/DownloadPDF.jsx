@@ -1,3 +1,4 @@
+
 "use client";
 
 import { toPng } from "html-to-image";
@@ -10,49 +11,88 @@ const DownloadPDF = () => {
   const download = async () => {
     const element = document.getElementById("resumePDF");
 
-    // We force the width to 1024px so mobile browsers don't compress the layout
+    if (!element) {
+      console.error("Resume element not found");
+      return;
+    }
+
+    // Store original width
     const originalWidth = element.style.width;
-    element.style.width = "1024px";
 
     try {
+      // Force a fixed width while generating the image
+      element.style.width = "1024px";
+
       const dataUrl = await toPng(element, {
         cacheBust: true,
         backgroundColor: "#ffffff",
         pixelRatio: 3,
       });
 
+      // Restore original width
       element.style.width = originalWidth;
 
+      // Create A4 PDF
       const pdf = new jsPDF("p", "mm", "a4");
+
+      const pageWidth = 210;
+      const pageHeight = 297;
+
+      // Small padding
+      const padding = 5;
+
+      const availableWidth = pageWidth - padding * 2;
+      const availableHeight = pageHeight - padding * 2;
+
+      // Create image
       const img = new Image();
       img.src = dataUrl;
 
       img.onload = () => {
-        const imgWidth = 210;
-        const pageHeight = 297;
-        const padding = 5; // 10mm padding for top and bottom
+        // Original image dimensions
+        const imageWidth = img.width;
+        const imageHeight = img.height;
 
-        // Height of content that actually fits on one page
-        const effectivePageHeight = pageHeight - padding * 2;
-        const imgHeight = (img.height * imgWidth) / img.width;
+        // Calculate image ratio
+        const imageRatio = imageWidth / imageHeight;
 
-        let heightLeft = imgHeight;
+        // Calculate PDF dimensions while maintaining aspect ratio
+        let pdfImageWidth = availableWidth;
+        let pdfImageHeight = pdfImageWidth / imageRatio;
 
-        // pg1
-        // Add the image starting at the top padding
-        pdf.addImage(img, "PNG", 0, padding, imgWidth, imgHeight);
+        /*
+         * If the resume is taller than the available A4 height,
+         * scale it down so the COMPLETE resume fits on ONE page.
+         */
+        if (pdfImageHeight > availableHeight) {
+          pdfImageHeight = availableHeight;
+          pdfImageWidth = pdfImageHeight * imageRatio;
+        }
 
-        // CLEANUP PAGE 1: Cover the top and bottom padding with white bars
-        pdf.setFillColor(255, 255, 255);
-        pdf.rect(0, 0, 210, padding, "F"); // Top cover
-        pdf.rect(0, pageHeight - padding, 210, padding, "F"); // Bottom cover
+        // Center the resume horizontally
+        const x = (pageWidth - pdfImageWidth) / 2;
 
-        heightLeft -= effectivePageHeight;
+        // Center vertically
+        const y = (pageHeight - pdfImageHeight) / 2;
 
+        // Add complete resume to the PDF
+        pdf.addImage(img, "PNG", x, y, pdfImageWidth, pdfImageHeight);
+
+        // Download
         pdf.save("Resume.pdf");
       };
+
+      img.onerror = (error) => {
+        console.error("Failed to load resume image", error);
+
+        // Restore width if image loading fails
+        element.style.width = originalWidth;
+      };
     } catch (error) {
-      console.error(error);
+      console.error("Error generating PDF:", error);
+
+      // Always restore original width
+      element.style.width = originalWidth;
     }
   };
 
@@ -61,12 +101,11 @@ const DownloadPDF = () => {
       type="button"
       onClick={download}
       disabled={!success}
-      className={`px-4 py-2 rounded-lg text-white font-bold
-        ${
-          success
-            ? "bg-indigo-500 hover:bg-indigo-600 shadow-md"
-            : "bg-indigo-200 cursor-not-allowed"
-        }`}
+      className={`px-4 py-2 rounded-lg text-white font-bold transition-all duration-200 ${
+        success
+          ? "bg-indigo-500 hover:bg-indigo-600 shadow-md"
+          : "bg-indigo-200 cursor-not-allowed"
+      }`}
     >
       Download PDF
     </button>

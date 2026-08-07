@@ -13,10 +13,23 @@ let Login = async (req, res) => {
     if (!ExistUser) {
       return res.status(400).json({ message: "user not exist" });
     }
+
+    if (
+      ExistUser.Password === null ||
+      ExistUser.Password === undefined ||
+      ExistUser.Password === ""
+    ) {
+      return res.status(400).json({
+        message:
+          "This account was created with Google. Please sign in with Google",
+      });
+    }
+
     let MatchPassword = await bcrypt.compare(Password, ExistUser.Password);
     if (!MatchPassword) {
       return res.status(400).json({ message: "wrong email or password" });
     }
+
     //generate a token
     let token = jwt.sign(
       {

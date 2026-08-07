@@ -29,7 +29,6 @@ let ResumeValidator = [
     .notEmpty()
     .withMessage("role is required")
     .withMessage("role must be string")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed")
     .isLength({ max: 50 })
     .withMessage("maximum 50 character is allowed"),
@@ -60,7 +59,6 @@ let ResumeValidator = [
   body("Skills.*.value")
     .notEmpty()
     .withMessage("skill value is required")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   // project
@@ -70,15 +68,14 @@ let ResumeValidator = [
     .notEmpty()
     .withMessage("Project title is required")
     .isLength({ max: 50 })
-    .withMessage("Max 30 characters")
-    .matches(/^[a-zA-Z\s]+$/)
+    .withMessage("Max 50 characters")
     .withMessage("only alphabet are allowed"),
 
   body("Projects.*.description")
     .notEmpty()
     .withMessage("Project description is required")
-    .isLength({ max: 120 })
-    .withMessage("Max 120 characters"),
+    .isLength({ max: 200 })
+    .withMessage("Max 200 characters"),
 
   body("Projects.*.link")
     .optional({ checkFalsy: true })
@@ -101,7 +98,6 @@ let ResumeValidator = [
     .withMessage("Role is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Experience.*.CompanyName")
@@ -109,7 +105,6 @@ let ResumeValidator = [
     .withMessage("Company name is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Experience.*.StartDate")
@@ -128,8 +123,8 @@ let ResumeValidator = [
   body("Experience.*.Description")
     .notEmpty()
     .withMessage("Description is required")
-    .isLength({ max: 120 })
-    .withMessage("Max 100 characters"),
+    .isLength({ max: 200 })
+    .withMessage("Max 200 characters"),
 
   // certification
   body("Certifications")
@@ -142,7 +137,6 @@ let ResumeValidator = [
     .withMessage("Institution name is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Certifications.*.CertifcateName")
@@ -150,7 +144,6 @@ let ResumeValidator = [
     .withMessage("Certificate name is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Certifications.*.IssueDate")
@@ -170,7 +163,6 @@ let ResumeValidator = [
     .withMessage("Institution name is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Education.*.degree")
@@ -178,7 +170,6 @@ let ResumeValidator = [
     .withMessage("Degree is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Education.*.fieldOfStudy")
@@ -186,7 +177,6 @@ let ResumeValidator = [
     .withMessage("Field of study is required")
     .isLength({ max: 50 })
     .withMessage("Max 50 characters")
-    .matches(/^[a-zA-Z\s]+$/)
     .withMessage("only alphabet are allowed"),
 
   body("Education.*.graduationYear")

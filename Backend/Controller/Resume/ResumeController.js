@@ -1,5 +1,4 @@
 let { validationResult } = require("express-validator");
-let ResumeService = require("../../Services/Resume/ResumeService");
 
 let ResumeController = async (req, res) => {
   try {
@@ -10,11 +9,9 @@ let ResumeController = async (req, res) => {
     }
 
     //here the resume will be generated
-    let response = await ResumeService(req.body);
     console.log("this is a req body ", req.body);
     res.status(200).json({
       message: "resume is being created",
-      response,
       remainingCalls: req.remainingCalls, // remaining calls is come from a middleware which si used to check the daily usage
     });
   } catch (err) {

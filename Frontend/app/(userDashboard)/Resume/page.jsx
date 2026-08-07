@@ -3,12 +3,16 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+//remaining api calls per day
+import RemainingAPICalls from "@/Features/RemainingAPICalls";
+
 import {
   FaArrowRight,
   FaCheckCircle,
   FaFileAlt,
   FaMagic,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const templates = [
   {
@@ -16,48 +20,77 @@ const templates = [
     name: "Classical Resume",
     image: "/classicalCV.png",
     description: "Clean and traditional layout for a professional appearance.",
+    slug: "classical-cv",
   },
   {
     id: 2,
     name: "Modern CV",
     image: "/modernCV.png",
     description: "A modern and balanced design for today's job market.",
+    slug: "modern-cv",
   },
   {
     id: 3,
     name: "Optimized CV",
     image: "/optimizedCV.png",
     description: "Structured specifically for ATS-friendly applications.",
+    slug: "optimized-cv",
   },
   {
     id: 4,
     name: "Elegant CV",
     image: "/elegantCV.png",
     description: "Minimal and elegant design with a professional appearance.",
+    slug: "elegant-cv",
   },
   {
     id: 5,
     name: "Bold CV",
     image: "/boldCV.png",
     description: "A confident layout designed to highlight your strengths.",
+    slug: "bold-cv",
   },
   {
     id: 6,
     name: "Professional CV",
     image: "/professionalCV.png",
     description: "A polished layout suitable for corporate applications.",
+    slug: "professional-cv",
   },
 ];
 
 export default function Resume() {
   const router = useRouter();
 
-  const handleTemplateClick = (id) => {
-    router.push(`/Resume/${id}`);
+  const handleTemplateClick = (slug) => {
+    router.push(`/Resume/${slug}`);
   };
+
+  //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  //  let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
+  let {
+    remainingCalls,
+    ShowPopUp,
+    success,
+    Role: role,
+  } = useSelector((state) => state.GlobalSlice);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
+      {(Role === "User" || UserRole === "User" || role === "User") &&
+        (success || //here the Successs is come from a global slice it is run wehna  user is reload a webite
+          remainingCalls === 0 ||
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother
+          ShowPopUp === true) && (
+          <RemainingAPICalls remaining={remainingCalls} />
+        )}
+
       {/* ================= HEADER ================= */}
       <section className="w-full bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -277,7 +310,7 @@ export default function Resume() {
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleTemplateClick(resume.id);
+                      handleTemplateClick(resume.slug);
                     }}
                     className="
                       mt-auto
@@ -301,7 +334,9 @@ export default function Resume() {
                       active:scale-[0.98]
                     "
                   >
-                    <span>Use This Template</span>
+                    <span className="hover:cursor-pointer">
+                      Use This Template
+                    </span>
                     <FaArrowRight className="text-xs" />
                   </button>
                 </div>

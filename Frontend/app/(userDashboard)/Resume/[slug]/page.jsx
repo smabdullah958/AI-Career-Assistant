@@ -1,0 +1,126 @@
+"use client";
+import toast from "react-hot-toast";
+import DownloadPDF from "@/Component/Buttons/DownloadPDF";
+import DisplayResume from "@/Features/DisplayResume";
+import ResumeForm from "@/Component/Form/ResumeForm";
+import ResumePreview from "@/Component/ResumeTemplate/ClassicalCV";
+//to show the resume when the page i load
+import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton";
+//to show the resume when the result is prepared
+import ResumeSkeleton from "@/Component/Loader/ResumeResultSkeleton";
+
+import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+//remaining api calls per day
+import RemainingAPICalls from "@/Features/RemainingAPICalls";
+
+const page = () => {
+  const previewRef = useRef(null); // Create the reference
+  let dispatch = useDispatch();
+  let { success, loading, errorMessage } = useSelector(
+    (state) => state.ResumeSlice,
+  );
+
+  // // get remainingCalls from a interivew slice and also here it is used to show the remining number of a calls
+  // let { remainingCalls, ShowPopUp } = useSelector((state) => state.GlobalSlice);
+
+  // get role remainingCalls from a global slice and also here it is used to show the remining number of a calls role froma gloabl slice and also it run when we can open  website or  reload a website
+  let {
+    remainingCalls,
+    ShowPopUp,
+    success: Success,
+    Role: role,
+  } = useSelector((state) => state.GlobalSlice);
+
+  //to preview the data in resume preview section
+  const [previewData, setPreviewData] = useState({});
+
+  // Reset resume when user leaves this page
+  useEffect(() => {
+    return () => {
+      dispatch(ResetResume());
+    };
+  }, [dispatch]);
+
+  // Automatically scroll when success or loading becomes true
+  useEffect(() => {
+    if ((success || loading) && previewRef.current) {
+      previewRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [success, loading]);
+
+  //these are used to ceck that if a user is login or signup  if user is login than it will show ther remaining number of a api calls
+  let { Role } = useSelector((state) => state.SignUpSlice);
+
+  //login role
+  let { UserRole } = useSelector((state) => state.LogInSlice);
+
+  // let role = useSelector((state) => state.GlobalSlice.Role); //get role froma gloabl slice and also it run when we can open  website or  reload a website
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+  }, [errorMessage]);
+
+  //show the resume sekeleton when move to a remuse section
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <ResumeFormSkeleton />;
+  }
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
+      {(Role === "User" || UserRole === "User" || role === "User") &&
+        (success ||
+          Success || //here the Successs is come from a global slice it is run wehna  user is reload a webite
+          errorMessage ||
+          remainingCalls === 0 ||
+          //show popups is also use to show the popup when thre remaining calls is greater than a 0 brother
+          ShowPopUp === true) && (
+          <RemainingAPICalls remaining={remainingCalls} />
+        )}
+
+      <div className=" flex justify-between ">
+        <h1 className="text-xl sm:text-3xl  xl:text-4xl font-bold my-6 lg:my-10 text-slate-800">
+          AI Resume Builder
+        </h1>
+
+        <h1 className="hidden md:block md:my-5 lg:my-10 md:text-3xl  xl:text-4xl font-bold  text-slate-800">
+          Live Preview
+        </h1>
+
+        <h2 className="hidden md:block md:my-5 lg:my-10 ">
+          <DownloadPDF />
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1  md:grid-cols-2 md:gap-10 lg:gap-16 2xl:gap-20">
+        <ResumeForm onDataChange={setPreviewData} />
+        <div ref={previewRef} className="lg:block my-5 ">
+          {/* when loading is true than show the resume skeleton  */}
+          {loading ? (
+            <ResumeSkeleton />
+          ) : success === false ? (
+            //it will show preview and it is show during when we fill the form
+            <ResumePreview data={previewData} />
+          ) : (
+            <ResumePreview data={previewData} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default page;

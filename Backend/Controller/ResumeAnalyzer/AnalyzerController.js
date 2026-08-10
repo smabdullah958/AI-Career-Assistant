@@ -21,7 +21,7 @@ let AnalyzerController = async (req, res) => {
 
     //pdf text extractor
     let TextExtractor = await PDFTextExtractor(req.file.buffer);
-
+    console.log(TextExtractor);
     //main ai/langchain
     let result = await chain(TextExtractor, Role, Experience);
 

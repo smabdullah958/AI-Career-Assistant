@@ -1,20 +1,21 @@
 "use client";
-import DownloadPDF from "../Buttons/DownloadPDF";
+import DownloadPDF from "../ResumeTemplate/Classical/ClassicalDownloadPDF";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResumeSchema } from "@/Libraries/ZodSchema";
 import { useEffect } from "react";
+
+import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 
 import ResumeThunck from "@/Libraries/Thuncks/Resume/ResumeThunck";
 import { useDispatch, useSelector } from "react-redux";
 //use watch is alway use for a complex form for a watchin or preview
 import { useWatch } from "react-hook-form";
 
-// on datachange is a funcion which hold the data which is used to preview the data
-
-//here we are using eh on datachange which is used to uplift the data to preview the live data in a resume section
 const ResumeForm = ({ onDataChange }) => {
   let dispatch = useDispatch();
+
+  const { success } = useSelector((state) => state.ResumeSlice);
 
   const {
     register,
@@ -185,8 +186,14 @@ const ResumeForm = ({ onDataChange }) => {
   };
 
   let FormFunction = async (data) => {
-    await dispatch(ResumeThunck(data));
+    let result = await dispatch(ResumeThunck(data));
   };
+
+  useEffect(() => {
+    if (success) {
+      dispatch(ResetResume());
+    }
+  }, [formValues]);
 
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);

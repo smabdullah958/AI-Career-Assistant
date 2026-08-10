@@ -1,6 +1,6 @@
 "use client";
 import toast from "react-hot-toast";
-import DownloadPDF from "@/Component/Buttons/DownloadPDF";
+import DownloadPDF from "@/Component/ResumeTemplate/Classical/ClassicalDownloadPDF";
 import ResumeForm from "@/Component/Form/ResumeForm";
 import ClassicalCV from "@/Component/ResumeTemplate/Classical/DIsplayClassicalCV"; //result of a calssical cv which we can download
 import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCVPreview"; //preview of a classical cv
@@ -101,22 +101,27 @@ const page = () => {
         </h1>
 
         <h2 className="hidden md:block md:my-5 lg:my-10 ">
-          <DownloadPDF />
+          <DownloadPDF response={previewData} />{" "}
+          {/* passs  a data to show ina  pdf*/}
         </h2>
       </div>
 
       <div className="grid grid-cols-1  md:grid-cols-2 md:gap-10 lg:gap-16 2xl:gap-20">
-        <ResumeForm onDataChange={setPreviewData} />
+        <ResumeForm
+          onDataChange={setPreviewData} //pass to get a live data from aresume form to show a live preveiw
+        />
         <div ref={previewRef} className="lg:block my-5 ">
           {/* when loading is true than show the resume skeleton  */}
-          {loading ? (
-            <ResumeSkeleton />
-          ) : success === false ? (
-            //it will show preview and it is show during when we fill the form
-            <ClassicalCVPreview data={previewData} />
-          ) : (
-            <ClassicalCV data={previewData} /> //when we can click on a downlod than this wil be show
-          )}
+          {
+            loading ? (
+              <ResumeSkeleton />
+            ) : success === false ? (
+              //it will show preview and it is show during when we fill the form
+              <ClassicalCVPreview data={previewData} />
+            ) : (
+              <ClassicalCV data={previewData} />
+            ) //when we can click on a downlod than this wil be show
+          }
         </div>
       </div>
     </div>

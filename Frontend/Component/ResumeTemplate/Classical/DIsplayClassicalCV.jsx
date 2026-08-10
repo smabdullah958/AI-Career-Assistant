@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-const ResumePreview = ({ data }) => {
+const DIsplayClassicalCV = ({ data }) => {
   return (
     <>
       <div
@@ -253,4 +253,4 @@ const SectionTitle = ({ title }) => {
   );
 };
 
-export default ResumePreview;
+export default DIsplayClassicalCV;

@@ -9,7 +9,7 @@ import { ResetLogInState } from "@/Libraries/Slices/Auth/LogInSlice";
 import ButtonLoader from "../Loader/ButtonLoader";
 import LoginWithGoogle from "../Buttons/LoginWithGoogle";
 import toast from "react-hot-toast";
-
+import { ResetState } from "@/Libraries/Slices/Auth/LogInWithGoogle"; //this si used to reset the state of a login with google
 const LoginForm = ({ HideForm }) => {
   let [hideErrorMessage, SethideErrorMessage] = useState(false);
   let dispatch = useDispatch();
@@ -64,6 +64,7 @@ const LoginForm = ({ HideForm }) => {
               HideForm();
               dispatch(ResetLogInState());
               SethideErrorMessage(false);
+              dispatch(ResetState());
             }}
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 hover:bg-blue-200 active:scale-95 transition-all duration-200 text-blue-700 font-bold text-lg"
           >

@@ -8,8 +8,8 @@ let LogInThroughGoogle = async (req, res) => {
     let { Email, GoogleId, Provider } = req.body;
 
     // Validation
-    if (!Email || !GoogleId) {
-      console.log("allf ield are required");
+    if (!Email || !GoogleId || !Provider) {
+      console.log("all field are required");
 
       return res.status(400).json({
         message: "Required information is missing. Please try again.",
@@ -27,14 +27,17 @@ let LogInThroughGoogle = async (req, res) => {
       });
     }
 
-    // Check provider
-    if (ExistUser.Provider !== "Google") {
-      console.log("user is not login with a google ");
+    //if user is not crete account with a google but it want  login with google than it can do with it
+    if (
+      !ExistUser.GoogleId ||
+      ExistUser.GoogleId === null ||
+      ExistUser.GoogleId === undefined ||
+      ExistUser.GoogleId === " "
+    ) {
+      ExistUser.GoogleId = GoogleId;
+      ExistUser.Provider = "Google";
 
-      return res.status(400).json({
-        message:
-          "This account was created using email and password. Please sign in with your password instead of Google.",
-      });
+      await ExistUser.save();
     }
 
     // Verify GoogleId
@@ -66,6 +69,8 @@ let LogInThroughGoogle = async (req, res) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+
+    console.log("user is login successfully", ExistUser);
 
     // Get Remaining Credits
     let remainingCalls = await GetCreditsForRegistration(ExistUser._id);

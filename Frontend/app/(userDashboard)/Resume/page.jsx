@@ -167,7 +167,7 @@ export default function Resume() {
             {templates.map((resume) => (
               <div
                 key={resume.id}
-                onClick={() => handleTemplateClick(resume.id)}
+                onClick={() => handleTemplateClick(resume.slug)}
                 className="
                   group
                   cursor-pointer

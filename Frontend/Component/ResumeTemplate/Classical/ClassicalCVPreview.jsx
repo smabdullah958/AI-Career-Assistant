@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 
-const ClassicalCVPreview = ({ data }) => {
+const DIsplayClassicalCV = ({ data }) => {
   return (
     <>
       <div
-        id="resumePDF"
-        className="bg-white ml-5 border border-gray-200 shadow-xl p-[18mm] w-full max-w-[210mm] min-h-[297mm] mx-auto sticky top-8 text-[#333]"
+        className="bg-white  p-5 max-w-[210mm] min-h-[297mm] sticky  text-[#333]"
         style={{
           fontFamily: "Georgia, 'Times New Roman', serif",
         }}
@@ -253,4 +252,4 @@ const SectionTitle = ({ title }) => {
   );
 };
 
-export default ClassicalCVPreview;
+export default DIsplayClassicalCV;

@@ -1,10 +1,6 @@
 "use client";
 import toast from "react-hot-toast";
-import DownloadPDF from "@/Component/ResumeTemplate/Classical/ClassicalDownloadPDF";
 import ResumeForm from "@/Component/Form/ResumeForm";
-import ClassicalCV from "@/Component/ResumeTemplate/Classical/DIsplayClassicalCV"; //result of a calssical cv which we can download
-import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCVPreview"; //preview of a classical cv
-//to show the resume when the page i load
 import ResumeFormSkeleton from "@/Component/Loader/ResumeFormSkeleton";
 //to show the resume when the result is prepared
 import ResumeSkeleton from "@/Component/Loader/ResumeResultSkeleton";
@@ -15,8 +11,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 //remaining api calls per day
 import RemainingAPICalls from "@/Features/RemainingAPICalls";
+import { useParams } from "next/navigation";
+
+//classical cv
+import DownloadPDF from "@/Component/ResumeTemplate/Classical/ClassicalDownloadPDF";
+import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCVPreview";
+
+//modern cv
+import ModernCVPreview from "@/Component/ResumeTemplate/Modern/ModernCVPreview";
 
 const page = () => {
+  let parms = useParams();
   const previewRef = useRef(null); // Create the reference
   let dispatch = useDispatch();
   let { success, loading, errorMessage } = useSelector(
@@ -79,6 +84,10 @@ const page = () => {
     return <ResumeFormSkeleton />;
   }
 
+  // alert(parms.slug);
+
+  let Slug = parms.slug;
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-100 p-5 sm:p-10 2xl:p-20">
       {(Role === "User" || UserRole === "User" || role === "User") &&
@@ -101,7 +110,7 @@ const page = () => {
         </h1>
 
         <h2 className="hidden md:block md:my-5 lg:my-10 ">
-          <DownloadPDF response={previewData} />{" "}
+          <DownloadPDF response={previewData} />
           {/* passs  a data to show ina  pdf*/}
         </h2>
       </div>
@@ -112,16 +121,14 @@ const page = () => {
         />
         <div ref={previewRef} className="lg:block my-5 ">
           {/* when loading is true than show the resume skeleton  */}
-          {
-            loading ? (
-              <ResumeSkeleton />
-            ) : success === false ? (
-              //it will show preview and it is show during when we fill the form
+          {loading ? (
+            <ResumeSkeleton />
+          ) : (
+            (Slug === "classical-cv" && (
               <ClassicalCVPreview data={previewData} />
-            ) : (
-              <ClassicalCV data={previewData} />
-            ) //when we can click on a downlod than this wil be show
-          }
+            )) ||
+            (Slug === "modern-cv" && <ModernCVPreview data={previewData} />)
+          )}
         </div>
       </div>
     </div>

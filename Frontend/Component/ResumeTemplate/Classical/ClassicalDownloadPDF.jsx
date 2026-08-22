@@ -374,12 +374,12 @@ const DownloadPDF = ({ response = {} }) => {
 
         // More space between projects
         if (index < projects.length - 1) {
-          y += 4;
+          y;
         }
       });
 
       // Space after the complete Projects section
-      y += 3;
+      y;
     }
 
     // =========================================================

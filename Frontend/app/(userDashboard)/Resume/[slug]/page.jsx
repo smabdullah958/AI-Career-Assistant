@@ -14,11 +14,12 @@ import RemainingAPICalls from "@/Features/RemainingAPICalls";
 import { useParams } from "next/navigation";
 
 //classical cv
-import DownloadPDF from "@/Component/ResumeTemplate/Classical/ClassicalDownloadPDF";
+import ClassicalDownloadPDF from "@/Component/ResumeTemplate/Classical/ClassicalDownloadPDF";
 import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCVPreview";
 
 //modern cv
 import ModernCVPreview from "@/Component/ResumeTemplate/Modern/ModernCVPreview";
+import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPDF";
 
 const page = () => {
   let parms = useParams();
@@ -110,8 +111,13 @@ const page = () => {
         </h1>
 
         <h2 className="hidden md:block md:my-5 lg:my-10 ">
-          <DownloadPDF response={previewData} />
-          {/* passs  a data to show ina  pdf*/}
+          (
+          {Slug === "classical-cv" ? (
+            <ClassicalDownloadPDF response={previewData} />
+          ) : (
+            Slug === "modern-cv" && <ModernDownloadPDF response={previewData} />
+          )}
+          )
         </h2>
       </div>
 

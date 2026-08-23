@@ -21,6 +21,10 @@ import ClassicalCVPreview from "@/Component/ResumeTemplate/Classical/ClassicalCV
 import ModernCVPreview from "@/Component/ResumeTemplate/Modern/ModernCVPreview";
 import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPDF";
 
+//optimized cv
+import OptimizedCVPreview from "@/Component/ResumeTemplate/Optimized/OptimizedCVPreview";
+import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/OptimizedDownloadPDF";
+
 const page = () => {
   let parms = useParams();
   const previewRef = useRef(null); // Create the reference
@@ -111,13 +115,15 @@ const page = () => {
         </h1>
 
         <h2 className="hidden md:block md:my-5 lg:my-10 ">
-          (
           {Slug === "classical-cv" ? (
             <ClassicalDownloadPDF response={previewData} />
+          ) : Slug === "modern-cv" ? (
+            <ModernDownloadPDF response={previewData} />
           ) : (
-            Slug === "modern-cv" && <ModernDownloadPDF response={previewData} />
+            Slug === "optimized-cv" && (
+              <OptimizedDownloadPDF response={previewData} />
+            )
           )}
-          )
         </h2>
       </div>
 
@@ -133,7 +139,10 @@ const page = () => {
             (Slug === "classical-cv" && (
               <ClassicalCVPreview data={previewData} />
             )) ||
-            (Slug === "modern-cv" && <ModernCVPreview data={previewData} />)
+            (Slug === "modern-cv" && <ModernCVPreview data={previewData} />) ||
+            (Slug === "optimized-cv" && (
+              <OptimizedCVPreview data={previewData} />
+            ))
           )}
         </div>
       </div>

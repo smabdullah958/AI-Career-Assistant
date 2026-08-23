@@ -3,7 +3,7 @@
 import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 
-const DownloadPDF = ({ response = {} }) => {
+const OptimizedDownloadPDF = ({ response = {} }) => {
   const { success } = useSelector((state) => state.ResumeSlice || {});
 
   const download = () => {
@@ -21,37 +21,53 @@ const DownloadPDF = ({ response = {} }) => {
     const pageWidth = 210;
     const pageHeight = 297;
 
-    // Screenshot uses a compact page.
     const margin = 16;
-
     const contentWidth = pageWidth - margin * 2;
 
-    const navy = [38, 57, 86];
-    const textColor = [51, 51, 51];
-    const lightGray = [238, 241, 245];
+    // =========================================================
+    // COLORS
+    // =========================================================
 
-    let y = 10;
+    const teal = [14, 124, 115];
+    const lightTeal = [230, 243, 241];
+    const lightTealLine = [181, 218, 214];
+
+    const textColor = [51, 51, 51];
+    const mutedText = [85, 85, 85];
+    const white = [255, 255, 255];
+
+    // =========================================================
+    // INITIAL Y POSITION
+    // =========================================================
+
+    let y = 7;
 
     // =========================================================
     // HELPERS
     // =========================================================
 
     const normalText = (size = 8.5) => {
-      pdf.setFont("times", "normal");
+      pdf.setFont("helvetica", "normal");
       pdf.setFontSize(size);
       pdf.setTextColor(...textColor);
     };
 
     const boldText = (size = 9) => {
-      pdf.setFont("times", "bold");
+      pdf.setFont("helvetica", "bold");
       pdf.setFontSize(size);
       pdf.setTextColor(...textColor);
     };
 
-    const navyText = (size = 8.5, style = "normal") => {
-      pdf.setFont("times", style);
+    const tealText = (size = 8.5, style = "normal") => {
+      pdf.setFont("helvetica", style);
       pdf.setFontSize(size);
-      pdf.setTextColor(...navy);
+      pdf.setTextColor(...teal);
+    };
+
+    const mutedTextStyle = (size = 8) => {
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(size);
+      pdf.setTextColor(...mutedText);
     };
 
     // =========================================================
@@ -59,7 +75,7 @@ const DownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     const sectionTitle = (title) => {
-      navyText(9, "bold");
+      tealText(9, "bold");
 
       pdf.setCharSpace(0.7);
 
@@ -67,10 +83,11 @@ const DownloadPDF = ({ response = {} }) => {
 
       pdf.setCharSpace(0);
 
-      y += 1.8;
-
-      pdf.setDrawColor(...navy);
+      // Light teal underline
+      pdf.setDrawColor(...lightTealLine);
       pdf.setLineWidth(0.25);
+
+      y += 1.8;
 
       pdf.line(margin, y, pageWidth - margin, y);
 
@@ -81,7 +98,7 @@ const DownloadPDF = ({ response = {} }) => {
     // WRAPPED TEXT
     // =========================================================
 
-    const drawWrappedText = (text, x, startY, width, fontSize = 7) => {
+    const drawWrappedText = (text, x, startY, width, fontSize = 8) => {
       normalText(fontSize);
 
       const lines = pdf.splitTextToSize(String(text), width);
@@ -106,7 +123,7 @@ const DownloadPDF = ({ response = {} }) => {
       let currentY = startY;
 
       items.forEach((item) => {
-        normalText(7);
+        normalText(8.5);
 
         pdf.text("•", x, currentY);
 
@@ -124,7 +141,7 @@ const DownloadPDF = ({ response = {} }) => {
     // RIGHT ALIGNED TEXT
     // =========================================================
 
-    const rightText = (text, rightX, currentY, fontSize = 6.5) => {
+    const rightText = (text, rightX, currentY, fontSize = 8) => {
       normalText(fontSize);
 
       pdf.text(String(text), rightX, currentY, {
@@ -136,67 +153,81 @@ const DownloadPDF = ({ response = {} }) => {
     // HEADER
     // =========================================================
 
+    const headerHeight = 32;
+
+    // Teal header background
+    pdf.setFillColor(...teal);
+
+    pdf.rect(0, 0, pageWidth, headerHeight, "F");
+
+    // ---------------------------------------------------------
     // NAME
-    navyText(13, "bold");
+    // ---------------------------------------------------------
 
-    pdf.text(response.name || "S M ABDULLAH", margin, y);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(30);
+    pdf.setTextColor(...white);
 
-    y += 5.5;
+    pdf.text(response.name || "Abdullah", pageWidth / 2, 12.8, {
+      align: "center",
+    });
 
+    // ---------------------------------------------------------
     // ROLE
-    navyText(8, "normal");
+    // ---------------------------------------------------------
 
-    pdf.setCharSpace(1);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(14);
+    pdf.setTextColor(...white);
+
+    pdf.setCharSpace(1.5);
 
     pdf.text(
-      String(response.Role || "AI POWERED FULLSTACK DEVELOPER").toUpperCase(),
-      margin,
-      y,
+      String(response.Role || "Professional Title").toUpperCase(),
+      pageWidth / 2,
+      20.5,
+      {
+        align: "center",
+      },
     );
 
     pdf.setCharSpace(0);
 
-    y += 5;
-
-    // =========================================================
-    // CONTACT
-    // =========================================================
-
-    normalText(8);
+    // ---------------------------------------------------------
+    // CONTACT INFORMATION
+    // ---------------------------------------------------------
 
     const contactItems = [
       response.email,
       response.phone,
+      response.address,
       response.portfolio,
       response.Linkedin,
     ].filter(Boolean);
 
-    let contactX = margin;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8.5);
+    pdf.setTextColor(...white);
+
+    let contactX = 6;
 
     contactItems.forEach((item, index) => {
       const value = String(item);
 
-      pdf.text(value, contactX, y);
+      pdf.text(value, contactX, 27);
 
       contactX += pdf.getTextWidth(value);
 
       if (index < contactItems.length - 1) {
-        contactX += 3.5;
+        contactX += 5;
       }
     });
 
-    y += 4;
-
     // =========================================================
-    // HEADER LINE
+    // CONTENT START
     // =========================================================
 
-    pdf.setDrawColor(...navy);
-    pdf.setLineWidth(0.35);
-
-    pdf.line(margin, y, pageWidth - margin, y);
-
-    y += 10;
+    y = headerHeight + 5;
 
     // =========================================================
     // SUMMARY
@@ -205,7 +236,7 @@ const DownloadPDF = ({ response = {} }) => {
     if (response.Summary) {
       sectionTitle("Summary");
 
-      y = drawWrappedText(response.Summary, margin, y, contentWidth, 8);
+      y = drawWrappedText(response.Summary, margin, y, contentWidth, 8.5);
 
       y += 3;
     }
@@ -224,54 +255,40 @@ const DownloadPDF = ({ response = {} }) => {
       let skillX = margin;
       let skillY = y + 3;
 
-      // Increased box height
-      const skillHeight = 8;
-
-      // Increased vertical gap between rows
-      const rowGap = 3;
-
-      // Increased horizontal gap between boxes
-      const boxGap = 3;
+      const skillHeight = 7;
+      const rowGap = 2.5;
+      const boxGap = 2.5;
 
       skills.forEach((skill) => {
         normalText(8);
 
         const textWidth = pdf.getTextWidth(String(skill));
 
-        const skillWidth = textWidth + 10;
+        const skillWidth = textWidth + 8;
 
         // New row
         if (skillX + skillWidth > pageWidth - margin) {
           skillX = margin;
+
           skillY += skillHeight + rowGap;
         }
 
-        // Background
-        pdf.setFillColor(...lightGray);
+        // Skill background
+        pdf.setFillColor(...lightTeal);
 
-        pdf.roundedRect(
-          skillX,
-          skillY - 5,
-          skillWidth,
-          skillHeight,
-          0.5,
-          0.5,
-          "F",
-        );
+        pdf.roundedRect(skillX, skillY - 5, skillWidth, skillHeight, 3, 3, "F");
 
         // Skill text
-        navyText(8);
+        tealText(8, "bold");
 
-        // Vertically center the text inside the box
         const textY = skillY - 5 + skillHeight / 2 + 1.2;
 
-        pdf.text(String(skill), skillX + 3, textY);
+        pdf.text(String(skill), skillX + 4, textY);
 
-        // Increased horizontal gap
         skillX += skillWidth + boxGap;
       });
 
-      y = skillY + skillHeight + 6;
+      y = skillY + skillHeight + 1;
     }
 
     // =========================================================
@@ -290,7 +307,7 @@ const DownloadPDF = ({ response = {} }) => {
         // JOB TITLE
         // ---------------------------------------------------
 
-        boldText(9);
+        boldText(9.5);
 
         pdf.text(experience.Role || "Job Position", margin, y);
 
@@ -316,7 +333,7 @@ const DownloadPDF = ({ response = {} }) => {
         // COMPANY
         // ---------------------------------------------------
 
-        boldText(8.5);
+        tealText(8.5, "bold");
 
         pdf.text(experience.CompanyName, margin, y);
 
@@ -327,10 +344,10 @@ const DownloadPDF = ({ response = {} }) => {
         // ---------------------------------------------------
 
         if (experience.Description) {
-          normalText(8.5);
           y = drawBullets(experience.Description, margin, y, contentWidth);
         }
 
+        // Preserve existing experience spacing
         y += 4;
       });
     }
@@ -347,42 +364,70 @@ const DownloadPDF = ({ response = {} }) => {
       sectionTitle("Projects");
 
       projects.forEach((project, index) => {
-        // Project title
+        // ---------------------------------------------------
+        // PROJECT TITLE
+        // ---------------------------------------------------
+
         boldText(9.5);
 
         pdf.text(project.title, margin, y);
 
+        //space between the title and descirption
         y += 3.5;
 
-        // Description
-        if (project.description) {
-          normalText(8.5);
+        // ---------------------------------------------------
+        // DESCRIPTION
+        // ---------------------------------------------------
 
-          y = drawWrappedText(project.description, margin, y, contentWidth, 8);
+        if (project.description) {
+          y = drawWrappedText(
+            project.description,
+            margin,
+            y,
+            contentWidth,
+            8.5,
+          );
 
           // Small gap before links
-          y += 1.5;
+          y;
         }
 
-        // Live Demo
+        // ---------------------------------------------------
+        // LIVE DEMO
+        // ---------------------------------------------------
+
         if (project.link) {
-          navyText(8);
+          tealText(8);
 
-          pdf.text(`Live Demo: ${String(project.link)}`, margin, y);
+          const liveDemoText = `Live Demo: ${String(project.link)}`;
 
-          y += 3;
+          const liveDemoLines = pdf.splitTextToSize(liveDemoText, contentWidth);
+
+          pdf.text(liveDemoLines, margin, y);
+
+          y += liveDemoLines.length * 3;
         }
 
-        // GitHub
+        // ---------------------------------------------------
+        // GITHUB
+        // ---------------------------------------------------
+
         if (project.Github) {
-          navyText(8);
+          tealText(8);
 
-          pdf.text(`GitHub: ${String(project.Github)}`, margin, y);
+          const githubText = `GitHub: ${String(project.Github)}`;
 
-          y += 3;
+          const githubLines = pdf.splitTextToSize(githubText, contentWidth);
+
+          pdf.text(githubLines, margin, y);
+
+          y += githubLines.length * 3;
         }
 
-        // More space between projects
+        // ---------------------------------------------------
+        // SPACE BETWEEN PROJECTS
+        // ---------------------------------------------------
+
         if (index < projects.length - 1) {
           y += 3;
         }
@@ -391,6 +436,7 @@ const DownloadPDF = ({ response = {} }) => {
       // Space after complete Projects section
       y += 3;
     }
+
     // =========================================================
     // EDUCATION + CERTIFICATIONS
     // =========================================================
@@ -419,7 +465,7 @@ const DownloadPDF = ({ response = {} }) => {
       // =======================================================
 
       if (education.length) {
-        navyText(8.5, "bold");
+        tealText(8.5, "bold");
 
         pdf.setCharSpace(0.7);
 
@@ -427,7 +473,7 @@ const DownloadPDF = ({ response = {} }) => {
 
         pdf.setCharSpace(0);
 
-        pdf.setDrawColor(...navy);
+        pdf.setDrawColor(...lightTealLine);
 
         pdf.setLineWidth(0.25);
 
@@ -441,10 +487,12 @@ const DownloadPDF = ({ response = {} }) => {
         let educationY = columnTopY + 6;
 
         education.forEach((item) => {
+          // Degree
           boldText(9);
 
           pdf.text(item.degree || "Degree", leftX, educationY);
 
+          // Graduation year
           if (item.graduationYear) {
             rightText(
               item.graduationYear,
@@ -456,17 +504,7 @@ const DownloadPDF = ({ response = {} }) => {
 
           educationY += 4.5;
 
-          normalText(8.5);
-
-          const instituteLines = pdf.splitTextToSize(
-            String(item.nameOfInstitute),
-            columnWidth,
-          );
-
-          pdf.text(instituteLines, leftX, educationY);
-
-          educationY += instituteLines.length * 3;
-
+          // Field of study
           if (item.fieldOfStudy) {
             normalText(8.5);
 
@@ -480,6 +518,19 @@ const DownloadPDF = ({ response = {} }) => {
             educationY += fieldLines.length * 3;
           }
 
+          // Institute
+          normalText(8.5);
+
+          const instituteLines = pdf.splitTextToSize(
+            String(item.nameOfInstitute),
+            columnWidth,
+          );
+
+          pdf.text(instituteLines, leftX, educationY);
+
+          educationY += instituteLines.length * 3;
+
+          // Education spacing
           educationY += 2;
         });
       }
@@ -489,7 +540,7 @@ const DownloadPDF = ({ response = {} }) => {
       // =======================================================
 
       if (certifications.length) {
-        navyText(8.5, "bold");
+        tealText(8.5, "bold");
 
         pdf.setCharSpace(0);
 
@@ -497,7 +548,7 @@ const DownloadPDF = ({ response = {} }) => {
 
         pdf.setCharSpace(0);
 
-        pdf.setDrawColor(...navy);
+        pdf.setDrawColor(...lightTealLine);
 
         pdf.setLineWidth(0.25);
 
@@ -540,6 +591,10 @@ const DownloadPDF = ({ response = {} }) => {
     pdf.save("Resume.pdf");
   };
 
+  // =========================================================
+  // BUTTON
+  // =========================================================
+
   return (
     <button
       type="button"
@@ -556,4 +611,4 @@ const DownloadPDF = ({ response = {} }) => {
   );
 };
 
-export default DownloadPDF;
+export default OptimizedDownloadPDF;

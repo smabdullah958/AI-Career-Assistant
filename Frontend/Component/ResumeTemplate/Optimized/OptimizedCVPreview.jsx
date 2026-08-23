@@ -2,30 +2,34 @@
 
 import Link from "next/link";
 
-const ClassicalCVPreview = ({ data }) => {
+const OptimizedCVPreview = ({ data }) => {
   return (
     <>
       <div
-        className="bg-white  p-5 max-w-[210mm] min-h-[297mm] sticky  text-[#333]"
+        className="bg-white p-5 max-w-[210mm] min-h-[297mm] sticky text-[#333]"
         style={{
-          fontFamily: "Georgia, 'Times New Roman', serif",
+          fontFamily: "Arial, Helvetica, sans-serif",
         }}
       >
         {/* ================= HEADER ================= */}
-        <header className="border-b-2 border-[#263956] pb-4 mb-6">
-          <h1 className="text-[32px] leading-none font-bold text-[#1f304b]">
+        <header className="bg-[#0E7C73] -mx-5 -mt-5 px-8 pt-7 pb-6 mb-6">
+          {/* Name */}
+          <h1 className="text-[32px] leading-none font-bold text-white">
             {data.name || "Abdullah"}
           </h1>
 
-          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-[#405574]">
+          {/* Role */}
+          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-white">
             {data.Role || "Professional Title"}
           </p>
 
           {/* Contact Information */}
-          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-[#333]">
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-white">
             {data.email && <span>{data.email}</span>}
 
             {data.phone && <span>{data.phone}</span>}
+
+            {data.address && <span>{data.address}</span>}
 
             {data.portfolio && (
               <Link
@@ -71,7 +75,7 @@ const ClassicalCVPreview = ({ data }) => {
                   skill.value && (
                     <span
                       key={index}
-                      className="bg-[#eef1f5] px-3 py-1 text-[11px] text-[#263956]"
+                      className="rounded-full bg-[#E6F3F1] px-3 py-1 text-[11px] font-semibold text-[#0E7C73]"
                     >
                       {skill.value}
                     </span>
@@ -97,13 +101,14 @@ const ClassicalCVPreview = ({ data }) => {
                       </h3>
 
                       <span className="shrink-0 text-[12px] text-[#333]">
-                        {exp.StartDate || ""} {exp.StartDate && " - "}{" "}
+                        {exp.StartDate || ""}
+                        {exp.StartDate && " - "}
                         {exp.EndDate || "Present"}
                       </span>
                     </div>
 
                     {/* Company */}
-                    <p className="text-[13px] italic text-[#405574]">
+                    <p className="text-[13px] font-semibold text-[#0E7C73]">
                       {exp.CompanyName}
                     </p>
 
@@ -135,19 +140,28 @@ const ClassicalCVPreview = ({ data }) => {
               (project, index) =>
                 project.title && (
                   <div key={index} className="mb-4">
-                    <div className="flex justify-between items-baseline gap-3">
-                      <h3 className="text-[15px] font-bold text-[#333]">
-                        {project.title}
-                      </h3>
+                    {/* Project title */}
+                    <h3 className="text-[15px] font-bold text-[#333]">
+                      {project.title}
+                    </h3>
 
-                      <div className="flex gap-2 text-[10px]">
+                    {/* Project description */}
+                    {project.description && (
+                      <p className="text-[12px] leading-[1.45] text-[#333]">
+                        {project.description}
+                      </p>
+                    )}
+
+                    {/* Project links */}
+                    {(project.link || project.Github) && (
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[10px]">
                         {project.link && (
                           <Link
                             href={project.link}
                             target="_blank"
-                            className="text-[#263956] hover:underline"
+                            className="text-[#0E7C73] hover:underline"
                           >
-                            {project.link}
+                            Live Demo: {project.link}
                           </Link>
                         )}
 
@@ -155,18 +169,12 @@ const ClassicalCVPreview = ({ data }) => {
                           <Link
                             href={project.Github}
                             target="_blank"
-                            className="text-[#263956] hover:underline"
+                            className="text-[#0E7C73] hover:underline"
                           >
-                            {project.Github}
+                            GitHub: {project.Github}
                           </Link>
                         )}
                       </div>
-                    </div>
-
-                    {project.description && (
-                      <p className="text-[12px] leading-[1.45] text-[#333]">
-                        {project.description}
-                      </p>
                     )}
                   </div>
                 ),
@@ -196,7 +204,9 @@ const ClassicalCVPreview = ({ data }) => {
                       </div>
 
                       {edu.fieldOfStudy && (
-                        <p className="text-[12px]">{edu.fieldOfStudy}</p>
+                        <p className="text-[12px] text-[#333]">
+                          {edu.fieldOfStudy}
+                        </p>
                       )}
 
                       <p className="text-[12px] text-[#555]">
@@ -246,10 +256,10 @@ const ClassicalCVPreview = ({ data }) => {
 
 const SectionTitle = ({ title }) => {
   return (
-    <h2 className="mb-2 border-b border-[#263956] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#263956]">
+    <h2 className="mb-2 border-b border-[#B5DAD6] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#0E7C73]">
       {title}
     </h2>
   );
 };
 
-export default ClassicalCVPreview;
+export default OptimizedCVPreview;

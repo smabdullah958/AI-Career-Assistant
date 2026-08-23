@@ -351,7 +351,7 @@ const ModernDownloadPDF = ({ response = {} }) => {
 
       sidebarY += lines.length * 3.5;
 
-      sidebarY;
+      sidebarY += 2;
     });
 
     // =========================================================
@@ -359,7 +359,7 @@ const ModernDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     if (skills.length) {
-      sidebarY += 8;
+      sidebarY += 5;
 
       sidebarY = drawSidebarTitle(
         "Skills",
@@ -391,7 +391,7 @@ const ModernDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     if (education.length) {
-      sidebarY += 8;
+      sidebarY += 5;
 
       sidebarY = drawSidebarTitle(
         "Education",
@@ -462,7 +462,7 @@ const ModernDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     if (certifications.length) {
-      sidebarY += 8;
+      sidebarY += 5;
 
       sidebarY = drawSidebarTitle(
         "Certifications",
@@ -524,6 +524,8 @@ const ModernDownloadPDF = ({ response = {} }) => {
 
         pdf.text(experience.Role || "Job Position", mainX, mainY);
 
+        mainY;
+
         // ---------------------------------------------------
         // DATE
         // ---------------------------------------------------
@@ -558,7 +560,7 @@ const ModernDownloadPDF = ({ response = {} }) => {
 
         pdf.text(experience.CompanyName, mainX, mainY);
 
-        mainY += 3.5;
+        mainY += 4;
 
         // ---------------------------------------------------
         // DESCRIPTION
@@ -574,11 +576,11 @@ const ModernDownloadPDF = ({ response = {} }) => {
 
         // Space between experiences
         if (index < experiences.length - 1) {
-          mainY += 3;
+          mainY += 5;
         }
       });
 
-      mainY += 2;
+      mainY += 5;
     }
 
     // =========================================================

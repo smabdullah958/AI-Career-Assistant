@@ -320,7 +320,7 @@ const DownloadPDF = ({ response = {} }) => {
 
         pdf.text(experience.CompanyName, margin, y);
 
-        y += 3.5;
+        y += 4;
 
         // ---------------------------------------------------
         // DESCRIPTION
@@ -352,17 +352,6 @@ const DownloadPDF = ({ response = {} }) => {
 
         pdf.text(project.title, margin, y);
 
-        // Project link / Github
-        const projectLink = project.link || project.Github;
-
-        if (projectLink) {
-          navyText(8.5);
-
-          pdf.text(String(project.link), pageWidth - margin, y, {
-            align: "right",
-          });
-        }
-
         y += 3.5;
 
         // Description
@@ -370,18 +359,38 @@ const DownloadPDF = ({ response = {} }) => {
           normalText(8.5);
 
           y = drawWrappedText(project.description, margin, y, contentWidth, 8);
+
+          // Small gap before links
+          y += 1.5;
+        }
+
+        // Live Demo
+        if (project.link) {
+          navyText(8);
+
+          pdf.text(`Live Demo: ${String(project.link)}`, margin, y);
+
+          y += 3;
+        }
+
+        // GitHub
+        if (project.Github) {
+          navyText(8);
+
+          pdf.text(`GitHub: ${String(project.Github)}`, margin, y);
+
+          y += 3;
         }
 
         // More space between projects
         if (index < projects.length - 1) {
-          y;
+          y += 3;
         }
       });
 
-      // Space after the complete Projects section
-      y;
+      // Space after complete Projects section
+      y += 3;
     }
-
     // =========================================================
     // EDUCATION + CERTIFICATIONS
     // =========================================================

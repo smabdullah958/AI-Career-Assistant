@@ -86,15 +86,35 @@ const ModernCVPreview = ({ data = {} }) => {
             <SidebarTitle title="CONTACT" />
 
             <div className="space-y-[5px] text-[12px] leading-[1.35] text-[#444]">
-              {data.email && <p>{data.email}</p>}
+              {data.email && (
+                <p className="break-words overflow-wrap-anywhere">
+                  {data.email}
+                </p>
+              )}
 
-              {data.phone && <p>{data.phone}</p>}
+              {data.phone && (
+                <p className="break-words overflow-wrap-anywhere">
+                  {data.phone}
+                </p>
+              )}
 
-              {data.address && <p>{data.address}</p>}
+              {data.address && (
+                <p className="break-words overflow-wrap-anywhere">
+                  {data.address}
+                </p>
+              )}
 
-              {data.portfolio && <p>{data.portfolio}</p>}
+              {data.portfolio && (
+                <p className="break-words overflow-wrap-anywhere">
+                  {data.portfolio}
+                </p>
+              )}
 
-              {data.Linkedin && <p>{data.Linkedin}</p>}
+              {data.Linkedin && (
+                <p className="break-words overflow-wrap-anywhere">
+                  {data.Linkedin}
+                </p>
+              )}
             </div>
 
             {/* ===============================================
@@ -110,7 +130,9 @@ const ModernCVPreview = ({ data = {} }) => {
                     <li key={index} className="flex items-start gap-[5px]">
                       <span className="text-[#d4a900] font-bold">•</span>
 
-                      <span>{skill}</span>
+                      <span className="break-words overflow-wrap-anywhere">
+                        {skill}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -191,7 +213,7 @@ const ModernCVPreview = ({ data = {} }) => {
 
             {data.Summary && (
               <ResumeSection title="SUMMARY">
-                <p className="text-[12px] leading-[1.55] text-[#3f4248]">
+                <p className="text-[12px] leading-[1.55] text-[#3f4248] break-words overflow-wrap-anywhere">
                   {data.Summary}
                 </p>
               </ResumeSection>
@@ -264,7 +286,7 @@ const ModernCVPreview = ({ data = {} }) => {
                         </h3>
 
                         {(project.link || project.Github) && (
-                          <span className="text-[9px] text-[#69778e] text-right break-all">
+                          <span className="text-[9px] text-[#69778e] text-right break-all overflow-wrap-anywhere">
                             {project.link || project.Github}
                           </span>
                         )}

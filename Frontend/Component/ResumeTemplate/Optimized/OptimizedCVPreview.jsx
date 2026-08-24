@@ -14,28 +14,40 @@ const OptimizedCVPreview = ({ data }) => {
         {/* ================= HEADER ================= */}
         <header className="bg-[#0E7C73] -mx-5 -mt-5 px-8 pt-7 pb-6 mb-6">
           {/* Name */}
-          <h1 className="text-[32px] leading-none font-bold text-white">
+          <h1 className="text-[32px] leading-none font-bold text-white break-words overflow-wrap-anywhere">
             {data.name || "Abdullah"}
           </h1>
 
           {/* Role */}
-          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-white">
+          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-white break-words overflow-wrap-anywhere">
             {data.Role || "Professional Title"}
           </p>
 
           {/* Contact Information */}
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-white">
-            {data.email && <span>{data.email}</span>}
+            {data.email && (
+              <span className="break-words overflow-wrap-anywhere">
+                {data.email}
+              </span>
+            )}
 
-            {data.phone && <span>{data.phone}</span>}
+            {data.phone && (
+              <span className="break-words overflow-wrap-anywhere">
+                {data.phone}
+              </span>
+            )}
 
-            {data.address && <span>{data.address}</span>}
+            {data.address && (
+              <span className="break-words overflow-wrap-anywhere">
+                {data.address}
+              </span>
+            )}
 
             {data.portfolio && (
               <Link
                 href={data.portfolio}
                 target="_blank"
-                className="hover:underline"
+                className="hover:underline break-words overflow-wrap-anywhere"
               >
                 {data.portfolio}
               </Link>
@@ -45,7 +57,7 @@ const OptimizedCVPreview = ({ data }) => {
               <Link
                 href={data.Linkedin}
                 target="_blank"
-                className="hover:underline"
+                className="hover:underline break-words overflow-wrap-anywhere"
               >
                 {data.Linkedin}
               </Link>
@@ -58,7 +70,7 @@ const OptimizedCVPreview = ({ data }) => {
           <section className="mb-7">
             <SectionTitle title="Summary" />
 
-            <p className="text-[12px] leading-[1.5] text-[#333]">
+            <p className="text-[12px] leading-[1.5] text-[#333] break-words overflow-wrap-anywhere">
               {data.Summary}
             </p>
           </section>
@@ -75,7 +87,7 @@ const OptimizedCVPreview = ({ data }) => {
                   skill.value && (
                     <span
                       key={index}
-                      className="rounded-full bg-[#E6F3F1] px-3 py-1 text-[11px] font-semibold text-[#0E7C73]"
+                      className="rounded-full bg-[#E6F3F1] px-3 py-1 text-[11px] font-semibold text-[#0E7C73] break-words overflow-wrap-anywhere"
                     >
                       {skill.value}
                     </span>
@@ -154,12 +166,12 @@ const OptimizedCVPreview = ({ data }) => {
 
                     {/* Project links */}
                     {(project.link || project.Github) && (
-                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[10px]">
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[10px] break-words overflow-wrap-anywhere">
                         {project.link && (
                           <Link
                             href={project.link}
                             target="_blank"
-                            className="text-[#0E7C73] hover:underline"
+                            className="text-[#0E7C73] hover:underline break-words overflow-wrap-anywhere"
                           >
                             Live Demo: {project.link}
                           </Link>
@@ -169,7 +181,7 @@ const OptimizedCVPreview = ({ data }) => {
                           <Link
                             href={project.Github}
                             target="_blank"
-                            className="text-[#0E7C73] hover:underline"
+                            className="text-[#0E7C73] hover:underline break-words overflow-wrap-anywhere"
                           >
                             GitHub: {project.Github}
                           </Link>

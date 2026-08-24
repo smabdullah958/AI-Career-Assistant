@@ -23,15 +23,23 @@ const ClassicalCVPreview = ({ data }) => {
 
           {/* Contact Information */}
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-[#333]">
-            {data.email && <span>{data.email}</span>}
+            {data.email && (
+              <span className="break-words overflow-wrap-anywhere">
+                {data.email}
+              </span>
+            )}
 
-            {data.phone && <span>{data.phone}</span>}
+            {data.phone && (
+              <span className="break-words overflow-wrap-anywhere">
+                {data.phone}
+              </span>
+            )}
 
             {data.portfolio && (
               <Link
                 href={data.portfolio}
                 target="_blank"
-                className="hover:underline"
+                className="break-words overflow-wrap-anywhere hover:underline"
               >
                 {data.portfolio}
               </Link>
@@ -41,7 +49,7 @@ const ClassicalCVPreview = ({ data }) => {
               <Link
                 href={data.Linkedin}
                 target="_blank"
-                className="hover:underline"
+                className="break-words overflow-wrap-anywhere hover:underline"
               >
                 {data.Linkedin}
               </Link>
@@ -54,7 +62,7 @@ const ClassicalCVPreview = ({ data }) => {
           <section className="mb-7">
             <SectionTitle title="Summary" />
 
-            <p className="text-[12px] leading-[1.5] text-[#333]">
+            <p className="text-[12px] leading-[1.5] text-[#333] break-words overflow-wrap-anywhere">
               {data.Summary}
             </p>
           </section>
@@ -71,7 +79,7 @@ const ClassicalCVPreview = ({ data }) => {
                   skill.value && (
                     <span
                       key={index}
-                      className="bg-[#eef1f5] px-3 py-1 text-[11px] text-[#263956]"
+                      className="bg-[#eef1f5] px-3 py-1 text-[11px] text-[#263956] break-words overflow-wrap-anywhere"
                     >
                       {skill.value}
                     </span>
@@ -92,7 +100,7 @@ const ClassicalCVPreview = ({ data }) => {
                   <div key={index} className="mb-5">
                     {/* Job title + Date */}
                     <div className="flex justify-between items-baseline gap-4">
-                      <h3 className="text-[16px] font-bold text-[#333]">
+                      <h3 className="text-[16px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                         {exp.Role || "Job Position"}
                       </h3>
 
@@ -145,7 +153,7 @@ const ClassicalCVPreview = ({ data }) => {
                           <Link
                             href={project.link}
                             target="_blank"
-                            className="text-[#263956] hover:underline"
+                            className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
                           >
                             {project.link}
                           </Link>
@@ -155,7 +163,7 @@ const ClassicalCVPreview = ({ data }) => {
                           <Link
                             href={project.Github}
                             target="_blank"
-                            className="text-[#263956] hover:underline"
+                            className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
                           >
                             {project.Github}
                           </Link>

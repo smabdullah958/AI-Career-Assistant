@@ -148,19 +148,26 @@ const ClassicalCVPreview = ({ data }) => {
               (project, index) =>
                 project.title && (
                   <div key={index} className="mb-4">
-                    <div className="flex justify-between items-baseline gap-3">
-                      <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
-                        {project.title}
-                      </h3>
+                    <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
+                      {project.title}
+                    </h3>
 
-                      <div className="flex gap-2 text-[10px]">
+                    {project.description && (
+                      <p className="text-[12px] leading-[1.45] text-[#333] break-words overflow-wrap-anywhere">
+                        {project.description}
+                      </p>
+                    )}
+
+                    {/* Project links */}
+                    {(project.link || project.Github) && (
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[10px] break-words overflow-wrap-anywhere">
                         {project.link && (
                           <Link
                             href={project.link}
                             target="_blank"
-                            className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
+                            className="text-[#292d35] font-semibold hover:underline break-words overflow-wrap-anywhere "
                           >
-                            {project.link}
+                            Live Demo: {project.link}
                           </Link>
                         )}
 
@@ -168,18 +175,12 @@ const ClassicalCVPreview = ({ data }) => {
                           <Link
                             href={project.Github}
                             target="_blank"
-                            className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
+                            className="text-[#292d35] font-semibold hover:underline break-words overflow-wrap-anywhere"
                           >
-                            {project.Github}
+                            GitHub: {project.Github}
                           </Link>
                         )}
                       </div>
-                    </div>
-
-                    {project.description && (
-                      <p className="text-[12px] leading-[1.45] text-[#333] break-words overflow-wrap-anywhere">
-                        {project.description}
-                      </p>
                     )}
                   </div>
                 ),

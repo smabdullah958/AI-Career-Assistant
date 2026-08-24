@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const ModernCVPreview = ({ data = {} }) => {
   const skills = (data.Skills || [])
     .map((skill) => skill?.value)
@@ -286,19 +288,26 @@ const ModernCVPreview = ({ data = {} }) => {
                 <div className="space-y-[12px]">
                   {projects.map((project, index) => (
                     <div key={index}>
-                      <div className="flex justify-between items-start gap-3">
-                        <h3 className="text-[12px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
-                          {project.title}
-                        </h3>
+                      <h3 className="text-[12px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
+                        {project.title}
+                      </h3>
 
-                        <div className="flex gap-2 text-[10px]">
+                      {project.description && (
+                        <p className="mt-[2px] text-[11px] leading-[1.35] text-[#3f4248] break-words overflow-wrap-anywhere">
+                          {project.description}
+                        </p>
+                      )}
+
+                      {/* Project links */}
+                      {(project.link || project.Github) && (
+                        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[10px] break-words overflow-wrap-anywhere">
                           {project.link && (
                             <Link
                               href={project.link}
                               target="_blank"
-                              className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
+                              className="text-[#292d35] font-semibold hover:underline break-words overflow-wrap-anywhere "
                             >
-                              {project.link}
+                              Live Demo: {project.link}
                             </Link>
                           )}
 
@@ -306,18 +315,12 @@ const ModernCVPreview = ({ data = {} }) => {
                             <Link
                               href={project.Github}
                               target="_blank"
-                              className="text-[#9ac2ff] hover:underline break-words overflow-wrap-anywhere"
+                              className="text-[#292d35] font-semibold hover:underline break-words overflow-wrap-anywhere"
                             >
-                              {project.Github}
+                              GitHub: {project.Github}
                             </Link>
                           )}
                         </div>
-                      </div>
-
-                      {project.description && (
-                        <p className="mt-[2px] text-[11px] leading-[1.35] text-[#3f4248] break-words overflow-wrap-anywhere">
-                          {project.description}
-                        </p>
                       )}
                     </div>
                   ))}

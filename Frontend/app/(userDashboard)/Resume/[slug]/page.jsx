@@ -25,6 +25,9 @@ import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPD
 import OptimizedCVPreview from "@/Component/ResumeTemplate/Optimized/OptimizedCVPreview";
 import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/OptimizedDownloadPDF";
 
+//elegant cv
+import ElegantCVPreview from "@/Component/ResumeTemplate/Elegant/ElegantCVPreview";
+
 const page = () => {
   let parms = useParams();
   const previewRef = useRef(null); // Create the reference
@@ -142,7 +145,8 @@ const page = () => {
             (Slug === "modern-cv" && <ModernCVPreview data={previewData} />) ||
             (Slug === "optimized-cv" && (
               <OptimizedCVPreview data={previewData} />
-            ))
+            )) ||
+            (Slug === "elegant-cv" && <ElegantCVPreview data={previewData} />)
           )}
         </div>
       </div>

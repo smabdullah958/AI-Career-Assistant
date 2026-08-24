@@ -36,27 +36,27 @@ const templates = [
     description: "Structured specifically for ATS-friendly applications.",
     slug: "optimized-cv",
   },
-  // {
-  //   id: 4,
-  //   name: "Elegant CV",
-  //   image: "/elegantCV.png",
-  //   description: "Minimal and elegant design with a professional appearance.",
-  //   slug: "elegant-cv",
-  // },
-  // {
-  //   id: 5,
-  //   name: "Bold CV",
-  //   image: "/boldCV.png",
-  //   description: "A confident layout designed to highlight your strengths.",
-  //   slug: "bold-cv",
-  // },
-  // {
-  //   id: 6,
-  //   name: "Professional CV",
-  //   image: "/professionalCV.png",
-  //   description: "A polished layout suitable for corporate applications.",
-  //   slug: "professional-cv",
-  // },
+  {
+    id: 4,
+    name: "Elegant CV",
+    image: "/elegantCV.png",
+    description: "Minimal and elegant design with a professional appearance.",
+    slug: "elegant-cv",
+  },
+  {
+    id: 5,
+    name: "Bold CV",
+    image: "/boldCV.png",
+    description: "A confident layout designed to highlight your strengths.",
+    slug: "bold-cv",
+  },
+  {
+    id: 6,
+    name: "Professional CV",
+    image: "/professionalCV.png",
+    description: "A polished layout suitable for corporate applications.",
+    slug: "professional-cv",
+  },
 ];
 
 export default function Resume() {

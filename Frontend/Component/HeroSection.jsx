@@ -3,13 +3,16 @@
 import { useSelector } from "react-redux";
 import Link from "next/link";
 const HeroSection = () => {
+  //get role from a global slice
+  let { Role: role } = useSelector((state) => state.GlobalSlice);
+
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);
 
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = Role === "User" || UserRole === "User";
+  let IsRole = Role === "User" || UserRole === "User" || role === "User";
 
   return (
     <div>

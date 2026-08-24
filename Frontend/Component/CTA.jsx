@@ -2,13 +2,16 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
 const CTA = () => {
+  //get role from a global slcei
+  let { Role: role } = useSelector((state) => state.GlobalSlice);
+
   //signup role
   let { Role } = useSelector((state) => state.SignUpSlice);
 
   //login role
   let { UserRole } = useSelector((state) => state.LogInSlice);
 
-  let IsRole = Role === "User" || UserRole === "User";
+  let IsRole = Role === "User" || UserRole === "User" || role === "User";
 
   return (
     <section className="py-24 px-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-center relative overflow-hidden">

@@ -1,9 +1,13 @@
 "use client";
-import DownloadPDF from "../ResumeTemplate/Classical/ClassicalDownloadPDF";
+import ClassicalDownloadPDF from "../ResumeTemplate/Classical/ClassicalDownloadPDF";
+import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPDF";
+import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/OptimizedDownloadPDF";
+import { useParams } from "next/navigation";
+
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResumeSchema } from "@/Libraries/ZodSchema";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 
@@ -13,6 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWatch } from "react-hook-form";
 
 const ResumeForm = ({ onDataChange }) => {
+  // const [previewData, setPreviewData] = useState({});
+  let { slug: Slug } = useParams();
+
   let dispatch = useDispatch();
 
   const { success } = useSelector((state) => state.ResumeSlice);
@@ -807,7 +814,15 @@ const ResumeForm = ({ onDataChange }) => {
             Generate Resume
           </button>
           <div className=" block md:hidden">
-            <DownloadPDF />
+            {Slug === "classical-cv" ? (
+              <ClassicalDownloadPDF response={formValues} />
+            ) : Slug === "modern-cv" ? (
+              <ModernDownloadPDF response={formValues} />
+            ) : (
+              Slug === "optimized-cv" && (
+                <OptimizedDownloadPDF response={formValues} />
+              )
+            )}
           </div>
         </div>
       </form>

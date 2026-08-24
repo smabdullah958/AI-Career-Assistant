@@ -537,7 +537,7 @@ const DownloadPDF = ({ response = {} }) => {
     // DOWNLOAD
     // =========================================================
 
-    pdf.save("Resume.pdf");
+    pdf.save("Classical-Resume.pdf");
   };
 
   return (

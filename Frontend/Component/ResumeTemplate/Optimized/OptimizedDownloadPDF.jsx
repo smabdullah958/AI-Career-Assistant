@@ -2,7 +2,6 @@
 
 import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
-
 const OptimizedDownloadPDF = ({ response = {} }) => {
   const { success } = useSelector((state) => state.ResumeSlice || {});
 
@@ -588,7 +587,7 @@ const OptimizedDownloadPDF = ({ response = {} }) => {
     // DOWNLOAD
     // =========================================================
 
-    pdf.save("Resume.pdf");
+    pdf.save("Optimized-Resume.pdf");
   };
 
   // =========================================================

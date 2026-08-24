@@ -108,11 +108,11 @@ const OptimizedCVPreview = ({ data }) => {
                   <div key={index} className="mb-5">
                     {/* Job title + Date */}
                     <div className="flex justify-between items-baseline gap-4">
-                      <h3 className="text-[16px] font-bold text-[#333]">
+                      <h3 className="text-[16px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                         {exp.Role || "Job Position"}
                       </h3>
 
-                      <span className="shrink-0 text-[12px] text-[#333]">
+                      <span className="shrink-0 text-[12px] text-[#333] break-words overflow-wrap-anywhere">
                         {exp.StartDate || ""}
                         {exp.StartDate && " - "}
                         {exp.EndDate || "Present"}
@@ -120,19 +120,21 @@ const OptimizedCVPreview = ({ data }) => {
                     </div>
 
                     {/* Company */}
-                    <p className="text-[13px] font-semibold text-[#0E7C73]">
+                    <p className="text-[13px] font-semibold text-[#0E7C73] break-words overflow-wrap-anywhere">
                       {exp.CompanyName}
                     </p>
 
                     {/* Description */}
                     {exp.Description && (
-                      <div className="mt-1 text-[12px] leading-[1.45] text-[#333]">
+                      <div className="mt-1 text-[12px] leading-[1.45] text-[#333] ">
                         {exp.Description.split("\n")
                           .filter((item) => item.trim())
                           .map((item, i) => (
-                            <div key={i} className="flex gap-2">
+                            <div key={i} className="flex gap-2 ">
                               <span>•</span>
-                              <span>{item}</span>
+                              <span className="break-words overflow-wrap-anywhere">
+                                {item}
+                              </span>
                             </div>
                           ))}
                       </div>
@@ -153,13 +155,13 @@ const OptimizedCVPreview = ({ data }) => {
                 project.title && (
                   <div key={index} className="mb-4">
                     {/* Project title */}
-                    <h3 className="text-[15px] font-bold text-[#333]">
+                    <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                       {project.title}
                     </h3>
 
                     {/* Project description */}
                     {project.description && (
-                      <p className="text-[12px] leading-[1.45] text-[#333]">
+                      <p className="text-[12px] leading-[1.45] text-[#333] break-words overflow-wrap-anywhere">
                         {project.description}
                       </p>
                     )}
@@ -171,7 +173,7 @@ const OptimizedCVPreview = ({ data }) => {
                           <Link
                             href={project.link}
                             target="_blank"
-                            className="text-[#0E7C73] hover:underline break-words overflow-wrap-anywhere"
+                            className="text-[#0E7C73] hover:underline break-words overflow-wrap-anywhere "
                           >
                             Live Demo: {project.link}
                           </Link>
@@ -206,22 +208,22 @@ const OptimizedCVPreview = ({ data }) => {
                   edu.nameOfInstitute && (
                     <div key={index} className="mb-4">
                       <div className="flex justify-between items-baseline gap-2">
-                        <h3 className="text-[15px] font-bold text-[#333]">
+                        <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                           {edu.degree || "Degree"}
                         </h3>
 
-                        <span className="shrink-0 text-[11px] text-[#333]">
+                        <span className="shrink-0 text-[11px] text-[#333] break-words overflow-wrap-anywhere">
                           {edu.graduationYear}
                         </span>
                       </div>
 
                       {edu.fieldOfStudy && (
-                        <p className="text-[12px] text-[#333]">
+                        <p className="text-[12px] text-[#333] break-words overflow-wrap-anywhere">
                           {edu.fieldOfStudy}
                         </p>
                       )}
 
-                      <p className="text-[12px] text-[#555]">
+                      <p className="text-[12px] text-[#555] break-words overflow-wrap-anywhere">
                         {edu.nameOfInstitute}
                       </p>
                     </div>
@@ -243,11 +245,12 @@ const OptimizedCVPreview = ({ data }) => {
                         <span>•</span>
 
                         <div>
-                          <span>{cert.CertifcateName}</span>
+                          <span className="break-words overflow-wrap-anywhere">
+                            {cert.CertifcateName}
+                          </span>
 
                           {cert.IssueDate && (
-                            <span className="text-[#555]">
-                              {" "}
+                            <span className="text-[#555] break-words overflow-wrap-anywhere">
                               ({cert.IssueDate})
                             </span>
                           )}

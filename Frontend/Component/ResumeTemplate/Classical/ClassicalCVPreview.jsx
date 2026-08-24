@@ -104,26 +104,31 @@ const ClassicalCVPreview = ({ data }) => {
                         {exp.Role || "Job Position"}
                       </h3>
 
-                      <span className="shrink-0 text-[12px] text-[#333]">
+                      <span className="shrink-0 text-[12px] text-[#333] break-words overflow-wrap-anywhere">
                         {exp.StartDate || ""} {exp.StartDate && " - "}{" "}
                         {exp.EndDate || "Present"}
                       </span>
                     </div>
 
                     {/* Company */}
-                    <p className="text-[13px] italic text-[#405574]">
+                    <p className="text-[13px] italic text-[#405574] break-words overflow-wrap-anywhere">
                       {exp.CompanyName}
                     </p>
 
                     {/* Description */}
                     {exp.Description && (
-                      <div className="mt-1 text-[12px] leading-[1.45] text-[#333]">
+                      <div className="mt-1 text-[12px] leading-[1.45] text-[#333] break-words overflow-wrap-anywhere">
                         {exp.Description.split("\n")
                           .filter((item) => item.trim())
                           .map((item, i) => (
-                            <div key={i} className="flex gap-2">
+                            <div
+                              key={i}
+                              className="flex gap-2 break-words overflow-wrap-anywhere"
+                            >
                               <span>•</span>
-                              <span>{item}</span>
+                              <span className="break-words overflow-wrap-anywhere">
+                                {item}
+                              </span>
                             </div>
                           ))}
                       </div>
@@ -144,7 +149,7 @@ const ClassicalCVPreview = ({ data }) => {
                 project.title && (
                   <div key={index} className="mb-4">
                     <div className="flex justify-between items-baseline gap-3">
-                      <h3 className="text-[15px] font-bold text-[#333]">
+                      <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                         {project.title}
                       </h3>
 
@@ -172,7 +177,7 @@ const ClassicalCVPreview = ({ data }) => {
                     </div>
 
                     {project.description && (
-                      <p className="text-[12px] leading-[1.45] text-[#333]">
+                      <p className="text-[12px] leading-[1.45] text-[#333] break-words overflow-wrap-anywhere">
                         {project.description}
                       </p>
                     )}
@@ -194,20 +199,22 @@ const ClassicalCVPreview = ({ data }) => {
                   edu.nameOfInstitute && (
                     <div key={index} className="mb-4">
                       <div className="flex justify-between items-baseline gap-2">
-                        <h3 className="text-[15px] font-bold text-[#333]">
+                        <h3 className="text-[15px] font-bold text-[#333] break-words overflow-wrap-anywhere">
                           {edu.degree || "Degree"}
                         </h3>
 
-                        <span className="shrink-0 text-[11px] text-[#333]">
+                        <span className="shrink-0 text-[11px] text-[#333] break-words overflow-wrap-anywhere">
                           {edu.graduationYear}
                         </span>
                       </div>
 
                       {edu.fieldOfStudy && (
-                        <p className="text-[12px]">{edu.fieldOfStudy}</p>
+                        <p className="text-[12px] break-words overflow-wrap-anywhere">
+                          {edu.fieldOfStudy}
+                        </p>
                       )}
 
-                      <p className="text-[12px] text-[#555]">
+                      <p className="text-[12px] text-[#555] break-words overflow-wrap-anywhere">
                         {edu.nameOfInstitute}
                       </p>
                     </div>
@@ -221,19 +228,23 @@ const ClassicalCVPreview = ({ data }) => {
             <section>
               <SectionTitle title="Certifications" />
 
-              <ul className="space-y-2 text-[12px]">
+              <ul className="space-y-2 text-[12px] break-words overflow-wrap-anywhere">
                 {data.Certifications.map(
                   (cert, index) =>
                     cert.CertifcateName && (
-                      <li key={index} className="flex gap-2 leading-[1.4]">
+                      <li
+                        key={index}
+                        className="flex gap-2 leading-[1.4] break-words overflow-wrap-anywhere"
+                      >
                         <span>•</span>
 
                         <div>
-                          <span>{cert.CertifcateName}</span>
+                          <span className="break-words overflow-wrap-anywhere">
+                            {cert.CertifcateName}
+                          </span>
 
                           {cert.IssueDate && (
-                            <span className="text-[#555]">
-                              {" "}
+                            <span className="text-[#555] break-words overflow-wrap-anywhere">
                               ({cert.IssueDate})
                             </span>
                           )}

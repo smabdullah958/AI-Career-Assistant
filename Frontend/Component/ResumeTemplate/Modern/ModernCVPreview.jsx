@@ -43,7 +43,7 @@ const ModernCVPreview = ({ data = {} }) => {
         =================================================== */}
 
         <header className="h-[32mm] bg-[#20242b] flex flex-col items-center justify-center text-white">
-          <h1 className="text-[30px] font-bold tracking-wide">
+          <h1 className="text-[30px] font-bold tracking-wide break-words overflow-wrap-anywhere">
             {data.name || "Your Name"}
           </h1>
 
@@ -54,7 +54,7 @@ const ModernCVPreview = ({ data = {} }) => {
               font-bold
               uppercase
               tracking-[4px]
-              text-[#d4a900]
+              text-[#d4a900] break-words overflow-wrap-anywhere
             "
           >
             {data.Role || "Your Role"}
@@ -234,12 +234,12 @@ const ModernCVPreview = ({ data = {} }) => {
                     <div key={index}>
                       {/* Job title + date */}
                       <div className="flex justify-between items-start gap-4">
-                        <h3 className="text-[13px] font-bold text-[#292d35]">
+                        <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {experience.Role || "Job Position"}
                         </h3>
 
                         {(experience.StartDate || experience.EndDate) && (
-                          <span className="text-[10px] text-[#69778e] whitespace-nowrap">
+                          <span className="text-[10px] text-[#69778e] break-words overflow-wrap-anywhere">
                             {experience.StartDate || ""}
                             {experience.StartDate && " - "}
                             {experience.EndDate || "Present"}
@@ -248,7 +248,7 @@ const ModernCVPreview = ({ data = {} }) => {
                       </div>
 
                       {/* Company */}
-                      <p className="mt-[1px] text-[11px] font-bold text-[#9b7b00]">
+                      <p className="mt-[1px] text-[11px] font-bold text-[#9b7b00] break-words overflow-wrap-anywhere">
                         {experience.CompanyName}
                       </p>
 
@@ -260,11 +260,13 @@ const ModernCVPreview = ({ data = {} }) => {
                             .map((item, i) => (
                               <div
                                 key={i}
-                                className="flex gap-[6px] text-[11px] leading-[1.35] text-[#3f4248]"
+                                className="flex gap-[6px] text-[11px] leading-[1.35] text-[#3f4248] "
                               >
                                 <span className="font-bold">•</span>
 
-                                <span>{item}</span>
+                                <span className="break-words overflow-wrap-anywhere">
+                                  {item}
+                                </span>
                               </div>
                             ))}
                         </div>
@@ -285,19 +287,35 @@ const ModernCVPreview = ({ data = {} }) => {
                   {projects.map((project, index) => (
                     <div key={index}>
                       <div className="flex justify-between items-start gap-3">
-                        <h3 className="text-[12px] font-bold text-[#292d35]">
+                        <h3 className="text-[12px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {project.title}
                         </h3>
 
-                        {(project.link || project.Github) && (
-                          <span className="text-[9px] text-[#69778e] text-right break-all overflow-wrap-anywhere">
-                            {project.link || project.Github}
-                          </span>
-                        )}
+                        <div className="flex gap-2 text-[10px]">
+                          {project.link && (
+                            <Link
+                              href={project.link}
+                              target="_blank"
+                              className="text-[#263956] hover:underline break-words overflow-wrap-anywhere"
+                            >
+                              {project.link}
+                            </Link>
+                          )}
+
+                          {project.Github && (
+                            <Link
+                              href={project.Github}
+                              target="_blank"
+                              className="text-[#9ac2ff] hover:underline break-words overflow-wrap-anywhere"
+                            >
+                              {project.Github}
+                            </Link>
+                          )}
+                        </div>
                       </div>
 
                       {project.description && (
-                        <p className="mt-[2px] text-[11px] leading-[1.35] text-[#3f4248]">
+                        <p className="mt-[2px] text-[11px] leading-[1.35] text-[#3f4248] break-words overflow-wrap-anywhere">
                           {project.description}
                         </p>
                       )}

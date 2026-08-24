@@ -151,25 +151,25 @@ const ModernCVPreview = ({ data = {} }) => {
                   {education.map((item, index) => (
                     <div key={index}>
                       <div className="flex justify-between items-start gap-2">
-                        <h3 className="text-[13px] font-bold text-[#292d35]">
+                        <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {item.degree || "Degree"}
                         </h3>
 
                         {item.graduationYear && (
-                          <span className="text-[10px] text-[#9b7b00] whitespace-nowrap">
+                          <span className="text-[10px] text-[#9b7b00] whitespace-nowrap break-words overflow-wrap-anywhere">
                             {item.graduationYear}
                           </span>
                         )}
                       </div>
 
                       {item.nameOfInstitute && (
-                        <p className="text-[11px] text-[#555]">
+                        <p className="text-[11px] text-[#555] break-words overflow-wrap-anywhere">
                           {item.nameOfInstitute}
                         </p>
                       )}
 
                       {item.fieldOfStudy && (
-                        <p className="text-[11px] text-[#555]">
+                        <p className="text-[11px] text-[#555] break-words overflow-wrap-anywhere">
                           {item.fieldOfStudy}
                         </p>
                       )}
@@ -187,13 +187,17 @@ const ModernCVPreview = ({ data = {} }) => {
               <div className="mt-[22px]">
                 <SidebarTitle title="CERTIFICATIONS" />
 
-                <div className="space-y-[9px] text-[11px] leading-[1.25] text-[#444]">
+                <div className="space-y-[9px] text-[11px] leading-[1.25] text-[#444] break-words overflow-wrap-anywhere">
                   {certifications.map((cert, index) => (
                     <div key={index}>
-                      <p>{cert.CertifcateName}</p>
+                      <p className="break-words overflow-wrap-anywhere">
+                        {cert.CertifcateName}
+                      </p>
 
                       {cert.IssueDate && (
-                        <p className="text-[#555]">{cert.IssueDate}</p>
+                        <p className="text-[#555] break-words overflow-wrap-anywhere">
+                          {cert.IssueDate}
+                        </p>
                       )}
                     </div>
                   ))}

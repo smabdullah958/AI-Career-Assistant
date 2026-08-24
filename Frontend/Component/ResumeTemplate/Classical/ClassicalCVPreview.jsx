@@ -13,11 +13,11 @@ const ClassicalCVPreview = ({ data }) => {
       >
         {/* ================= HEADER ================= */}
         <header className="border-b-2 border-[#263956] pb-4 mb-6">
-          <h1 className="text-[32px] leading-none font-bold text-[#1f304b]">
+          <h1 className="text-[32px] leading-none font-bold text-[#1f304b] break-words overflow-wrap-anywhere">
             {data.name || "Abdullah"}
           </h1>
 
-          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-[#405574]">
+          <p className="mt-2 text-[15px] uppercase tracking-[2px] text-[#405574] break-words overflow-wrap-anywhere">
             {data.Role || "Professional Title"}
           </p>
 

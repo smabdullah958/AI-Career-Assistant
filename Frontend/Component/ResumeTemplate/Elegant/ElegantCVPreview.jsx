@@ -56,7 +56,7 @@ const ElegantCVPreview = ({ data = {} }) => {
               font-bold
               uppercase
               tracking-[4px]
-               break-words overflow-wrap-anywhere
+               break-words overflow-wrap-anywhere  px-3
             "
           >
             {data.Role || "Your Role"}
@@ -77,7 +77,8 @@ const ElegantCVPreview = ({ data = {} }) => {
               bg-[#FBF1EC]
               border-r-[3px]
               border-[#A8481F]
-              px-[6.5mm]
+              px-2
+              sm:px-[6.5mm]
               py-[8mm]
             "
           >
@@ -152,7 +153,7 @@ const ElegantCVPreview = ({ data = {} }) => {
                 <div className="space-y-[10px]">
                   {education.map((item, index) => (
                     <div key={index}>
-                      <div className="flex justify-between items-start gap-2">
+                      <div className="flex-col sm:flex  justify-between items-start gap-2">
                         <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {item.degree || "Degree"}
                         </h3>
@@ -235,7 +236,7 @@ const ElegantCVPreview = ({ data = {} }) => {
                   {experiences.map((experience, index) => (
                     <div key={index}>
                       {/* Job title + date */}
-                      <div className="flex justify-between items-start gap-4">
+                      <div className="flex-col sm:flex justify-between items-start gap-4">
                         <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {experience.Role || "Job Position"}
                         </h3>

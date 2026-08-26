@@ -266,7 +266,7 @@ const ClassicalCVPreview = ({ data }) => {
 
 const SectionTitle = ({ title }) => {
   return (
-    <h2 className="mb-2 border-b border-[#263956] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#263956]">
+    <h2 className="mb-2 border-b border-[#263956] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#263956] break-words overflow-wrap-anywhere ">
       {title}
     </h2>
   );

@@ -22,7 +22,7 @@ const DownloadPDF = ({ response = {} }) => {
     const pageHeight = 297;
 
     // Screenshot uses a compact page.
-    const margin = 16;
+    const margin = 7;
 
     const contentWidth = pageWidth - margin * 2;
 

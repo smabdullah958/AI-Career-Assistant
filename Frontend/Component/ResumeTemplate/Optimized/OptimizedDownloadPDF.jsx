@@ -372,7 +372,7 @@ const OptimizedDownloadPDF = ({ response = {} }) => {
         pdf.text(project.title, margin, y);
 
         //space between the title and descirption
-        y += 3.5;
+        y += 4;
 
         // ---------------------------------------------------
         // DESCRIPTION
@@ -388,7 +388,7 @@ const OptimizedDownloadPDF = ({ response = {} }) => {
           );
 
           // Small gap before links
-          y;
+          y += 2;
         }
 
         // ---------------------------------------------------

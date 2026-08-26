@@ -271,7 +271,7 @@ const OptimizedCVPreview = ({ data }) => {
 
 const SectionTitle = ({ title }) => {
   return (
-    <h2 className="mb-2 border-b border-[#B5DAD6] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#0E7C73]">
+    <h2 className="mb-2 border-b border-[#B5DAD6] pb-1 text-[16px] font-bold uppercase tracking-[1.5px] text-[#0E7C73]  break-words overflow-wrap-anywhere">
       {title}
     </h2>
   );

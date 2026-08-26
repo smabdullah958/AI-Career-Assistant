@@ -27,6 +27,7 @@ import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/Optimized
 
 //elegant cv
 import ElegantCVPreview from "@/Component/ResumeTemplate/Elegant/ElegantCVPreview";
+import ElegantDownloadPDF from "@/Component/ResumeTemplate/Elegant/ElegantDownloadPDF";
 
 const page = () => {
   let parms = useParams();
@@ -122,9 +123,11 @@ const page = () => {
             <ClassicalDownloadPDF response={previewData} />
           ) : Slug === "modern-cv" ? (
             <ModernDownloadPDF response={previewData} />
+          ) : Slug === "optimized-cv" ? (
+            <OptimizedDownloadPDF response={previewData} />
           ) : (
-            Slug === "optimized-cv" && (
-              <OptimizedDownloadPDF response={previewData} />
+            Slug === "elegant-cv" && (
+              <ElegantDownloadPDF response={previewData} />
             )
           )}
         </h2>

@@ -2,6 +2,7 @@
 import ClassicalDownloadPDF from "../ResumeTemplate/Classical/ClassicalDownloadPDF";
 import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPDF";
 import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/OptimizedDownloadPDF";
+import ElegantDownloadPDF from "../ResumeTemplate/Elegant/ElegantDownloadPDF";
 import { useParams } from "next/navigation";
 
 import { useForm, useFieldArray } from "react-hook-form";
@@ -818,9 +819,11 @@ const ResumeForm = ({ onDataChange }) => {
               <ClassicalDownloadPDF response={formValues} />
             ) : Slug === "modern-cv" ? (
               <ModernDownloadPDF response={formValues} />
+            ) : Slug === "optimized-cv" ? (
+              <OptimizedDownloadPDF response={formValues} />
             ) : (
-              Slug === "optimized-cv" && (
-                <OptimizedDownloadPDF response={formValues} />
+              Slug === "elegant-cv" && (
+                <ElegantDownloadPDF response={formValues} />
               )
             )}
           </div>

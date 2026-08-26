@@ -56,7 +56,7 @@ const ModernCVPreview = ({ data = {} }) => {
               font-bold
               uppercase
               tracking-[4px]
-              text-[#d4a900] break-words overflow-wrap-anywhere
+              text-[#d4a900] break-words overflow-wrap-anywhere px-5
             "
           >
             {data.Role || "Your Role"}
@@ -77,7 +77,8 @@ const ModernCVPreview = ({ data = {} }) => {
               bg-[#f1f0ec]
               border-r-[3px]
               border-[#d4a900]
-              px-[6.5mm]
+              px-2
+             sm:px-[6.5mm]
               py-[8mm]
             "
           >
@@ -152,7 +153,7 @@ const ModernCVPreview = ({ data = {} }) => {
                 <div className="space-y-[10px]">
                   {education.map((item, index) => (
                     <div key={index}>
-                      <div className="flex justify-between items-start gap-2">
+                      <div className="flex-cols sm:flex justify-between items-start gap-2">
                         <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {item.degree || "Degree"}
                         </h3>
@@ -212,7 +213,7 @@ const ModernCVPreview = ({ data = {} }) => {
               RIGHT CONTENT
           ================================================= */}
 
-          <main className="px-[9mm] py-[8mm]">
+          <main className="px-3 sm:px-[9mm] py-[8mm]">
             {/* ===============================================
                 SUMMARY
             =============================================== */}
@@ -235,7 +236,7 @@ const ModernCVPreview = ({ data = {} }) => {
                   {experiences.map((experience, index) => (
                     <div key={index}>
                       {/* Job title + date */}
-                      <div className="flex justify-between items-start gap-4">
+                      <div className="flex-col sm:flex justify-between items-start gap-4">
                         <h3 className="text-[13px] font-bold text-[#292d35] break-words overflow-wrap-anywhere">
                           {experience.Role || "Job Position"}
                         </h3>
@@ -347,6 +348,10 @@ const SidebarTitle = ({ title }) => {
           font-bold
           tracking-[2px]
           text-[#292d35]
+          whitespace-normal
+          break-words
+          overflow-wrap-anywhere
+          [word-break:break-word]
         "
       >
         {title}

@@ -56,7 +56,7 @@ const ElegantCVPreview = ({ data = {} }) => {
               font-bold
               uppercase
               tracking-[4px]
-               break-words overflow-wrap-anywhere  px-3
+               break-words overflow-wrap-anywhere  px-5
             "
           >
             {data.Role || "Your Role"}
@@ -187,7 +187,7 @@ const ElegantCVPreview = ({ data = {} }) => {
             =============================================== */}
 
             {certifications.length > 0 && (
-              <div className="mt-[22px]">
+              <div className="mt-[22px] ">
                 <SidebarTitle title="CERTIFICATIONS" />
 
                 <div className="space-y-[9px] text-[11px] leading-[1.25] text-[#444] break-words overflow-wrap-anywhere">
@@ -213,7 +213,7 @@ const ElegantCVPreview = ({ data = {} }) => {
               RIGHT CONTENT
           ================================================= */}
 
-          <main className="px-[9mm] py-[8mm]">
+          <main className="px-3 sm:px-[9mm] py-[8mm]">
             {/* ===============================================
                 SUMMARY
             =============================================== */}
@@ -348,6 +348,11 @@ const SidebarTitle = ({ title }) => {
           font-bold
           tracking-[2px]
           text-[#A8481F]
+           whitespace-normal
+          break-words
+          overflow-wrap-anywhere
+          [word-break:break-word]
+
         "
       >
         {title}

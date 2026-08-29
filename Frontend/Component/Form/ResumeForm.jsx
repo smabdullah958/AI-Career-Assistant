@@ -3,12 +3,15 @@ import ClassicalDownloadPDF from "../ResumeTemplate/Classical/ClassicalDownloadP
 import ModernDownloadPDF from "@/Component/ResumeTemplate/Modern/ModernDowloadPDF";
 import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/OptimizedDownloadPDF";
 import ElegantDownloadPDF from "../ResumeTemplate/Elegant/ElegantDownloadPDF";
+import BoldDownloadPDF from "../ResumeTemplate/Bold/BoldDownloadPDF";
+import ProfessionalDownloadPDF from "../ResumeTemplate/Porfessional/ProfessionalDownloadPDF";
+
 import { useParams } from "next/navigation";
 
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResumeSchema } from "@/Libraries/ZodSchema";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { ResetResume } from "@/Libraries/Slices/Resume/ResumeSlice";
 
@@ -821,9 +824,13 @@ const ResumeForm = ({ onDataChange }) => {
               <ModernDownloadPDF response={formValues} />
             ) : Slug === "optimized-cv" ? (
               <OptimizedDownloadPDF response={formValues} />
+            ) : Slug === "elegant-cv" ? (
+              <ElegantDownloadPDF response={formValues} />
+            ) : Slug === "bold-cv" ? (
+              <BoldDownloadPDF response={formValues} />
             ) : (
-              Slug === "elegant-cv" && (
-                <ElegantDownloadPDF response={formValues} />
+              Slug === "professional-cv" && (
+                <ProfessionalDownloadPDF response={formValues} />
               )
             )}
           </div>

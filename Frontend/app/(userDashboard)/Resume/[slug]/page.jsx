@@ -29,6 +29,14 @@ import OptimizedDownloadPDF from "@/Component/ResumeTemplate/Optimized/Optimized
 import ElegantCVPreview from "@/Component/ResumeTemplate/Elegant/ElegantCVPreview";
 import ElegantDownloadPDF from "@/Component/ResumeTemplate/Elegant/ElegantDownloadPDF";
 
+//bold cv
+import BoldCVPreview from "@/Component/ResumeTemplate/Bold/BoldCVPreview";
+import BoldDownloadPDF from "@/Component/ResumeTemplate/Bold/BoldDownloadPDF";
+
+//professional cv
+import ProfessionalCVPreview from "@/Component/ResumeTemplate/Porfessional/ProfessionalCVPreview";
+import ProfessionalDownloadPDF from "@/Component/ResumeTemplate/Porfessional/ProfessionalDownloadPDF";
+
 const page = () => {
   let parms = useParams();
   const previewRef = useRef(null); // Create the reference
@@ -125,9 +133,13 @@ const page = () => {
             <ModernDownloadPDF response={previewData} />
           ) : Slug === "optimized-cv" ? (
             <OptimizedDownloadPDF response={previewData} />
+          ) : Slug === "elegant-cv" ? (
+            <ElegantDownloadPDF response={previewData} />
+          ) : Slug === "bold-cv" ? (
+            <BoldDownloadPDF response={previewData} />
           ) : (
-            Slug === "elegant-cv" && (
-              <ElegantDownloadPDF response={previewData} />
+            Slug === "professional-cv" && (
+              <ProfessionalDownloadPDF response={previewData} />
             )
           )}
         </h2>
@@ -149,7 +161,13 @@ const page = () => {
             (Slug === "optimized-cv" && (
               <OptimizedCVPreview data={previewData} />
             )) ||
-            (Slug === "elegant-cv" && <ElegantCVPreview data={previewData} />)
+            (Slug === "elegant-cv" && (
+              <ElegantCVPreview data={previewData} />
+            )) ||
+            (Slug === "bold-cv" && <BoldCVPreview data={previewData} />) ||
+            (Slug === "professional-cv" && (
+              <ProfessionalCVPreview data={previewData} />
+            ))
           )}
         </div>
       </div>

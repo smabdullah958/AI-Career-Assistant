@@ -22,7 +22,7 @@ const ElegantCVPreview = ({ data = {} }) => {
   );
 
   return (
-    <div className="w-full flex justify-center bg-[#f3f4f6] p-4">
+    <div className="w-full flex justify-center bg-[#f3f4f6]">
       {/* =====================================================
           A4 RESUME
       ===================================================== */}

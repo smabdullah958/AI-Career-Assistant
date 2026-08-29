@@ -44,7 +44,7 @@ const ElegantCVPreview = ({ data = {} }) => {
             HEADER
         =================================================== */}
 
-        <header className="h-[32mm] bg-[#A8481F] flex flex-col items-center justify-center text-white">
+        <header className="h-[32mm] border-b-2  flex flex-col items-center justify-center text-black font-bold">
           <h1 className="text-[30px] font-bold tracking-wide break-words overflow-wrap-anywhere">
             {data.name || "Your Name"}
           </h1>
@@ -74,9 +74,9 @@ const ElegantCVPreview = ({ data = {} }) => {
 
           <aside
             className="
-              bg-[#FBF1EC]
+              
               border-r-[3px]
-              border-[#A8481F]
+              border-
               px-2
               sm:px-[6.5mm]
               py-[8mm]
@@ -86,7 +86,7 @@ const ElegantCVPreview = ({ data = {} }) => {
                 CONTACT
             =============================================== */}
 
-            <SidebarTitle title="CONTACT" className="text-[#A8481F]" />
+            <SidebarTitle title="CONTACT" className="text-black " />
 
             <div className="space-y-[5px] text-[12px] leading-[1.35] text">
               {data.email && (
@@ -131,7 +131,7 @@ const ElegantCVPreview = ({ data = {} }) => {
                 <ul className="space-y-[5px] text-[12px] leading-[1.3] text-[#444]">
                   {skills.map((skill, index) => (
                     <li key={index} className="flex items-start gap-[5px]">
-                      <span className="text-[#d4a900] font-bold">•</span>
+                      <span className="text-black  font-bold">•</span>
 
                       <span className="break-words overflow-wrap-anywhere">
                         {skill}
@@ -159,14 +159,14 @@ const ElegantCVPreview = ({ data = {} }) => {
                         </h3>
 
                         {item.graduationYear && (
-                          <span className="text-[10px] text-[#9b7b00] whitespace-nowrap break-words overflow-wrap-anywhere">
+                          <span className="text-[10px] text-black  whitespace-nowrap break-words overflow-wrap-anywhere">
                             {item.graduationYear}
                           </span>
                         )}
                       </div>
 
                       {item.nameOfInstitute && (
-                        <p className="text-[11px] text-[#9b7b00] break-words overflow-wrap-anywhere">
+                        <p className="text-[11px] text-black  break-words overflow-wrap-anywhere">
                           {item.nameOfInstitute}
                         </p>
                       )}
@@ -251,7 +251,7 @@ const ElegantCVPreview = ({ data = {} }) => {
                       </div>
 
                       {/* Company */}
-                      <p className="mt-[1px] text-[11px] font-bold text-[#9b7b00] break-words overflow-wrap-anywhere">
+                      <p className="mt-[1px] text-[11px] font-bold text-black  break-words overflow-wrap-anywhere">
                         {experience.CompanyName}
                       </p>
 
@@ -347,7 +347,7 @@ const SidebarTitle = ({ title }) => {
           text-[12px]
           font-bold
           tracking-[2px]
-          text-[#A8481F]
+          text-black 
            whitespace-normal
           break-words
           overflow-wrap-anywhere
@@ -373,13 +373,12 @@ const ResumeSection = ({ title, children }) => {
           text-[13px]
           font-bold
           tracking-[2px]
-          text-[#A8481F]
-        "
+        text-black         "
       >
         {title}
       </h2>
 
-      <div className=" h-[1.5px] w-full bg-[#dcc2b4]" />
+      <div className=" h-[1.5px] w-full" />
 
       <div className="mt-[8px]">{children}</div>
     </section>

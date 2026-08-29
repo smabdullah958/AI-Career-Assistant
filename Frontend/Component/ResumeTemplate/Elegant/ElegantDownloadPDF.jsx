@@ -22,70 +22,63 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     const pageHeight = 297;
 
     // =========================================================
-    // MODERN CV GEOMETRY
+    // CV GEOMETRY
     // =========================================================
 
-    // Header remains full width
     const headerHeight = 32;
 
-    // Sidebar starts from the absolute left edge
     const sidebarX = 0;
 
-    // Sidebar width
     const sidebarWidth = 64;
 
-    // Space between sidebar and main content
     const columnGap = 7;
 
-    // Sidebar internal padding
     const sidebarPaddingX = 6.5;
     const sidebarPaddingY = 8;
 
-    // Main content right margin
     const mainRightMargin = 16;
 
-    // Main content top padding
     const mainPaddingY = 8;
 
-    // Main content starts after sidebar + gap
     const mainX = sidebarX + sidebarWidth + columnGap;
 
-    // Sidebar content width
     const sidebarContentWidth = sidebarWidth - sidebarPaddingX * 2;
 
-    // Main content width
     const mainWidth = pageWidth - mainX - mainRightMargin;
 
     // =========================================================
     // COLORS
-    // These are pulled 1:1 from ElegantCVPreview.jsx so the PDF
-    // matches the preview exactly.
+    // =========================================================
+    // These colors now match the Preview component
     // =========================================================
 
     const colors = {
-      // #A8481F -> header bg, sidebar border, all section/sidebar titles
-      accent: [168, 72, 31],
-      // #d4a900 -> skills bullet only
-      gold: [212, 169, 0],
-      // #292d35 -> job titles, degree, project titles, project links
-      text: [41, 45, 53],
-      // #3f4248 -> summary/description/body paragraph text
-      body: [63, 66, 72],
-      // #69778e -> experience dates
-      muted: [105, 119, 142],
-      // #9b7b00 -> company name, institute name, graduation year
-      brown: [155, 123, 0],
-      // #FBF1EC -> sidebar background
-      sidebar: [251, 241, 236],
-      white: [255, 255, 255],
-      // #dcc2b4 -> main section title divider line
-      divider: [220, 194, 180],
-      // #444444 -> skills text, certification name
-      textMed: [68, 68, 68],
-      // #555555 -> field of study, certification issue date
-      textLight: [85, 85, 85],
-      // default (no color class in preview) -> plain black
+      // Preview:
+      // text-[#292d35]
+      primary: [41, 45, 53],
+
+      // Preview:
+      secondary: [105, 119, 142],
+
+      // Preview:
+      // text-[#444]
+      muted: [68, 68, 68],
+
+      // Preview:
+      // text-[#555]
+      lightMuted: [85, 85, 85],
+
+      // Preview:
+      // text-[#69778e]
+      date: [105, 119, 142],
+
+      // Preview:
+      // text-black
       black: [0, 0, 0],
+
+      // Preview:
+      // bg-white
+      white: [255, 255, 255],
     };
 
     // =========================================================
@@ -116,32 +109,28 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // HELPERS
     // =========================================================
 
-    const font = (size = 9, style = "normal") => {
+    const font = (size = 9, style = "bold") => {
       pdf.setFont("helvetica", style);
       pdf.setFontSize(size);
     };
 
-    const textColor = (color) => {
+    const textColor = (color = colors.black) => {
       pdf.setTextColor(...color);
     };
 
-    const fillColor = (color) => {
+    const fillColor = (color = colors.white) => {
       pdf.setFillColor(...color);
     };
 
     // =========================================================
-    // MODERN SECTION TITLE
+    // SECTION TITLE
     // =========================================================
 
-    const drawSectionTitle = (
-      title,
-      x,
-      currentY,
-      width,
-      color = colors.accent,
-      lineColor = colors.divider,
-    ) => {
-      textColor(color);
+    const drawSectionTitle = (title, x, currentY, width) => {
+      // Preview:
+      // text-black
+
+      textColor(colors.black);
 
       font(9.75, "bold");
 
@@ -151,7 +140,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
       pdf.setCharSpace(0);
 
-      pdf.setDrawColor(...lineColor);
+      // Preview:
+      // black divider
+
+      pdf.setDrawColor(...colors.black);
       pdf.setLineWidth(0.4);
 
       pdf.line(x, currentY + 3.2, x + width, currentY + 3.2);
@@ -164,7 +156,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     const drawSidebarTitle = (title, x, currentY, width) => {
-      textColor(colors.accent);
+      // Preview:
+      // text-black
+
+      textColor(colors.black);
 
       font(9, "bold");
 
@@ -174,7 +169,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
       pdf.setCharSpace(0);
 
-      pdf.setDrawColor(...colors.accent);
+      // Preview:
+      // black line
+
+      pdf.setDrawColor(...colors.black);
       pdf.setLineWidth(0.45);
 
       pdf.line(x, currentY + 3, x + width, currentY + 3);
@@ -187,7 +185,7 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     const wrapText = (text, width, size = 8.5) => {
-      font(size, "normal");
+      font(size, "bold");
 
       return pdf.splitTextToSize(String(text), width);
     };
@@ -208,7 +206,12 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
       const lines = wrapText(text, width, size);
 
-      textColor(colors.body);
+      // Preview:
+      // text-[#3f4248]
+
+      textColor(colors.secondary);
+
+      font(size, "bold");
 
       pdf.text(lines, x, currentY);
 
@@ -232,20 +235,22 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       items.forEach((item) => {
         const lines = wrapText(item, width - 6, size);
 
-        // Bullet (matches preview: bullet inherits parent body text color)
-        fillColor(colors.body);
+        // Preview:
+        // bullet is black
+
+        fillColor(colors.black);
 
         pdf.circle(x + 1.2, yPosition - 1.1, 0.65, "F");
 
-        // Text
-        textColor(colors.body);
+        // Preview:
+        // Description text-[#3f4248]
+
+        textColor(colors.secondary);
 
         pdf.text(lines, x + 4.5, yPosition);
 
-        // Line height
         yPosition += lines.length * 3.15;
 
-        // Gap between bullets
         yPosition += 0.8;
       });
 
@@ -257,18 +262,26 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // =========================================================
 
     // ---------------------------------------------------------
-    // FULL WIDTH HEADER (accent color, matches preview header bg)
+    // WHITE FULL PAGE
     // ---------------------------------------------------------
 
-    fillColor(colors.accent);
+    fillColor(colors.white);
+
+    pdf.rect(0, 0, pageWidth, pageHeight, "F");
+
+    // ---------------------------------------------------------
+    // BLACK HEADER
+    // ---------------------------------------------------------
+
+    fillColor(colors.white);
 
     pdf.rect(0, 0, pageWidth, headerHeight, "F");
 
     // ---------------------------------------------------------
-    // FULL LEFT SIDEBAR
+    // WHITE SIDEBAR
     // ---------------------------------------------------------
 
-    fillColor(colors.sidebar);
+    fillColor(colors.white);
 
     pdf.rect(
       sidebarX,
@@ -279,10 +292,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     );
 
     // ---------------------------------------------------------
-    // SIDEBAR BORDER (accent color, matches preview border-[#A8481F])
+    // BLACK SIDEBAR BORDER
     // ---------------------------------------------------------
 
-    fillColor(colors.accent);
+    fillColor(colors.black);
 
     pdf.rect(
       sidebarWidth - 0.8,
@@ -296,8 +309,12 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // HEADER
     // =========================================================
 
-    textColor(colors.white);
+    // Preview:
+    // header text-black
 
+    textColor(colors.black);
+
+    // NAME
     font(30, "bold");
 
     pdf.text(response.name || "Your Name", pageWidth / 2, 12.8, {
@@ -305,11 +322,13 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     });
 
     // =========================================================
-    // ROLE (white text, matches preview - it's inside the same
-    // white header block, not a separate gold color)
+    // ROLE
     // =========================================================
 
-    textColor(colors.white);
+    // Preview:
+    // role text-black
+
+    textColor(colors.black);
 
     font(14, "bold");
 
@@ -356,8 +375,12 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     contactItems.forEach((item) => {
       const lines = wrapText(item, sidebarContentWidth, 9);
 
-      // Preview has no explicit color class on contact text -> plain black
-      textColor(colors.black);
+      // Preview:
+      // Contact inherits #292d35
+
+      textColor(colors.primary);
+
+      font(9, "bold");
 
       pdf.text(lines, sidebarContentX, sidebarY);
 
@@ -383,13 +406,19 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       skills.forEach((skill) => {
         const lines = wrapText(skill, sidebarContentWidth - 7, 9);
 
-        // Gold bullet (matches preview text-[#d4a900])
-        fillColor(colors.gold);
+        // Preview:
+        // bullet is black
+
+        fillColor(colors.black);
 
         pdf.circle(sidebarContentX + 1, sidebarY - 1.1, 0.7, "F");
 
-        // Skill text (matches preview text-[#444])
-        textColor(colors.textMed);
+        // Preview:
+        // skill text-[#444]
+
+        textColor(colors.muted);
+
+        font(9, "bold");
 
         pdf.text(lines, sidebarContentX + 4, sidebarY);
 
@@ -414,18 +443,30 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       );
 
       education.forEach((item) => {
-        // Degree (matches preview text-[#292d35])
-        textColor(colors.text);
+        // =====================================================
+        // DEGREE
+        // =====================================================
+
+        // Preview:
+        // text-[#292d35]
+
+        textColor(colors.primary);
 
         font(9.75, "bold");
 
         pdf.text(item.degree || "Degree", sidebarContentX, sidebarY);
 
-        // Graduation year (matches preview text-[#9b7b00])
-        if (item.graduationYear) {
-          textColor(colors.brown);
+        // =====================================================
+        // GRADUATION YEAR
+        // =====================================================
 
-          font(7.5, "normal");
+        if (item.graduationYear) {
+          // Preview:
+          // text-black
+
+          textColor(colors.black);
+
+          font(7.5, "bold");
 
           pdf.text(
             String(item.graduationYear),
@@ -439,7 +480,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
         sidebarY += 4;
 
-        // Institute (matches preview text-[#9b7b00])
+        // =====================================================
+        // INSTITUTE
+        // =====================================================
+
         if (item.nameOfInstitute) {
           const lines = wrapText(
             item.nameOfInstitute,
@@ -447,25 +491,37 @@ const ElegantDownloadPDF = ({ response = {} }) => {
             8.5,
           );
 
-          textColor(colors.brown);
+          // Preview:
+          // text-black
+
+          textColor(colors.black);
+
+          font(8.5, "bold");
 
           pdf.text(lines, sidebarContentX, sidebarY);
 
           sidebarY += lines.length * 3.25;
         }
 
-        // Field of study (matches preview text-[#555])
+        // =====================================================
+        // FIELD OF STUDY
+        // =====================================================
+
         if (item.fieldOfStudy) {
           const lines = wrapText(item.fieldOfStudy, sidebarContentWidth, 8.5);
 
-          textColor(colors.textLight);
+          // Preview:
+          // text-[#555]
+
+          textColor(colors.lightMuted);
+
+          font(8.5, "bold");
 
           pdf.text(lines, sidebarContentX, sidebarY);
 
           sidebarY += lines.length * 3.25;
         }
 
-        // Education gap
         sidebarY += 3;
       });
     }
@@ -485,24 +541,36 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       );
 
       certifications.forEach((cert) => {
-        // Certificate name (matches preview text-[#444])
         const nameLines = wrapText(
           cert.CertifcateName,
           sidebarContentWidth,
           8.5,
         );
 
-        textColor(colors.textMed);
+        // Preview:
+        // certification text-[#444]
+
+        textColor(colors.muted);
+
+        font(8.5, "bold");
 
         pdf.text(nameLines, sidebarContentX, sidebarY);
 
         sidebarY += nameLines.length * 3.3;
 
-        // Issue date (matches preview text-[#555])
+        // =====================================================
+        // ISSUE DATE
+        // =====================================================
+
         if (cert.IssueDate) {
           const dateLines = wrapText(cert.IssueDate, sidebarContentWidth, 8.5);
 
-          textColor(colors.textLight);
+          // Preview:
+          // date text-[#555]
+
+          textColor(colors.lightMuted);
+
+          font(8.5, "bold");
 
           pdf.text(dateLines, sidebarContentX, sidebarY);
 
@@ -526,6 +594,9 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     if (response.Summary) {
       mainY = drawSectionTitle("Summary", mainX, mainY, mainWidth);
 
+      // Preview:
+      // text-[#3f4248]
+
       mainY = drawParagraph(response.Summary, mainX, mainY, mainWidth, 9, 3.7);
 
       mainY += 4;
@@ -539,19 +610,22 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       mainY = drawSectionTitle("Experience", mainX, mainY, mainWidth);
 
       experiences.forEach((experience, index) => {
-        // ---------------------------------------------------
-        // JOB TITLE (matches preview text-[#292d35])
-        // ---------------------------------------------------
+        // =====================================================
+        // JOB TITLE
+        // =====================================================
 
-        textColor(colors.text);
+        // Preview:
+        // text-[#292d35]
+
+        textColor(colors.primary);
 
         font(9.75, "bold");
 
         pdf.text(experience.Role || "Job Position", mainX, mainY);
 
-        // ---------------------------------------------------
-        // DATE (matches preview text-[#69778e])
-        // ---------------------------------------------------
+        // =====================================================
+        // DATE
+        // =====================================================
 
         if (experience.StartDate || experience.EndDate) {
           const dateText = [
@@ -562,9 +636,12 @@ const ElegantDownloadPDF = ({ response = {} }) => {
             .filter(Boolean)
             .join(" ");
 
-          textColor(colors.muted);
+          // Preview:
+          // text-[#69778e]
 
-          font(7.5, "normal");
+          textColor(colors.date);
+
+          font(7.5, "bold");
 
           pdf.text(dateText, pageWidth - mainRightMargin, mainY, {
             align: "right",
@@ -573,11 +650,14 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
         mainY += 3.5;
 
-        // ---------------------------------------------------
-        // COMPANY (matches preview text-[#9b7b00])
-        // ---------------------------------------------------
+        // =====================================================
+        // COMPANY NAME
+        // =====================================================
 
-        textColor(colors.brown);
+        // Preview:
+        // text-black
+
+        textColor(colors.black);
 
         font(8.25, "bold");
 
@@ -585,9 +665,9 @@ const ElegantDownloadPDF = ({ response = {} }) => {
 
         mainY += 4;
 
-        // ---------------------------------------------------
+        // =====================================================
         // DESCRIPTION
-        // ---------------------------------------------------
+        // =====================================================
 
         mainY = drawBullets(
           experience.Description,
@@ -597,7 +677,10 @@ const ElegantDownloadPDF = ({ response = {} }) => {
           8.25,
         );
 
-        // Space between experiences
+        // =====================================================
+        // SPACE
+        // =====================================================
+
         if (index < experiences.length - 1) {
           mainY += 5;
         }
@@ -614,20 +697,24 @@ const ElegantDownloadPDF = ({ response = {} }) => {
       mainY = drawSectionTitle("Projects", mainX, mainY, mainWidth);
 
       projects.forEach((project, index) => {
-        // ---------------------------------------------------
-        // PROJECT TITLE (matches preview text-[#292d35])
-        // ---------------------------------------------------
+        // =====================================================
+        // PROJECT TITLE
+        // =====================================================
 
-        textColor(colors.text);
+        // Preview:
+        // text-[#292d35]
+
+        textColor(colors.primary);
+
         font(9, "bold");
 
         pdf.text(project.title, mainX, mainY);
 
         mainY += 4;
 
-        // ---------------------------------------------------
-        // DESCRIPTION (matches preview text-[#3f4248])
-        // ---------------------------------------------------
+        // =====================================================
+        // PROJECT DESCRIPTION
+        // =====================================================
 
         if (project.description) {
           const descriptionLines = wrapText(
@@ -636,24 +723,31 @@ const ElegantDownloadPDF = ({ response = {} }) => {
             8.25,
           );
 
-          textColor(colors.body);
+          // Preview:
+          // text-[#3f4248]
+
+          textColor(colors.secondary);
+
+          font(8.25, "bold");
 
           pdf.text(descriptionLines, mainX, mainY);
 
-          // Move to the end of description
           mainY += descriptionLines.length * 3.2;
 
-          // Small controlled gap before links
           mainY += 1.5;
         }
 
-        // ---------------------------------------------------
-        // LIVE DEMO (matches preview text-[#292d35] font-semibold)
-        // ---------------------------------------------------
+        // =====================================================
+        // LIVE DEMO
+        // =====================================================
 
         if (project.link) {
-          textColor(colors.text);
-          font(7, "normal");
+          // Preview:
+          // text-[#292d35]
+
+          textColor(colors.primary);
+
+          font(7, "bold");
 
           const liveDemoText = `Live Demo: ${project.link}`;
 
@@ -664,13 +758,17 @@ const ElegantDownloadPDF = ({ response = {} }) => {
           mainY += liveDemoLines.length * 3;
         }
 
-        // ---------------------------------------------------
-        // GITHUB (matches preview text-[#292d35] font-semibold)
-        // ---------------------------------------------------
+        // =====================================================
+        // GITHUB
+        // =====================================================
 
         if (project.Github) {
-          textColor(colors.text);
-          font(7, "normal");
+          // Preview:
+          // text-[#292d35]
+
+          textColor(colors.primary);
+
+          font(7, "bold");
 
           const githubText = `GitHub: ${project.Github}`;
 
@@ -681,9 +779,9 @@ const ElegantDownloadPDF = ({ response = {} }) => {
           mainY += githubLines.length * 3;
         }
 
-        // ---------------------------------------------------
+        // =====================================================
         // SPACE BETWEEN PROJECTS
-        // ---------------------------------------------------
+        // =====================================================
 
         if (index < projects.length - 1) {
           mainY += 3;
@@ -696,7 +794,9 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // =========================================================
     // DOWNLOAD
     // =========================================================
+
     console.log("PDF pages:", pdf.getNumberOfPages());
+
     console.log("PDF size:", pdf.output("blob").size);
 
     pdf.save("Elegant-Resume.pdf");

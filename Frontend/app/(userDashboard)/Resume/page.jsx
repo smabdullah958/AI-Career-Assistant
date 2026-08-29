@@ -39,7 +39,7 @@ const templates = [
   {
     id: 4,
     name: "Elegant CV",
-    image: "/elegantcv.png",
+    image: "/elegantCv.png",
     description: "Minimal and elegant design with a professional appearance.",
     slug: "elegant-cv",
   },

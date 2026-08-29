@@ -22,7 +22,7 @@ const BoldCVPreview = ({ data = {} }) => {
   );
 
   return (
-    <div className="w-full flex justify-center p-4">
+    <div className="w-full flex justify-center">
       {/* =====================================================
           A4 RESUME
       ===================================================== */}

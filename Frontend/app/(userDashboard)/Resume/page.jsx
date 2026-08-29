@@ -24,24 +24,25 @@ const templates = [
   },
   {
     id: 2,
-    name: "Modern CV",
-    image: "/modernCV.png",
-    description: "A modern and balanced design for today's job market.",
-    slug: "modern-cv",
+    name: "Professional CV",
+    image: "/professionalCV.png",
+    description: "A polished layout suitable for corporate applications.",
+    slug: "professional-cv",
   },
   {
     id: 3,
-    name: "Optimized CV",
-    image: "/optimizedCV.png",
-    description: "Structured specifically for ATS-friendly applications.",
-    slug: "optimized-cv",
-  },
-  {
-    id: 4,
     name: "Elegant CV",
     image: "/elegant.png",
     description: "Minimal and elegant design with a professional appearance.",
     slug: "elegant-cv",
+  },
+
+  {
+    id: 4,
+    name: "Optimized CV",
+    image: "/optimizedCV.png",
+    description: "Structured specifically for ATS-friendly applications.",
+    slug: "optimized-cv",
   },
   {
     id: 5,
@@ -52,10 +53,10 @@ const templates = [
   },
   {
     id: 6,
-    name: "Professional CV",
-    image: "/professionalCV.png",
-    description: "A polished layout suitable for corporate applications.",
-    slug: "professional-cv",
+    name: "Modern CV",
+    image: "/modernCV.png",
+    description: "A modern and balanced design for today's job market.",
+    slug: "modern-cv",
   },
 ];
 

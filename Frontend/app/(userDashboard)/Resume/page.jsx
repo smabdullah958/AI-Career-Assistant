@@ -59,7 +59,6 @@ const templates = [
     slug: "modern-cv",
   },
 ];
-
 export default function Resume() {
   const router = useRouter();
 

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const AdminMobileHeader = () => {
+const MobileHeader = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   let closeMenu = () => {
@@ -92,4 +92,4 @@ const AdminMobileHeader = () => {
   );
 };
 
-export default AdminMobileHeader;
+export default MobileHeader;

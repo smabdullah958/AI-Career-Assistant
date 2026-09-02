@@ -10,8 +10,6 @@ export const metadata = {
 // /for toast
 import { Toaster } from "react-hot-toast";
 
-import Header from "@/Component/Header";
-import MobileHeader from "@/Component/MobileHeader";
 import Footer from "@/Component/Footer";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -25,10 +23,6 @@ export default function RootLayout({ children }) {
         >
           <StoreProvider>
             <CheckLogin />
-
-            {/* header and also mobile heaer */}
-            <MobileHeader />
-            <Header />
 
             {children}
             {/* toast an also foother */}

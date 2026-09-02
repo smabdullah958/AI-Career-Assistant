@@ -7,9 +7,15 @@ const stats = [
   { title: "Conversion", value: "68%", icon: FiBarChart2, color: "#8b5cf6" },
 ];
 
+import HeaderWrapper from "@/Component/HeaderWrapper";
+
 export default function AdminHomePage() {
   return (
     <div className="admin-page">
+      <div className="flex justify-end px-6 py-3 md:hidden">
+        <HeaderWrapper />
+      </div>
+
       <header className="admin-header">
         <h1>Dashboard Overview</h1>
         <p>Welcome back! Here is your summary of the platform performance.</p>

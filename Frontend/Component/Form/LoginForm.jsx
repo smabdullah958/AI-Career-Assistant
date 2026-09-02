@@ -15,14 +15,9 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage, UserRole, success } = useSelector(
+  let { loading, errorMessage } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
-
-  console.log("🔥 LOGIN FORM RENDER");
-  console.log("loading:", loading);
-  console.log("success:", success);
-  console.log("UserRole:", UserRole);
 
   let [Field, SetField] = useState({
     Email: "",
@@ -44,19 +39,12 @@ const LoginForm = ({ HideForm }) => {
     //navigation
     const Role = result?.payload?.Role;
 
-    console.log("🔥 LOGIN SUCCESS");
-    console.log("🔥 ROLE:", Role);
-
     if (Role === "Admin" || Role === "SuperAdmin") {
-      console.log("🚀 ADMIN → /AdminDashboard");
-
       HideForm();
       router.replace("/AdminDashboard");
 
       return;
     }
-
-    console.log("👤 USER → /");
 
     HideForm();
     router.replace("/");

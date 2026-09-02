@@ -8,8 +8,9 @@ let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let SignUp = async (req, res) => {
   try {
-    let { Name, Email, Password, Role, Provider } = req.body;
-    if (!Name || !Email || !Password || !Provider) {
+    let { Name, Email, Password, Role, Provider = "Local" } = req.body;
+    console.log(Role);
+    if (!Name || !Email || !Password || !Provider || !Role) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -31,12 +32,13 @@ let SignUp = async (req, res) => {
       Name,
       Email,
       Password: hashPassword,
-      Role: "User",
+      Role,
       Provider,
     });
     await newUser.save();
 
     console.log("user id : " + newUser._id);
+    console.log("user role : " + newUser.Role);
     //generate token
     let token = jwt.sign(
       {

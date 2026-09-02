@@ -15,8 +15,9 @@ function CheckLogin() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (Role === "Admin") {
+    if (Role === "Admin" || Role === "SuperAdmin") {
       router.push("/AdminDashboard");
+      return;
     }
     router.push("/");
   }, [Role, router]);

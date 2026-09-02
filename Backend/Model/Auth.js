@@ -15,7 +15,8 @@ let Schema = new mongoose.Schema({
   },
   Role: {
     type: String,
-    enum: ["User"],
+    enum: ["User", "Admin", "SuperAdmin"],
+    default: "User",
   },
   GoogleId: {
     type: String,

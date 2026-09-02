@@ -13,7 +13,6 @@ let LogInThunck = createAsyncThunk(
         withCredentials: true,
       });
       dispatch(setRemainingCalls(result.data?.remainingCalls));
-      // console.log("result data ");
       return result?.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);

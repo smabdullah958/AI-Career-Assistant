@@ -15,9 +15,14 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage } = useSelector(
+  let { loading, errorMessage, UserRole, success } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
+
+  console.log("🔥 LOGIN FORM RENDER");
+  console.log("loading:", loading);
+  console.log("success:", success);
+  console.log("UserRole:", UserRole);
 
   let [Field, SetField] = useState({
     Email: "",
@@ -36,12 +41,25 @@ const LoginForm = ({ HideForm }) => {
   let LogInFunction = async (Data) => {
     let result = await dispatch(LogInThunck(Data));
 
-    if (LogInThunck.fulfilled.match(result)) {
-      // to check that can the thunck is successfully or not if yes than replace the page to home page
-      router.replace("/");
+    //navigation
+    const Role = result?.payload?.Role;
+
+    console.log("🔥 LOGIN SUCCESS");
+    console.log("🔥 ROLE:", Role);
+
+    if (Role === "Admin" || Role === "SuperAdmin") {
+      console.log("🚀 ADMIN → /AdminDashboard");
 
       HideForm();
+      router.replace("/AdminDashboard");
+
+      return;
     }
+
+    console.log("👤 USER → /");
+
+    HideForm();
+    router.replace("/");
   };
 
   useEffect(() => {

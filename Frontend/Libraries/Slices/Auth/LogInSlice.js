@@ -28,7 +28,9 @@ let LogInSlice = createSlice({
     //to show the login button  it means that when a user is logout
     ResetLogOutRole: (state) => {
       state.IsLoggIn = false;
-      state.UserRole = null; //remove ther role when click ona  logout button
+      state.UserRole = null;
+      state.success = false;
+      //remove ther role when click ona  logout button
       // console.log(state.IsLoggIn, state.UserRole);
     },
   },

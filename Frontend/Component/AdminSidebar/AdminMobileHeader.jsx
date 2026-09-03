@@ -68,7 +68,7 @@ const AdminMobileHeader = () => {
             </Link>
 
             <Link
-              href="/AdminDashboard/about"
+              href="/AdminDashboard/About"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
@@ -76,7 +76,7 @@ const AdminMobileHeader = () => {
             </Link>
 
             <Link
-              href="/AdminDashboard/contact"
+              href="/AdminDashboard/Contact"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
@@ -84,11 +84,18 @@ const AdminMobileHeader = () => {
             </Link>
 
             <Link
-              href="/AdminDashboard/faq"
+              href="/AdminDashboard/FAQ"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
               FAQ
+            </Link>
+            <Link
+              href="/AdminDashboard/Notification"
+              className="text-white hover:text-blue-700 transition-colors duration-300"
+              onClick={closeMenu}
+            >
+              Notification
             </Link>
           </nav>
         </div>

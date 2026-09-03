@@ -3,6 +3,8 @@ import LogIn from "@/Component/Buttons/LoginButton";
 import LogOut from "@/Component/Buttons/LogoutButton";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { IoNotificationsOutline } from "react-icons/io5";
+import Link from "next/link";
 const HeaderWrapper = () => {
   // Get status from BOTH slices
   const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn); //get role frm
@@ -17,7 +19,10 @@ const HeaderWrapper = () => {
   if (!isClient) return null;
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-5">
+      <Link href="/Notifcation">
+        <IoNotificationsOutline size={24} className="mt-2 hidden md:block" />
+      </Link>
       {IsLoggIn || IsLoggedIn ? <LogOut /> : <LogIn />}
     </div>
   );

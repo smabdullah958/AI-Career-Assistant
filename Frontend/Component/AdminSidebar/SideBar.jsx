@@ -29,7 +29,7 @@ const AdminSidebar = () => {
 
           <li>
             <Link
-              href="/AdminDashboard/about"
+              href="/AdminDashboard/About"
               className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
             >
               <FiInfo size={20} />
@@ -39,7 +39,7 @@ const AdminSidebar = () => {
 
           <li>
             <Link
-              href="/AdminDashboard/contact"
+              href="/AdminDashboard/Contact"
               className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
             >
               <FiPhone size={20} />
@@ -49,11 +49,20 @@ const AdminSidebar = () => {
 
           <li>
             <Link
-              href="/AdminDashboard/faq"
+              href="/AdminDashboard/FAQ"
               className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
             >
               <FiHelpCircle size={20} />
               <span>FAQ</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/AdminDashboard/Notification"
+              className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
+            >
+              Notification
             </Link>
           </li>
         </ul>

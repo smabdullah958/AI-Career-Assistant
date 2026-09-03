@@ -38,5 +38,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/AdminDashboard/:path*"],
+  matcher: ["/AdminDashboard/:path*", "/Notification/:path*"],
 };

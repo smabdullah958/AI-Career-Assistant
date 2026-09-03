@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { IoNotificationsOutline } from "react-icons/io5";
 
 const MobileHeader = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -27,32 +28,36 @@ const MobileHeader = () => {
             className="object-contain"
           />
         </div>
+        <div className="flex gap-3">
+          <Link href="/Notifcation">
+            <IoNotificationsOutline size={24} className="mt-1" />
+          </Link>
 
-        {/* Burger button */}
-        {showMenu ? (
-          //CROSS ICON
-          <span className="mr-5">
-            <button onClick={() => setShowMenu(false)}>
-              <span className="absolute w-6 h-[2px] bg-white rotate-45 "></span>
-              <span className="absolute w-6 h-[2px] bg-white -rotate-45"></span>
+          {/* Burger button */}
+          {showMenu ? (
+            //CROSS ICON
+            <span className="mr-5">
+              <button onClick={() => setShowMenu(false)}>
+                <span className="absolute w-6 h-[2px] bg-white rotate-45 "></span>
+                <span className="absolute w-6 h-[2px] bg-white -rotate-45"></span>
+              </button>
+            </span>
+          ) : (
+            <button
+              onClick={() => setShowMenu(true)}
+              className="focus:outline-none"
+            >
+              <Image
+                src="/burger.webp"
+                alt="menu"
+                width={30}
+                height={30}
+                loading="lazy"
+              />
             </button>
-          </span>
-        ) : (
-          <button
-            onClick={() => setShowMenu(true)}
-            className="focus:outline-none"
-          >
-            <Image
-              src="/burger.webp"
-              alt="menu"
-              width={30}
-              height={30}
-              loading="lazy"
-            />
-          </button>
-        )}
+          )}
+        </div>
       </div>
-
       {/* Slide-down menu */}
       {showMenu && (
         <div className="absolute top-16 left-0 w-full bg-[#618cf9] shadow-md z-50 animate-slideDown ">

@@ -1,6 +1,10 @@
 //it is used to get credits for a signup
 let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
 
+let SendNotification = require("../../Utilis/Notification"); //to send a notificaiton to a user
+
+let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
+
 let userModel = require("../../Model/Auth");
 require("dotenv").config();
 let key = process.env.SecretKey;
@@ -60,6 +64,26 @@ let SignUp = async (req, res) => {
 
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
+
+    //send notificaiton to  a user
+    let notification = await SendNotification(
+      newUser._id,
+      "New_User",
+      "Welcome to our platform",
+      "Thank you for signing up! We are excited to have you on board. Explore our features and enjoy your experience.",
+    );
+
+    console.log("notification sent to user : ", notification);
+
+    //send notification to admin
+    let adminNotification = await SendAdminNotification(
+      "New_User",
+      "A new user has signed up",
+      `User ${newUser.Name} has signed up for an account.`,
+    );
+
+    console.log("notification sent to admin : ", adminNotification);
+
     console.log(remainingCalls);
     // console.log(newUser.Role);
     res.status(200).json({

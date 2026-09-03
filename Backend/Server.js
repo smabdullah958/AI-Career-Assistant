@@ -17,6 +17,7 @@ let AuthRoute = require("./Routes/Auth");
 let ResumeRoute = require("./Routes/ResumeRoute");
 let InterviewRoute = require("./Routes/InterviewRoute");
 let AnalyzerRoute = require("./Routes/AnalyzerRoute");
+let NotiicationRoute = require("./Routes/NotificationRoute");
 
 ConnectDB();
 
@@ -24,6 +25,7 @@ app.use("/Auth", AuthRoute);
 app.use("/Resume", ResumeRoute);
 app.use("/AiInterviews", InterviewRoute);
 app.use("/ResumeAnalyzer", AnalyzerRoute);
+app.use("/NotiicationRoute", NotiicationRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

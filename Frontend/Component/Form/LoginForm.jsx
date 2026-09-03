@@ -45,9 +45,10 @@ const LoginForm = ({ HideForm }) => {
 
       return;
     }
-
-    HideForm();
-    router.replace("/");
+    if (Role === "User") {
+      HideForm();
+      router.replace("/");
+    }
   };
 
   useEffect(() => {

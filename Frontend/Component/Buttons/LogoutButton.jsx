@@ -27,6 +27,8 @@ import { ResetInterviewState } from "@/Libraries/Slices/Interview/InterviewSlice
 
 import { ResetAnalyzer } from "@/Libraries/Slices/Analyzer/AnalyzerSlice"; //to reset all the state of a resume analyzer
 
+import GetUnreadNotification from "@/Libraries/Thuncks/Notification/UnreadNotification"; //clear the unread message
+
 const LogoutButton = () => {
   let dispatch = useDispatch();
   let router = useRouter();
@@ -50,6 +52,7 @@ const LogoutButton = () => {
       dispatch(ResetAnalyzer()); //reset the analyzer all the state
       dispatch(ResetInterviewState()); //reset all the state ofa interview
       dispatch(ResetResume()); //reset all the state of a resume
+      dispatch(GetUnreadNotification()); //clear the unread message count
     }
   }, [success]);
 

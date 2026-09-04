@@ -19,10 +19,14 @@ let GetNotification = async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(10);
+
     console.log("all the noticaitno: ", GetNotification);
     res.status(200).json({ response: GetNotification });
   } catch (err) {
     console.log("internal error ina  notifiacaiton", err);
+    return res
+      .status(500)
+      .json({ message: "internal error", error: err.messge });
   }
 };
 

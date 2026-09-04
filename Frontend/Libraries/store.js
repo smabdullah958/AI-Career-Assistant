@@ -5,7 +5,7 @@ import SignUpSlice from "@/Libraries/Slices/Auth/SignUpSlice";
 import LogInSlice from "@/Libraries/Slices/Auth/LogInSlice";
 import LogOutSlice from "@/Libraries/Slices/Auth/LogOutSlice";
 import GoogleSlice from "@/Libraries/Slices/Auth/CreateAccountGoogleSlice";
-import LogInWithGoogleSlice from "@/Libraries/Slices/Auth/LogInWithGoogle"
+import LogInWithGoogleSlice from "@/Libraries/Slices/Auth/LogInWithGoogle";
 
 // for generating resume
 import ResumeSlice from "@/Libraries/Slices/Resume/ResumeSlice";
@@ -16,6 +16,9 @@ import InterviewSlice from "@/Libraries/Slices/Interview/InterviewSlice";
 // for Analyze resume
 import AnalyzeSlice from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
 
+//get in app notificaiton
+import GetNotification from "@/Libraries/Slices/Notification/GetNotification";
+
 //to get and reset the remaining api call
 import GlobalSlice from "@/Libraries/Slices/GlobalSlice";
 export let store = configureStore({
@@ -23,11 +26,12 @@ export let store = configureStore({
     SignUpSlice,
     LogInSlice,
     LogOutSlice,
-    GoogleSlice,  //creat acount through a google brtohe r
+    GoogleSlice, //creat acount through a google brtohe r
     LogInWithGoogleSlice, //login witha google
     ResumeSlice,
     InterviewSlice,
     AnalyzeSlice,
     GlobalSlice,
+    GetNotification,
   },
 });

@@ -7,13 +7,13 @@ const stats = [
   { title: "Conversion", value: "68%", icon: FiBarChart2, color: "#8b5cf6" },
 ];
 
-import HeaderWrapper from "@/Component/HeaderWrapper";
+import AdminHeaderWrapper from "@/Component/AdminSidebar/AdminHeaderWrapper";
 
 export default function AdminHomePage() {
   return (
     <div className="admin-page">
       <div className="flex justify-end px-6 py-3 md:hidden">
-        <HeaderWrapper />
+        <AdminHeaderWrapper />
       </div>
 
       <header className="admin-header">

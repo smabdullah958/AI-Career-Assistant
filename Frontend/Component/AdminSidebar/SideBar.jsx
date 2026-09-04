@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FiHome, FiInfo, FiPhone, FiHelpCircle } from "react-icons/fi";
-import HeaderWrapper from "@/Component/HeaderWrapper";
+import AdminHeaderWrapper from "@/Component/AdminSidebar/AdminHeaderWrapper";
 
 const AdminSidebar = () => {
   return (
@@ -70,7 +70,7 @@ const AdminSidebar = () => {
 
       {/* Bottom - Logout */}
       <div className="p-5">
-        <HeaderWrapper />
+        <AdminHeaderWrapper />
       </div>
     </aside>
   );

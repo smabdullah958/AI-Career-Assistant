@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IoNotificationsOutline } from "react-icons/io5";
-
+import GetUnreadNotification from "@/Libraries/Thuncks/Notification/UnreadNotification";
+import { useDispatch, useSelector } from "react-redux";
 const MobileHeader = () => {
+  let dispatch = useDispatch();
+
+  let UnReadCount = useSelector(
+    (state) => state.UnreadNotification.UnReadCount,
+  );
+
   const [showMenu, setShowMenu] = useState(false);
 
   let closeMenu = () => {
@@ -12,6 +19,10 @@ const MobileHeader = () => {
       setShowMenu(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    dispatch(GetUnreadNotification());
+  }, [dispatch]);
 
   return (
     <header className="md:hidden bg-[#618cf9] shadow-lg ">
@@ -28,10 +39,16 @@ const MobileHeader = () => {
             className="object-contain"
           />
         </div>
-        <div className="flex gap-3">
-          <Link href="/Notifcation">
-            <IoNotificationsOutline size={24} className="mt-1" />
-          </Link>
+        <div className="flex gap-5">
+          <div className="relative mt-2 md:hidden block">
+            <Link href="/Notifcation" className="md:hidden block">
+              <IoNotificationsOutline size={24} />
+
+              {UnReadCount > 0 && (
+                <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+              )}
+            </Link>
+          </div>
 
           {/* Burger button */}
           {showMenu ? (

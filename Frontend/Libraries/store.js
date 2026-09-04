@@ -18,6 +18,7 @@ import AnalyzeSlice from "@/Libraries/Slices/Analyzer/AnalyzerSlice";
 
 //get in app notificaiton
 import GetNotification from "@/Libraries/Slices/Notification/GetNotification";
+import UnreadNotification from "@/Libraries/Slices/Notification/UnreadNotification";
 
 //to get and reset the remaining api call
 import GlobalSlice from "@/Libraries/Slices/GlobalSlice";
@@ -33,5 +34,6 @@ export let store = configureStore({
     AnalyzeSlice,
     GlobalSlice,
     GetNotification,
+    UnreadNotification,
   },
 });

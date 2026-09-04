@@ -1,24 +1,3 @@
-// "use client";
-
-// import { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import NotificationThunck from "@/Libraries/Thuncks/Notification/GetNotification";
-
-// const page = () => {
-//   let dispatch = useDispatch();
-//   let { loading, success, response } = useSelector(
-//     (state) => state.GetNotification,
-//   );
-
-//   useeffect(() => {
-//     dispatch(NotificationThunck());
-//   }, []);
-
-//   return <div></div>;
-// };
-
-// export default page;
-
 "use client";
 
 import { useEffect } from "react";
@@ -29,7 +8,12 @@ import {
 } from "react-icons/io5";
 
 import NotificationThunck from "@/Libraries/Thuncks/Notification/GetNotification";
+
+import MarkAsRead from "@/Libraries/Thuncks/Notification/MarkAsRead";
+
 import { increment } from "@/Libraries/Slices/Notification/GetNotification";
+
+import { clearUnreadCount } from "@/Libraries/Slices/Notification/UnreadNotification";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -41,6 +25,28 @@ const Page = () => {
   useEffect(() => {
     dispatch(NotificationThunck(page));
   }, [page, dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(MarkAsRead());
+  //   console.log("so the mark as read: ", dispatch(MarkAsRead()));
+  // }, [dispatch]);
+
+  // Mark notifications as read ONLY when unread notifications exist
+  useEffect(() => {
+    if (!response || response.length === 0) {
+      return;
+    }
+
+    const hasUnreadNotification = response.some(
+      (notification) => notification.isRead === false,
+    );
+
+    if (hasUnreadNotification) {
+      dispatch(MarkAsRead());
+      dispatch(clearUnreadCount());
+      console.log("so the mark as read: ", dispatch(MarkAsRead()));
+    }
+  }, [response, dispatch]);
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-6 dark:bg-[#0b0f19] sm:px-6 lg:px-8">

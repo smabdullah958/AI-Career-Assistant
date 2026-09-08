@@ -3,7 +3,7 @@ let PushUserNotification = require("../Services/PushNotification/PushUserNotific
 const User = require("../Model/Auth");
 
 //weekly notification ona monday at a 9am
-cron.schedule("0 9 * * 1", async () => {
+cron.schedule("*/1 * * * *", async () => {
   try {
     console.log("🔔 Cron job started");
 

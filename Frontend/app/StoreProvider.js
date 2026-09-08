@@ -1,14 +1,15 @@
 "use client";
 import { Provider } from "react-redux";
 import { store } from "@/Libraries/store";
-// import { useEffect } from "react";
 
+import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { useEffect } from "react";
 
-let StoreProvider = ({ children }) => { 
+let StoreProvider = ({ children }) => {
   useEffect(() => {
-    RegisterFCM();
+    // RegisterFCM();
+  
   }, []);
 
   return (

@@ -2,6 +2,10 @@ const User = require("../../Model/Auth");
 const jwt = require("jsonwebtoken");
 const GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
 
+let SendNotification = require("../../Utilis/Notification"); //to send a notificaiton to a user
+
+let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
+
 const CreateAccountThroughGoogle = async (req, res) => {
   try {
     const { Name, Email, GoogleId, Provider } = req.body;
@@ -56,6 +60,25 @@ const CreateAccountThroughGoogle = async (req, res) => {
 
     // Get Remaining Credits
     const remainingCalls = await GetCreditsForRegistration(user._id);
+
+    //send notificaiton to  a user
+    let notification = await SendNotification(
+      newUser._id,
+      "New_User",
+      "Welcome to our platform",
+      "Thank you for signing up! We are excited to have you on board. Explore our features and enjoy your experience.",
+    );
+
+    console.log("notification sent to user : ", notification);
+
+    //send notification to admin
+    let adminNotification = await SendAdminNotification(
+      "New_User",
+      "A new user has signed up",
+      `User ${newUser.Name} has signed up for an account.`,
+    );
+
+    console.log("notification sent to admin : ", adminNotification);
 
     console.log(user.Role, remainingCalls);
 

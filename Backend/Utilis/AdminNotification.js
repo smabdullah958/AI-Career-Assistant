@@ -15,15 +15,6 @@ let SendNotification = async (type, title, message) => {
     if (!FindAdminUser) {
       return console.log("No Admin user found");
     }
-
-    // let notification = await NotificationModel.create({
-    //   recipientID: FindAdminUser._id,
-    //   type,
-    //   title,
-    //   message,
-    // });
-    // return notification;
-
     let notifications = FindAdminUser.map((admin) => ({
       recipientID: admin._id,
       type,

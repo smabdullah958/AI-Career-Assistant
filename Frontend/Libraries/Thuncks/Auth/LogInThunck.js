@@ -5,6 +5,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 
+import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
+
 let LogInThunck = createAsyncThunk(
   "Loginthunck",
   async (Data, { dispatch, rejectWithValue }) => {
@@ -13,6 +15,11 @@ let LogInThunck = createAsyncThunk(
         withCredentials: true,
       });
       dispatch(setRemainingCalls(result.data?.remainingCalls));
+
+      if (result.status === 200) {
+        RegisterFCM();
+      }
+
       return result?.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);

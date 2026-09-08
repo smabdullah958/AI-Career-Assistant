@@ -3,6 +3,8 @@
 import { getMessaging, onRegistered, register } from "firebase/messaging";
 import app from "./FirebaseConfig";
 import toast from "react-hot-toast";
+import axios from "axios";
+let url = process.env.NEXT_PUBLIC_BackendURL;
 
 export const RegisterFCM = async () => {
   try {
@@ -21,12 +23,24 @@ export const RegisterFCM = async () => {
     const messaging = getMessaging(app);
 
     // Listen for Firebase Installation ID
-    onRegistered(messaging, (installationId) => {
+    onRegistered(messaging, async (installationId) => {
       console.log("Firebase Installation ID:", installationId);
 
-      // IMPORTANT:
-      // Later we will send this installationId to Express.
-      // For now, only testing.
+      //post the token to a backend
+      try {
+        const response = await axios.post(
+          `${url}/NotiicationRoute/push`,
+          {
+            FcmToken: installationId,
+          },
+          {
+            withCredentials: true,
+          },
+        );
+        console.log("FID sent to backend:", response.data);
+      } catch (err) {
+        console.log("internal issue in a axios : ", err);
+      }
     });
 
     // Register this browser with FCM

@@ -5,6 +5,8 @@ import { DisplayLogout } from "@/Libraries/Slices/Auth/LogInSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
+import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
+
 let SignUpThunck = createAsyncThunk(
   "SignupThunck",
   async (Data, { dispatch, rejectWithValue }) => {
@@ -22,6 +24,11 @@ let SignUpThunck = createAsyncThunk(
       );
       // console.log("result data ", result.data?.IsLoggIn, result.data?.Role);
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
+
+      if (result.status === 200) {
+        RegisterFCM();
+      }
+
       return result.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);

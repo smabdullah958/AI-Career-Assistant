@@ -29,7 +29,7 @@ export const RegisterFCM = async () => {
       //post the token to a backend
       try {
         const response = await axios.post(
-          `${url}/NotiicationRoute/push`,
+          `${url}/NotiicationRoute/token`,
           {
             FcmToken: installationId,
           },

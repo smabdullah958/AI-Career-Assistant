@@ -1,6 +1,6 @@
 let FcmModel = require("../../Model/FCMModel");
 
-let PushNotification = async (req, res) => {
+let FCMToken = async (req, res) => {
   try {
     let { FcmToken } = req.body;
     if (!FcmToken) {
@@ -38,4 +38,4 @@ let PushNotification = async (req, res) => {
   }
 };
 
-module.exports = PushNotification;
+module.exports = FCMToken;

@@ -18,6 +18,7 @@ let ResumeRoute = require("./Routes/ResumeRoute");
 let InterviewRoute = require("./Routes/InterviewRoute");
 let AnalyzerRoute = require("./Routes/AnalyzerRoute");
 let NotiicationRoute = require("./Routes/NotificationRoute");
+require("./Utilis/NotificationCron");  //now cron job
 
 ConnectDB();
 

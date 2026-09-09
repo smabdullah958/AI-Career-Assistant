@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 
-export const RegisterFCM = async () => {
+export const RegisterFCM = async (registration) => {
   try {
     // Ask user for notification permission
     const permission = await Notification.requestPermission();
@@ -42,10 +42,11 @@ export const RegisterFCM = async () => {
         console.log("internal issue in a axios : ", err);
       }
     });
-
+    console.log("so the registrariton is a ", registration);
     // Register this browser with FCM
     await register(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_VAPID,
+      serviceWorkerRegistration: registration,
     });
 
     console.log("FCM registration completed.");

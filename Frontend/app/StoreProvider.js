@@ -9,7 +9,19 @@ import { useEffect } from "react";
 let StoreProvider = ({ children }) => {
   useEffect(() => {
     // RegisterFCM();
-  
+      const setupFirebase = async () => {
+
+      const registration =
+        await RegisterServiceWorker();
+
+      if (registration) {
+        await RegisterFCM(registration);
+      }
+
+    };
+
+    setupFirebase();
+
   }, []);
 
   return (

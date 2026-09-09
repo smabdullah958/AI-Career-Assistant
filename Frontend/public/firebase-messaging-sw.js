@@ -5,10 +5,16 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js",
 );
-//firebase config
-import app from "@/Libraries/Firebase/FirebaseConfig";
 
-app();
+//firebase config
+firebase.initializeApp({
+  apiKey: "AIzaSyDSgEgOx19yLa9V6pL6xtU1IOAkqPQ0JhA",
+  authDomain: "ai-career-assistant-95041.firebaseapp.com",
+  projectId: "ai-career-assistant-95041",
+  storageBucket: "ai-career-assistant-95041.firebasestorage.app",
+  messagingSenderId: "947539202458",
+  appId: "1:947539202458:web:34cc288d3052761120ea23",
+});
 
 const messaging = firebase.messaging();
 

@@ -60,7 +60,7 @@ const PushUserNotification = async (UserId) => {
     for (const item of userFids) {
       try {
         const message = {
-          fid: item.Fid,
+          fid: item.FcmToken,
 
           notification: notification(
             UserId,
@@ -71,8 +71,7 @@ const PushUserNotification = async (UserId) => {
         };
 
         const response = await admin.messaging().send(message);
-
-        console.log(`Notification sent to user ${UserId}`, response);
+        console.log(`Notification sent to user: ${UserId}`);
       } catch (error) {
         console.log(`Notification failed for FID ${item.Fid}:`, error);
 

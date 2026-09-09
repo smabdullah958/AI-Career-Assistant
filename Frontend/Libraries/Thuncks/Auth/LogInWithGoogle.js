@@ -6,6 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
+import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 
 let LogInWithGoogleThunck = createAsyncThunk(
   "Loginwithgoglethunck",
@@ -26,7 +27,12 @@ let LogInWithGoogleThunck = createAsyncThunk(
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
 
       if (result.status === 200) {
-        RegisterFCM();
+        const registration = await RegisterServiceWorker();
+
+        if (registration) {
+          await RegisterFCM(registration);
+        }
+        console.log("Service worker registration:", registration);
       }
 
       return result.data;

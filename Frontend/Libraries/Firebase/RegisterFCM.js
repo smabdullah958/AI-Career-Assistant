@@ -18,7 +18,7 @@ export const RegisterFCM = async (registration) => {
       toast.error("Notification permision is not granted");
       return;
     }
-
+    console.log("so then notification persion ", permission);
     // Get Firebase Messaging instance
     const messaging = getMessaging(app);
 

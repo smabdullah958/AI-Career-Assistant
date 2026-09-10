@@ -1,48 +1,6 @@
-// const admin = require("../../Config/FirebaseAdmin");
-// const FCMToken = require("../../Model/FCMModel");
-// let notification = require("../../Utilis/Notification");
+require("../../Config/FirebaseAdmin");
 
-// const PushUserNotification = async (UserId) => {
-//   try {
-//     // Find all FCM tokens of this user
-//     const userTokens = await FCMToken.find({
-//       UserId,
-//     });
-
-//     if (userTokens.length === 0) {
-//       console.log(`No FCM token found for user ${UserId}`);
-//       return;
-//     }
-
-//     // Send notification to every device
-//     for (const item of userTokens) {
-//       const message = {
-//         fid: item.FcmToken,
-
-//         notification: notification(
-//           UserId,
-//           "Weekly_Report",
-//           "your weekly report is ready",
-//           "here you can check it out your weekly work",
-//         ),
-//       };
-
-//       await admin.messaging().send(message);
-//     }
-//     console.log(`Notification sent to user: ${UserId}`);
-//   } catch (error) {
-//     console.log(`Notification failed for user ${UserId}:`, error);
-//     if (error.code === "messaging/registration-token-not-registered") {
-//       await FCMToken.deleteOne({
-//         UserId,
-//         Fid: item.Fid,
-//       });
-//     }
-//   }
-// };
-// module.exports = PushUserNotification;
-
-const admin = require("../../Config/FirebaseAdmin");
+const { getMessaging } = require("firebase-admin/messaging");
 const FCMToken = require("../../Model/FCMModel");
 const notification = require("../../Utilis/Notification");
 
@@ -52,6 +10,8 @@ const PushUserNotification = async (UserId) => {
       UserId,
     });
 
+    console.log(`User ${UserId} has ${userFids.length} FID record(s)`);
+
     if (userFids.length === 0) {
       console.log(`No FID found for user ${UserId}`);
       return;
@@ -59,6 +19,8 @@ const PushUserNotification = async (UserId) => {
 
     for (const item of userFids) {
       try {
+        console.log("Sending notification to FID:", item.FcmToken);
+
         const message = {
           fid: item.FcmToken,
 
@@ -70,12 +32,16 @@ const PushUserNotification = async (UserId) => {
           ),
         };
 
-        const response = await admin.messaging().send(message);
-        console.log(`Notification sent to user: ${UserId}`);
-      } catch (error) {
-        console.log(`Notification failed for FID ${item.Fid}:`, error);
+        console.log("Firebase message:", message);
 
-        // Remove invalid/unregistered FID
+        const response = await getMessaging().send(message);
+
+        console.log(`Notification sent to user: ${UserId}`);
+
+        console.log("Firebase response:", response);
+      } catch (error) {
+        console.log(`Notification failed for FID ${item.FcmToken}:`, error);
+
         if (
           error.code === "messaging/registration-token-not-registered" ||
           error.code === "messaging/invalid-registration-token"
@@ -84,7 +50,7 @@ const PushUserNotification = async (UserId) => {
             _id: item._id,
           });
 
-          console.log(`Removed invalid FID: ${item.Fid}`);
+          console.log(`Removed invalid FID: ${item.FcmToken}`);
         }
       }
     }

@@ -15,7 +15,7 @@ const LoginForm = ({ HideForm }) => {
   let dispatch = useDispatch();
   let router = useRouter();
 
-  let { loading, errorMessage } = useSelector(
+  let { loading, errorMessage, UserRole } = useSelector(
     (state) => state.LogInSlice, //LogInSlice is come from a store
   );
 
@@ -39,13 +39,18 @@ const LoginForm = ({ HideForm }) => {
     //navigation
     const Role = result?.payload?.Role;
 
-    if (Role === "Admin" || Role === "SuperAdmin") {
+    if (
+      Role === "Admin" ||
+      Role === "SuperAdmin" ||
+      UserRole === "Admin" ||
+      UserRole === "SuperAdmin"
+    ) {
       HideForm();
       router.push("/AdminDashboard");
 
       return;
     }
-    if (Role === "User") {
+    if (Role === "User" || UserRole === "User") {
       HideForm();
       router.push("/");
     }

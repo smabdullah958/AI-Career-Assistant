@@ -8,9 +8,12 @@ import {
 } from "react-icons/io5";
 
 import NotificationThunck from "@/Libraries/Thuncks/Notification/GetNotification";
+
 import MarkAsRead from "@/Libraries/Thuncks/Notification/MarkAsRead";
 
 import { increment } from "@/Libraries/Slices/Notification/GetNotification";
+
+import { clearUnreadCount } from "@/Libraries/Slices/Notification/UnreadNotification";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -40,6 +43,7 @@ const Page = () => {
 
     if (hasUnreadNotification) {
       dispatch(MarkAsRead());
+      dispatch(clearUnreadCount());
       console.log("so the mark as read: ", dispatch(MarkAsRead()));
     }
   }, [response, dispatch]);

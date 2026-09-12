@@ -41,13 +41,13 @@ const LoginForm = ({ HideForm }) => {
 
     if (Role === "Admin" || Role === "SuperAdmin") {
       HideForm();
-      router.replace("/AdminDashboard");
+      router.push("/AdminDashboard");
 
       return;
     }
     if (Role === "User") {
       HideForm();
-      router.replace("/");
+      router.push("/");
     }
   };
 

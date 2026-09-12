@@ -8,31 +8,6 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 
-// let LogInThunck = createAsyncThunk(
-//   "Loginthunck",
-//   async (Data, { dispatch, rejectWithValue }) => {
-//     try {
-//       let result = await axios.post(`${url}/Auth/login`, Data, {
-//         withCredentials: true,
-//       });
-//       dispatch(setRemainingCalls(result.data?.remainingCalls));
-
-//       if (result.status === 200) {
-//         const registration = await RegisterServiceWorker();
-
-//         if (registration) {
-//           await RegisterFCM(registration);
-//         }
-//         console.log("Service worker registration:", registration);
-//       }
-
-//       return result?.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data?.message);
-//     }
-//   },
-// );
-
 let LogInThunck = createAsyncThunk(
   "Loginthunck",
   async (Data, { dispatch, rejectWithValue }) => {

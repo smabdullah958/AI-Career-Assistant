@@ -1,6 +1,6 @@
 let NotificationModel = require("../Model/Notification");
 
-let SendNotification = async (ID, type, title, message) => {
+let CreateNotification = async (ID, type, title, message) => {
   try {
     let notification = await NotificationModel.create({
       recipientID: ID,
@@ -14,4 +14,4 @@ let SendNotification = async (ID, type, title, message) => {
   }
 };
 
-module.exports = SendNotification;
+module.exports = CreateNotification;

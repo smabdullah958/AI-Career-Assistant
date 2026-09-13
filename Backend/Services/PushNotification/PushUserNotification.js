@@ -2,9 +2,14 @@ require("../../Config/FirebaseAdmin");
 
 const { getMessaging } = require("firebase-admin/messaging");
 const FCMToken = require("../../Model/FCMModel");
-const notification = require("../../Utilis/Notification");
 
-const PushUserNotification = async (UserId) => {
+const PushUserNotification = async (
+  UserId,
+  type,
+  title,
+  message,
+  url = "/",
+) => {
   try {
     const userFids = await FCMToken.find({
       UserId,
@@ -24,12 +29,8 @@ const PushUserNotification = async (UserId) => {
         const message = {
           fid: item.FcmToken,
 
-          notification: notification(
-            UserId,
-            "Weekly_Report",
-            "Your weekly report is ready",
-            "Here you can check out your weekly work",
-          ),
+          notification: { title, body: message },
+          data: { type, url },
         };
 
         console.log("Firebase message:", message);

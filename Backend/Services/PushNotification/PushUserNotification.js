@@ -7,7 +7,7 @@ const PushUserNotification = async (
   UserId,
   type,
   title,
-  message,
+  Message,
   url = "/",
 ) => {
   try {
@@ -29,7 +29,7 @@ const PushUserNotification = async (
         const message = {
           fid: item.FcmToken,
 
-          notification: { title, body: message },
+          notification: { title, body: Message },
           data: { type, url },
         };
 

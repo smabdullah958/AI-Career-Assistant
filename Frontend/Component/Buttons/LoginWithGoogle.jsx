@@ -14,7 +14,9 @@ const LoginWithGoogle = ({ Provider = "Google" }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { errorMessage } = useSelector((state) => state.LogInWithGoogleSlice);
+  const { errorMessage, Role } = useSelector(
+    (state) => state.LogInWithGoogleSlice,
+  );
 
   // Google Login
   const login = useGoogleLogin({
@@ -40,10 +42,18 @@ const LoginWithGoogle = ({ Provider = "Google" }) => {
             Provider,
           }),
         );
+        //for navigation
+        const userRole = result.payload?.Role;
+
+        console.log("User Role:", userRole);
 
         // Redirect if login successful
         if (LogInWithGoogleThunck.fulfilled.match(result)) {
-          router.replace("/");
+          if (userRole === "Admin" || userRole === "SuperAdmin") {
+            router.push("/AdminDashboard");
+          } else {
+            router.replace("/");
+          }
         }
       } catch (error) {
         console.log(error);

@@ -1,4 +1,5 @@
 require("../../Config/FirebaseAdmin");
+let Frontend = process.env.Frontend;
 
 const { getMessaging } = require("firebase-admin/messaging");
 const FCMToken = require("../../Model/FCMModel");
@@ -31,6 +32,11 @@ const PushUserNotification = async (
 
           notification: { title, body: Message },
           data: { type, url },
+          webpush: {
+            fcmOptions: {
+              link: `${Frontend}/${url}`,
+            },
+          },
         };
 
         console.log("Firebase message:", message);

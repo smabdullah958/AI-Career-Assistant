@@ -7,7 +7,7 @@ const CreateAdminNotification = require("./AdminNotification"); //creae notifcai
 
 //weekly notification ona monday at a 9am
 // */1
-cron.schedule("*/3 * * * *", async () => {
+cron.schedule("*/100 * * * *", async () => {
   try {
     console.log("🔔 Cron job started");
 
@@ -62,7 +62,7 @@ cron.schedule("*/3 * * * *", async () => {
 });
 
 //montly notification ona monday at a 9am
-cron.schedule("*/1 * * * *", async () => {
+cron.schedule("*/100 * * * *", async () => {
   try {
     console.log("🔔 Cron job started");
 
@@ -105,7 +105,7 @@ cron.schedule("*/1 * * * *", async () => {
         type,
         title,
         message,
-        "/AdminDashbord",
+        "/AdminDashboard",
       );
     }
 

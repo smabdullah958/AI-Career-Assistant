@@ -1,5 +1,5 @@
 const Usage = require("../Model/Usage");
-let Notifcation = require("../Utilis/Notification");
+let Notifcation = require("../Utilis/UserNotification");
 
 let DailyUsageMiddleWare = async (req, res, next) => {
   const UserId = req.user.UserId;

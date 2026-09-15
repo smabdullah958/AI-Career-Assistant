@@ -1,7 +1,7 @@
 //it is used to get credits for a signup
 let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
 
-let SendNotification = require("../../Utilis/Notification"); //to send a notificaiton to a user
+let SendNotification = require("../../Utilis/UserNotification"); //to send a notificaiton to a user
 
 let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
 

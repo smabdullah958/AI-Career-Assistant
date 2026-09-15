@@ -26,7 +26,41 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.notification?.body,
     icon: "/logo.png",
+    data: {
+      url: payload.data?.url,
+    },
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+// Notification click
+self.addEventListener("notificationclick", (event) => {
+  console.log("Notification clicked");
+
+  event.notification.close();
+
+  const url = event.notification.data?.url;
+
+  event.waitUntil(
+    clients
+      .matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      })
+      .then((clientList) => {
+        // If application is already open
+        for (const client of clientList) {
+          if ("focus" in client) {
+            client.navigate(url);
+            return client.focus();
+          }
+        }
+
+        // If application is not open
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+      }),
+  );
 });

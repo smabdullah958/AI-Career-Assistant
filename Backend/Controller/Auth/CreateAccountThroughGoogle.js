@@ -2,7 +2,7 @@ const User = require("../../Model/Auth");
 const jwt = require("jsonwebtoken");
 const GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration");
 
-let SendNotification = require("../../Utilis/Notification"); //to send a notificaiton to a user
+let SendNotification = require("../../Utilis/UserNotification"); //to send a notificaiton to a user
 
 let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
 

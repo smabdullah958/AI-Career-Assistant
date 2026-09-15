@@ -49,9 +49,16 @@ const LoginWithGoogle = ({ Provider = "Google" }) => {
 
         // Redirect if login successful
         if (LogInWithGoogleThunck.fulfilled.match(result)) {
+          console.log("User Role:", userRole);
+
           if (userRole === "Admin" || userRole === "SuperAdmin") {
+            console.log("🚀 Navigating to AdminDashboard");
+
             router.push("/AdminDashboard");
+            console.log("✅ router.push executed");
           } else {
+            console.log("🚀 Navigating to home");
+
             router.replace("/");
           }
         }

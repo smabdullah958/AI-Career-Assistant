@@ -19,6 +19,7 @@ export async function middleware(request) {
 
   // No token → send user to login
   if (!token) {
+    console.log("token is required");
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -26,13 +27,17 @@ export async function middleware(request) {
 
   // Invalid / expired token
   if (!payload) {
+    console.log("❌ Invalid token");
+
     return NextResponse.redirect(new URL("/", request.url));
   }
 
   // Check admin role
   if (payload.Role !== "Admin" && payload.Role !== "SuperAdmin") {
+    console.log("role is not admin or a super admin");
     return NextResponse.redirect(new URL("/", request.url));
   }
+  console.log("✅ Admin middleware passed");
 
   return NextResponse.next();
 }

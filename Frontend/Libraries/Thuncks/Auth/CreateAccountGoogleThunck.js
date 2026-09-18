@@ -19,6 +19,7 @@ let GoogleThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
+      console.log(result?.data);
       // console.log("user is reggister");
       dispatch(
         //to show a logout button when a user is signup

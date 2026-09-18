@@ -17,7 +17,7 @@ let LogInThunck = createAsyncThunk(
       let result = await axios.post(`${url}/Auth/login`, Data, {
         withCredentials: true,
       });
-
+      console.log(result);
       console.log("🟢 LOGIN API RESPONSE:", result.status);
       console.log("🟢 BACKEND URL:", url);
 

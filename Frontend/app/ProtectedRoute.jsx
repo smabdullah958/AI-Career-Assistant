@@ -11,16 +11,6 @@ function CheckLogin() {
   // check login role
   const Role = useSelector((state) => state.GlobalSlice.Role); //this is to chck from global slice
 
-  //login role
-  // let UserRole = useSelector((state) => state.LogInSlice.UserRole); //to check the role from a login slice
-
-  // let GooogleRole = useSelector((state) => state.LogInWithGoogleSlice.Role); //to get role when a user is logi with a google
-
-  // //signup role
-  // let SignUpRole = useSelector((state) => state.SignUpSlice.Role); //to get  a role whena  create new account
-
-  // let GoogleSignUpRole = useSelector((state) => state.GoogleSlice.Role); //get a role when create account witha  google
-
   const loading = useSelector((state) => state.GlobalSlice.loading);
 
   // Runs once when the website opens
@@ -33,18 +23,7 @@ function CheckLogin() {
       return;
     }
 
-    if (
-      Role === "Admin" ||
-      Role === "SuperAdmin"
-      // UserRole === "Admin" ||
-      // UserRole === "SuperAdmin" ||
-      // GooogleRole === "Role" ||
-      // GooogleRole === "SuperAdmin" ||
-      // SignUpRole === "Admin" ||
-      // SignUpRole === "SuperAdmin" ||
-      // GoogleSignUpRole === "Admin" ||
-      // GoogleSignUpRole === "SuperAdmin"
-    ) {
+    if (Role === "Admin" || Role === "SuperAdmin") {
       router.replace("/AdminDashboard");
     }
   }, [Role, loading, pathname, router]);

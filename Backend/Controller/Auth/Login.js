@@ -45,7 +45,7 @@ let Login = async (req, res) => {
     //send token or a cookie toa  frontend
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, 
+      secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //for 7 days
     });
@@ -59,7 +59,6 @@ let Login = async (req, res) => {
       IsLoggIn: true, //when user is login than pass the islogin true
       Role: ExistUser.Role,
       remainingCalls,
-      token,
     });
   } catch (error) {
     console.log("some thing went wrong", error);

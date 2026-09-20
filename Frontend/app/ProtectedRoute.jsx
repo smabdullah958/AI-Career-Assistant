@@ -1,12 +1,13 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import CheckLoginThunk from "@/Libraries/Thuncks/Auth/CheckLoginThunck";
-function CheckLogin() {
+function ProtectedRoute() {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const [hasCheckedLogin, setHasCheckedLogin] = useState(false);
 
   // check login role
   const Role = useSelector((state) => state.GlobalSlice.Role); //this is to chck from global slice
@@ -15,20 +16,28 @@ function CheckLogin() {
 
   // Runs once when the website opens
   useEffect(() => {
-    dispatch(CheckLoginThunk());
+    dispatch(CheckLoginThunk()).finally(() => setHasCheckedLogin(true));
   }, [dispatch]);
 
   useEffect(() => {
-    if (loading || pathname.startsWith("/AdminDashboard")) {
+    if (loading || !hasCheckedLogin) {
       return;
     }
 
-    if (Role === "Admin" || Role === "SuperAdmin") {
+    const isAdmin = Role === "Admin" || Role === "SuperAdmin";
+    const isAdminRoute = pathname.startsWith("/AdminDashboard");
+
+    if (isAdminRoute && !isAdmin) {
+      router.replace("/");
+      return;
+    }
+
+    if (!isAdminRoute && isAdmin) {
       router.replace("/AdminDashboard");
     }
-  }, [Role, loading, pathname, router]);
+  }, [Role, hasCheckedLogin, loading, pathname, router]);
 
   return null;
 }
 
-export default CheckLogin;
+export default ProtectedRoute;

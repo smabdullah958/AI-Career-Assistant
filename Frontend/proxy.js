@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-const secret = new TextEncoder().encode(process.env.SecretKey);
+const secretKey = process.env.SecretKey;
+const secret = secretKey ? new TextEncoder().encode(secretKey) : null;
 async function verifyToken(token) {
+  if (!secret) {
+    console.error(
+      "SecretKey is missing. Add it to your .env file and restart Next.js.",
+    );
+    return null;
+  }
+
   try {
     const { payload } = await jwtVerify(token, secret);
 
@@ -52,3 +60,10 @@ export async function proxy(request) {
 
   return NextResponse.next();
 }
+
+// Only protect admin pages. Without this matcher, the proxy also runs on `/`.
+// A visitor without a token is redirected to `/`, which otherwise creates an
+// endless redirect loop because `/` would immediately be processed again.
+export const config = {
+  matcher: ["/AdminDashboard/:path*"],
+};

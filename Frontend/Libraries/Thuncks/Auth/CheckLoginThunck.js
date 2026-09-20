@@ -11,7 +11,9 @@ let CheckLoginThunck = createAsyncThunk(
       });
       return result?.data;
     } catch (error) {
-      return console.log(rejectWithValue(error.response?.data?.message));
+      return rejectWithValue(
+        error.response?.data?.message || "Unable to check login status",
+      );
     }
   },
 );

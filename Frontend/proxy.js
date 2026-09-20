@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 const secret = new TextEncoder().encode(process.env.SecretKey);
-
 async function verifyToken(token) {
   try {
     const { payload } = await jwtVerify(token, secret);

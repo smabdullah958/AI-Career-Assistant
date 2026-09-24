@@ -32,10 +32,6 @@ function CheckLogin() {
     if (loading) {
       return;
     }
-    // Do not redirect while already inside AdminDashboard
-    if (pathname.startsWith("/AdminDashboard")) {
-      return;
-    }
 
     if (
       Role === "Admin" ||
@@ -50,8 +46,6 @@ function CheckLogin() {
       GoogleSignUpRole === "SuperAdmin"
     ) {
       router.replace("/AdminDashboard");
-    } else {
-      router.replace("/");
     }
   }, [
     Role,

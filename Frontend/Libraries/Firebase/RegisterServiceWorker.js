@@ -5,7 +5,7 @@ export const RegisterServiceWorker = async () => {
         "/firebase-messaging-sw.js",
       );
 
-      console.log("Firebase Service Worker registered:", registration);
+      console.log("Firebase Service Worker registered:");
 
       return registration;
     } catch (error) {

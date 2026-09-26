@@ -22,6 +22,10 @@ import UnreadNotification from "@/Libraries/Slices/Notification/UnreadNotificati
 
 //to get and reset the remaining api call
 import GlobalSlice from "@/Libraries/Slices/GlobalSlice";
+
+//for analytics
+import UserAnalyticsSlice from "@/Libraries/Slices/UserAnalytics/UserAnalytics";
+
 export let store = configureStore({
   reducer: {
     SignUpSlice,
@@ -35,5 +39,6 @@ export let store = configureStore({
     GlobalSlice,
     GetNotification,
     UnreadNotification,
+    UserAnalyticsSlice,
   },
 });

@@ -1,64 +1,144 @@
-import { FiBarChart2, FiUsers, FiBriefcase, FiActivity } from "react-icons/fi";
+"use client";
 
-const stats = [
-  { title: "Total Users", value: "12.4K", icon: FiUsers, color: "#2563eb" },
-  { title: "Active Jobs", value: "842", icon: FiBriefcase, color: "#16a34a" },
-  { title: "Interviews", value: "3.6K", icon: FiActivity, color: "#f59e0b" },
-  { title: "Conversion", value: "68%", icon: FiBarChart2, color: "#8b5cf6" },
-];
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaUsers, FaUserCheck, FaUserTimes } from "react-icons/fa";
+import { MdOutlineQueryStats } from "react-icons/md";
 
-import AdminHeaderWrapper from "@/Component/AdminSidebar/AdminHeaderWrapper";
+import UserAnalyticsThunck from "@/Libraries/Thuncks/UserAnalytics/UserAnalytics";
+import UserGrowth from "@/Component/Admin/UserAnalytics/UserGrowth";
 
-export default function AdminHomePage() {
+const AdminDashboard = () => {
+  const dispatch = useDispatch();
+
+  // Monthly will be selected by default
+  const [period, setPeriod] = useState("30d");
+
+  const { loading, ActiveUser, InActiveUser, TotalUser, RetentionRate } =
+    useSelector((state) => state.UserAnalyticsSlice);
+
+  // Call analytics API whenever period changes
+  useEffect(() => {
+    dispatch(UserAnalyticsThunck(period));
+  }, [dispatch, period]);
+
+  const periods = [
+    {
+      label: "Weekly",
+      value: "7d",
+    },
+    {
+      label: "Monthly",
+      value: "30d",
+    },
+    {
+      label: "Yearly",
+      value: "1y",
+    },
+  ];
+
+  const analytics = [
+    {
+      title: "Total Registered Users",
+      value: TotalUser,
+      icon: FaUsers,
+      iconClass: "bg-blue-100 text-blue-600",
+    },
+    {
+      title: "Active Users",
+      value: ActiveUser,
+      icon: FaUserCheck,
+      iconClass: "bg-emerald-100 text-emerald-600",
+    },
+    {
+      title: "Inactive Users",
+      value: InActiveUser,
+      icon: FaUserTimes,
+      iconClass: "bg-red-100 text-red-600",
+    },
+    {
+      title: "Retention Rate",
+      value: RetentionRate !== null ? `${RetentionRate}%` : null,
+      icon: MdOutlineQueryStats,
+      iconClass: "bg-purple-100 text-purple-600",
+    },
+  ];
+
   return (
-    <div className="admin-page">
-      <div className="flex justify-end px-6 py-3 md:hidden">
-        <AdminHeaderWrapper />
+    <div className="w-full px-5 py-6 h-screen">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        {/* Heading */}
+        <div>
+          <p className="mt-1 text-sm text-slate-500">
+            Track your user base, engagement and growth.
+          </p>
+        </div>
+
+        {/* ================= PERIOD BUTTONS ================= */}
+        <div className="flex w-fit items-center gap-1 rounded-xl bg-white p-1 shadow-md">
+          {periods.map((item) => {
+            const isActive = period === item.value;
+
+            return (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => setPeriod(item.value)}
+                className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  isActive
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-blue-600 hover:bg-blue-50"
+                }`}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <header className="admin-header">
-        <h1>Dashboard Overview</h1>
-        <p>Welcome back! Here is your summary of the platform performance.</p>
-      </header>
+      {/* ================= ANALYTICS CARDS ================= */}
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {analytics.map((item) => {
+          const Icon = item.icon;
 
-      <section className="admin-grid">
-        {stats.map(({ title, value, icon: Icon, color }) => (
-          <div key={title} className="admin-card">
-            <div className="admin-stat">
-              <div>
-                <div style={{ color: "#6b7280", fontSize: "0.8rem" }}>
-                  {title}
+          return (
+            <div
+              key={item.title}
+              className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm"
+            >
+              {/* Card Header */}
+              <div className="flex items-center gap-3">
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.iconClass}`}
+                >
+                  <Icon size={20} />
                 </div>
-                <div className="admin-stat-value">{value}</div>
+
+                <p className="text-sm font-medium text-slate-600">
+                  {item.title}
+                </p>
               </div>
-              <div
-                className="admin-icon"
-                style={{ background: `${color}20`, color }}
-              >
-                <Icon size={18} />
+
+              {/* Card Value */}
+              <div className="mt-5">
+                {loading ? (
+                  <div className="h-9 w-20 animate-pulse rounded-md bg-slate-200" />
+                ) : (
+                  <p className="text-3xl font-bold text-slate-900">
+                    {item.value ?? 0}
+                  </p>
+                )}
               </div>
             </div>
-          </div>
-        ))}
-      </section>
+          );
+        })}
+      </div>
 
-      <section className="admin-panel">
-        <h2>Recent activity</h2>
-        <div className="admin-list">
-          <div className="admin-list-item">
-            <strong>New candidate registered</strong>
-            <span>John Doe joined today and completed profile setup.</span>
-          </div>
-          <div className="admin-list-item">
-            <strong>Resume analysis completed</strong>
-            <span>42 CVs were reviewed and scored in the last 24 hours.</span>
-          </div>
-          <div className="admin-list-item">
-            <strong>Interview session scheduled</strong>
-            <span>14 mock interviews were assigned to users this week.</span>
-          </div>
-        </div>
-      </section>
+      <UserGrowth />
     </div>
   );
-}
+};
+
+export default AdminDashboard;

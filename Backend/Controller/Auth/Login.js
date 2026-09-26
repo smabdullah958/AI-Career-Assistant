@@ -50,6 +50,12 @@ let Login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, //for 7 days
     });
 
+    let LastActiveDate = await UserModel.findByIdAndUpdate(ExistUser._id, {
+      LastActiveAt: new Date(),
+    });
+
+    console.log(LastActiveDate);
+
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(ExistUser._id);
 

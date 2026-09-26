@@ -1,4 +1,5 @@
 const Usage = require("../../Model/Usage");
+let UserModel = require("../../Model/Auth");
 
 const CheckAuth = async (req, res) => {
   try {
@@ -20,6 +21,14 @@ const CheckAuth = async (req, res) => {
     }
 
     console.log("record", req.user);
+
+    let LastActiveDate = await UserModel.findByIdAndUpdate(UserId, {
+      LastActiveAt: new Date(),
+    });
+
+    console.log("last update ate ", LastActiveDate);
+
+    console.log("so the user is login successfully", LastActiveDate);
 
     return res.status(200).json({
       IsLoggIn: true,

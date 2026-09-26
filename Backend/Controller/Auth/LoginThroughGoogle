@@ -73,6 +73,12 @@ let LogInThroughGoogle = async (req, res) => {
 
     console.log("user is login successfully", ExistUser);
 
+    let LastActiveDate = await UserModel.findByIdAndUpdate(ExistUser._id, {
+      LastActiveAt: new Date(),
+    });
+
+    console.log("so he last active date is ", LastActiveDate);
+
     // Get Remaining Credits
     let remainingCalls = await GetCreditsForRegistration(ExistUser._id);
 

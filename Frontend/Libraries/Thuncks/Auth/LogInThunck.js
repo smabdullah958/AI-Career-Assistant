@@ -8,15 +8,22 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 
+import getDeviceType from "@/Component/getDeviceType";
+const deviceType = getDeviceType();
+
 let LogInThunck = createAsyncThunk(
   "Loginthunck",
   async (Data, { dispatch, rejectWithValue }) => {
     try {
       console.log("🟢 LOGIN THUNK STARTED");
 
-      let result = await axios.post(`${url}/Auth/login`, Data, {
-        withCredentials: true,
-      });
+      let result = await axios.post(
+        `${url}/Auth/login`,
+        { ...Data, deviceType },
+        {
+          withCredentials: true,
+        },
+      );
       console.log(result?.data);
       console.log("🟢 LOGIN API RESPONSE:", result.status);
       console.log("🟢 BACKEND URL:", url);

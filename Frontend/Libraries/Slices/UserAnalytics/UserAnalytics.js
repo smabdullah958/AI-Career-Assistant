@@ -9,7 +9,10 @@ let initialState = {
   InActiveUser: null,
   TotalUser: null,
   RetentionRate: null,
-  NewUser:null
+  NewUser:null,
+  UserGrowth:[],
+  DeviceType:[],
+  UserByCountry: [],
 };
 
 let UserAnalyticsSlice = createSlice({
@@ -26,6 +29,9 @@ let UserAnalyticsSlice = createSlice({
         state.RetentionRate=null,
         state.TotalUser=null
         state.NewUser=null
+        state.UserGrowth=[]
+        state.DeviceType=[]
+        state.UserByCountry= []
     });
     builder.addCase(UserAnalyticsThunck.pending, (state) => {
       state.loading = true,
@@ -37,6 +43,10 @@ let UserAnalyticsSlice = createSlice({
         state.RetentionRate=null,
         state.TotalUser=null,
         state.NewUser=null
+        state.UserGrowth=[]
+        state.DeviceType=[]
+        state.UserByCountry= []
+
     });
     builder.addCase(UserAnalyticsThunck.fulfilled, (state, action) => {
       state.loading = false,
@@ -47,6 +57,10 @@ let UserAnalyticsSlice = createSlice({
          state.RetentionRate = action?.payload?.Retention_Rate; //get Retention Rate 
         state.TotalUser = action?.payload?.Total_User; //get In total User 
         state.NewUser=action?.payload?.New_User  //get new user
+        state.UserGrowth=action?.payload?.User_Growth //get guser growth
+        state.DeviceType=action?.payload?.Device_Analytics //to get a device type
+        state.UserByCountry=action?.payload?.UserBy_Country //to get a user by their country 
+
 
     });
   },

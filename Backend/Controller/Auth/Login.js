@@ -5,7 +5,7 @@ let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
 let Login = async (req, res) => {
   try {
-    let { Email, Password } = req.body;
+    let { Email, Password, deviceType } = req.body;
     if (!Email || !Password) {
       return res.status(400).status({ message: "all the field are required" });
     }
@@ -52,6 +52,7 @@ let Login = async (req, res) => {
 
     let LastActiveDate = await UserModel.findByIdAndUpdate(ExistUser._id, {
       LastActiveAt: new Date(),
+      DeviceType: deviceType,
     });
 
     console.log(LastActiveDate);

@@ -8,7 +8,7 @@ let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send
 
 const CreateAccountThroughGoogle = async (req, res) => {
   try {
-    const { Name, Email, GoogleId, Provider } = req.body;
+    const { Name, Email, GoogleId, Provider, deviceType } = req.body;
 
     if (!Name || !Email || !GoogleId || !Provider) {
       return res.status(400).json({
@@ -32,6 +32,7 @@ const CreateAccountThroughGoogle = async (req, res) => {
       Provider,
       Password: null,
       Role: "User",
+      DeviceType: deviceType,
     });
 
     // Give free credits only once

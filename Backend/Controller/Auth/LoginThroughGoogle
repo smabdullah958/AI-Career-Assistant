@@ -5,7 +5,7 @@ let jwt = require("jsonwebtoken");
 
 let LogInThroughGoogle = async (req, res) => {
   try {
-    let { Email, GoogleId, Provider } = req.body;
+    let { Email, GoogleId, Provider, deviceType } = req.body;
 
     // Validation
     if (!Email || !GoogleId || !Provider) {
@@ -75,6 +75,7 @@ let LogInThroughGoogle = async (req, res) => {
 
     let LastActiveDate = await UserModel.findByIdAndUpdate(ExistUser._id, {
       LastActiveAt: new Date(),
+      DeviceType: deviceType,
     });
 
     console.log("so he last active date is ", LastActiveDate);

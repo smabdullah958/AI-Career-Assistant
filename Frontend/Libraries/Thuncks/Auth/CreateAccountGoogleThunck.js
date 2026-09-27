@@ -7,6 +7,8 @@ import axios from "axios";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
+import getDeviceType from "@/Component/getDeviceType";
+const deviceType = getDeviceType();
 
 let GoogleThunck = createAsyncThunk(
   "GoogleThunck",
@@ -14,7 +16,7 @@ let GoogleThunck = createAsyncThunk(
     try {
       let result = await axios.post(
         `${url}/Auth/CreateAccountThroughGoogle`,
-        Data,
+        { ...Data, deviceType },
         {
           withCredentials: true,
         },

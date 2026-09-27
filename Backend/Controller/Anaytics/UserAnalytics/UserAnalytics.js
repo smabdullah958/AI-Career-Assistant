@@ -28,6 +28,12 @@ let RetentionRate = require("../../../Services/Analytics/UserAnalytics/Retention
 //total User
 let TotalUser = require("../../../Services/Analytics/UserAnalytics/TotalUser");
 
+//analtyice the user device
+let DeviceAnalytics = require("../../../Services/Analytics/UserAnalytics/DeviceAnalytics");
+
+//analyze user by teir country
+let UserByCountry = require("../../../Services/Analytics/UserAnalytics/UserByCountry");
+
 let UserAnalytics = async (req, res) => {
   try {
     let StartDate = new Date();
@@ -37,11 +43,20 @@ let UserAnalytics = async (req, res) => {
 
     //for weekly
     if (Period === "7d") {
-      let [Active_User, Total_User, New_User, User_Growth] = await Promise.all([
+      let [
+        Active_User,
+        Total_User,
+        New_User,
+        User_Growth,
+        Device_Analytics,
+        UserBy_Country,
+      ] = await Promise.all([
         WeeklyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
         WeeklyNewUser(Model, StartDate, EndDate),
         WeeklyUserGrowth(Model, EndDate),
+        DeviceAnalytics(),
+        UserByCountry("7daysAgo", "today"),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -56,6 +71,8 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       );
       res.status(200).json({
         Active_User,
@@ -64,16 +81,27 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       });
     }
 
     //for monthly
     if (Period === "30d") {
-      let [Active_User, Total_User, New_User, User_Growth] = await Promise.all([
+      let [
+        Active_User,
+        Total_User,
+        New_User,
+        User_Growth,
+        Device_Analytics,
+        UserBy_Country,
+      ] = await Promise.all([
         MonthlyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
         MonthlyNewUser(Model, StartDate, EndDate),
         MonthlyUserGrowth(Model, EndDate),
+        DeviceAnalytics(),
+        UserByCountry("7daysAgo", "today"),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -88,6 +116,8 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       );
       res.status(200).json({
         Active_User,
@@ -96,16 +126,27 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       });
     }
 
     //for yearly
     if (Period === "1y") {
-      let [Active_User, Total_User, New_User, User_Growth] = await Promise.all([
+      let [
+        Active_User,
+        Total_User,
+        New_User,
+        User_Growth,
+        Device_Analytics,
+        UserBy_Country,
+      ] = await Promise.all([
         YearlyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
         YearlyNewUser(Model, StartDate, EndDate),
         YearlyUserGrowth(Model, EndDate),
+        DeviceAnalytics(),
+        UserByCountry("7daysAgo", "today"),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -120,6 +161,8 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       );
       res.status(200).json({
         Active_User,
@@ -128,6 +171,8 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate,
         New_User,
         User_Growth,
+        Device_Analytics,
+        UserBy_Country,
       });
     }
   } catch (error) {

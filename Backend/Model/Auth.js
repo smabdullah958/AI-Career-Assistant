@@ -27,6 +27,11 @@ let Schema = new mongoose.Schema(
       enum: ["Local", "Google"],
       default: "Local",
     },
+    DeviceType: {
+  type: String,
+  enum: ["desktop", "mobile", "tablet"],
+  default: "desktop",
+},
     CreatedAt: {
       type: Date,
       default: Date.now,

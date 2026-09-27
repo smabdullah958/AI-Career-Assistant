@@ -7,6 +7,9 @@ import { MdOutlineQueryStats } from "react-icons/md";
 
 import UserAnalyticsThunck from "@/Libraries/Thuncks/UserAnalytics/UserAnalytics";
 import UserGrowth from "@/Component/Admin/UserAnalytics/UserGrowth";
+import DeviceAnalytics from "@/Component/Admin/UserAnalytics/DeviceAnalytics";
+import Active_V_InActive from "@/Component/Admin/UserAnalytics/ActiveVInactive";
+import UserByCountry from "@/Component/Admin/UserAnalytics/UserByCountry";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -65,7 +68,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="w-full px-5 py-6 h-screen">
+    <div className="w-full px-5 py-6 h-[100%]">
       {/* ================= HEADER ================= */}
       <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         {/* Heading */}
@@ -106,7 +109,7 @@ const AdminDashboard = () => {
           return (
             <div
               key={item.title}
-              className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm"
+              className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               {/* Card Header */}
               <div className="flex items-center gap-3">
@@ -137,6 +140,9 @@ const AdminDashboard = () => {
       </div>
 
       <UserGrowth />
+      <DeviceAnalytics />
+      <Active_V_InActive />
+      <UserByCountry />
     </div>
   );
 };

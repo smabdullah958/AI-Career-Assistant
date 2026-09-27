@@ -8,13 +8,20 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 
+import getDeviceType from "@/Component/getDeviceType";
+const deviceType = getDeviceType();
+
 let LogInWithGoogleThunck = createAsyncThunk(
   "Loginwithgoglethunck",
   async (Data, { dispatch, rejectWithValue }) => {
     try {
-      let result = await axios.post(`${url}/Auth/LogInThroughGoogle`, Data, {
-        withCredentials: true,
-      });
+      let result = await axios.post(
+        `${url}/Auth/LogInThroughGoogle`,
+        { ...Data, deviceType },
+        {
+          withCredentials: true,
+        },
+      );
       // console.log("user is reggister");
       dispatch(
         //to show a logout button when a user is signup

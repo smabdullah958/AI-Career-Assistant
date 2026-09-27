@@ -19,6 +19,13 @@ const {
   YearlyUserGrowth,
 } = require("../../../Services/Analytics/UserAnalytics/UserGrowth");
 
+//find retein rate trend
+let {
+  WeeklyRetentionRate,
+  MonthlyRetentionRate,
+  YearlyRetentionRate,
+} = require("../../../Services/Analytics/UserAnalytics/RetentionRateTrend");
+
 //In Active User
 let InActiveUser = require("../../../Services/Analytics/UserAnalytics/InActiveUser");
 
@@ -50,6 +57,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       ] = await Promise.all([
         WeeklyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
@@ -57,6 +65,7 @@ let UserAnalytics = async (req, res) => {
         WeeklyUserGrowth(Model, EndDate),
         DeviceAnalytics(),
         UserByCountry("7daysAgo", "today"),
+        WeeklyRetentionRate(Model, EndDate),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -73,6 +82,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       );
       res.status(200).json({
         Active_User,
@@ -83,6 +93,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       });
     }
 
@@ -95,6 +106,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       ] = await Promise.all([
         MonthlyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
@@ -102,6 +114,7 @@ let UserAnalytics = async (req, res) => {
         MonthlyUserGrowth(Model, EndDate),
         DeviceAnalytics(),
         UserByCountry("7daysAgo", "today"),
+        MonthlyRetentionRate(Model, EndDate),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -118,6 +131,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       );
       res.status(200).json({
         Active_User,
@@ -128,6 +142,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       });
     }
 
@@ -140,6 +155,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       ] = await Promise.all([
         YearlyActiveUser(Model, StartDate, EndDate),
         TotalUser(Model),
@@ -147,6 +163,7 @@ let UserAnalytics = async (req, res) => {
         YearlyUserGrowth(Model, EndDate),
         DeviceAnalytics(),
         UserByCountry("7daysAgo", "today"),
+        YearlyRetentionRate(Model, EndDate),
       ]);
 
       const In_Active_User = InActiveUser(Total_User, Active_User);
@@ -163,6 +180,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       );
       res.status(200).json({
         Active_User,
@@ -173,6 +191,7 @@ let UserAnalytics = async (req, res) => {
         User_Growth,
         Device_Analytics,
         UserBy_Country,
+        Retention_Rate_Trend,
       });
     }
   } catch (error) {

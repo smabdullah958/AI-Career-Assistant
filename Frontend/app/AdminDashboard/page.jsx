@@ -10,6 +10,7 @@ import UserGrowth from "@/Component/Admin/UserAnalytics/UserGrowth";
 import DeviceAnalytics from "@/Component/Admin/UserAnalytics/DeviceAnalytics";
 import Active_V_InActive from "@/Component/Admin/UserAnalytics/ActiveVInactive";
 import UserByCountry from "@/Component/Admin/UserAnalytics/UserByCountry";
+import RetentionRateTrend from "@/Component/Admin/UserAnalytics/RetentionRateTrend";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -143,6 +144,7 @@ const AdminDashboard = () => {
       <DeviceAnalytics />
       <Active_V_InActive />
       <UserByCountry />
+      <RetentionRateTrend />
     </div>
   );
 };

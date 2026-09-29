@@ -5,26 +5,47 @@ import { store } from "@/Libraries/store";
 
 import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorker";
 import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
-import { useEffect } from "react";
+import { getFirebaseAnalytics } from "@/Libraries/Firebase/FirebaseConfig";
 
-let StoreProvider = ({ children }) => {
+import { useEffect } from "react";
+import { logEvent } from "firebase/analytics";
+
+const StoreProvider = ({ children }) => {
   useEffect(() => {
     const setupFirebase = async () => {
-      const registration = await RegisterServiceWorker();
+      try {
+        // -------------------------
+        // Firebase Analytics
+        // -------------------------
+        const analytics = await getFirebaseAnalytics();
 
-      if (registration) {
-        await RegisterFCM(registration);
+        if (analytics) {
+          console.log("Firebase Analytics initialized");
+
+          logEvent(analytics, "test_analytics_event");
+
+          console.log("Test Analytics event sent");
+        } else {
+          console.log("Firebase Analytics is not supported");
+        }
+
+        // -------------------------
+        // Firebase FCM
+        // -------------------------
+        const registration = await RegisterServiceWorker();
+
+        if (registration) {
+          await RegisterFCM(registration);
+        }
+      } catch (error) {
+        console.error("Firebase setup error:", error);
       }
     };
 
     setupFirebase();
   }, []);
 
-  return (
-    <div>
-      <Provider store={store}>{children}</Provider>
-    </div>
-  );
+  return <Provider store={store}>{children}</Provider>;
 };
 
 export default StoreProvider;

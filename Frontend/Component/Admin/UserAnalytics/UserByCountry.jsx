@@ -3,17 +3,15 @@
 import { useSelector } from "react-redux";
 
 const UserByCountry = () => {
-  const { UserByCountry, ActiveUser, loading } = useSelector(
+  const { UserByCountry,  loading } = useSelector(
     (state) => state.UserAnalyticsSlice,
   );
 
   const totalActiveUsers =
-    Number(ActiveUser) ||
     UserByCountry?.reduce(
       (total, item) => total + Number(item.activeUsers || 0),
       0,
-    ) ||
-    0;
+    ) || 0;
 
   return (
     <div className="mt-6 w-full max-w-5xl rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">

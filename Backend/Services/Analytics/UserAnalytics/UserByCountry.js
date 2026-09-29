@@ -23,7 +23,7 @@ const UserByCountry = async (startDate, endDate) => {
       },
     ],
 
-    dateRanges: [
+    dateRanges: [ 
       {
         startDate,
         endDate,

@@ -47,9 +47,14 @@ const RetentionRateTrend = () => {
 
               <XAxis dataKey="label" />
 
-              <YAxis domain={[0, 100]} tickFormatter={(value) => `${value}%`} />
+              <YAxis
+                domain={[0, 100]}
+                tickFormatter={(value) => `${value}%`}
+              />
 
-              <Tooltip formatter={(value) => [`${value}%`, "Retention Rate"]} />
+              <Tooltip
+                formatter={(value) => [`${value}%`, "Retention Rate"]}
+              />
 
               <Line
                 type="monotone"

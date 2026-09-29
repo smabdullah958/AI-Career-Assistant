@@ -1,4 +1,3 @@
-// Weekly Growth
 // Weekly Retention Rate
 let WeeklyRetentionRate = async (Model, EndDate) => {
   try {

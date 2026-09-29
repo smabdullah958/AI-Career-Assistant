@@ -113,7 +113,7 @@ let UserAnalytics = async (req, res) => {
         MonthlyNewUser(Model, StartDate, EndDate),
         MonthlyUserGrowth(Model, EndDate),
         DeviceAnalytics(),
-        UserByCountry("7daysAgo", "today"),
+        UserByCountry("30daysAgo", "today"),
         MonthlyRetentionRate(Model, EndDate),
       ]);
 
@@ -162,7 +162,7 @@ let UserAnalytics = async (req, res) => {
         YearlyNewUser(Model, StartDate, EndDate),
         YearlyUserGrowth(Model, EndDate),
         DeviceAnalytics(),
-        UserByCountry("7daysAgo", "today"),
+        UserByCountry("365daysAgo", "today"),
         YearlyRetentionRate(Model, EndDate),
       ]);
 

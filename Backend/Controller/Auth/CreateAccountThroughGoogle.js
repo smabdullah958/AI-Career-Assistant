@@ -88,6 +88,7 @@ const CreateAccountThroughGoogle = async (req, res) => {
       IsLoggIn: true,
       Role: user.Role,
       remainingCalls,
+      UserId: user._id,
     });
   } catch (error) {
     console.log(error);

@@ -66,6 +66,7 @@ let Login = async (req, res) => {
       IsLoggIn: true, //when user is login than pass the islogin true
       Role: ExistUser.Role,
       remainingCalls,
+      UserId: ExistUser._id,
     });
   } catch (error) {
     console.log("some thing went wrong", error);

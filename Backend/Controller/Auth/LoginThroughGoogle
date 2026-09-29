@@ -88,6 +88,7 @@ let LogInThroughGoogle = async (req, res) => {
       IsLoggIn: true,
       Role: ExistUser.Role,
       remainingCalls,
+      UserId: ExistUser._id,
     });
   } catch (error) {
     console.log(error);

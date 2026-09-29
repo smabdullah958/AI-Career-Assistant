@@ -99,6 +99,7 @@ let SignUp = async (req, res) => {
       Role: newUser.Role,
       remainingCalls,
       IsLoggIn: true,
+      UserId: newUser._id,
     });
   } catch (error) {
     console.error(error);

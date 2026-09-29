@@ -11,6 +11,8 @@ import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorke
 import getDeviceType from "@/Component/getDeviceType";
 const deviceType = getDeviceType();
 
+import { FirebaseAuthenticatedUser } from "@/Libraries/Firebase/FirebaseAuthendicateUser";
+
 let LogInThunck = createAsyncThunk(
   "Loginthunck",
   async (Data, { dispatch, rejectWithValue }) => {
@@ -31,6 +33,11 @@ let LogInThunck = createAsyncThunk(
       dispatch(setRemainingCalls(result.data?.remainingCalls));
 
       if (result.status === 200) {
+        // Firebase Analytics
+        await FirebaseAuthenticatedUser(result.data?.UserId, "email", "login");
+
+        console.log("🟢 Firebase authenticated user set");
+
         console.log("🟢 LOGIN SUCCESS - STARTING FCM");
 
         const registration = await RegisterServiceWorker();

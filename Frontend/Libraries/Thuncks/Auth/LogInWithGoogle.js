@@ -11,6 +11,8 @@ import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorke
 import getDeviceType from "@/Component/getDeviceType";
 const deviceType = getDeviceType();
 
+import { FirebaseAuthenticatedUser } from "@/Libraries/Firebase/FirebaseAuthendicateUser";
+
 let LogInWithGoogleThunck = createAsyncThunk(
   "Loginwithgoglethunck",
   async (Data, { dispatch, rejectWithValue }) => {
@@ -34,6 +36,9 @@ let LogInWithGoogleThunck = createAsyncThunk(
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
 
       if (result.status === 200) {
+        // Firebase Analytics
+        await FirebaseAuthenticatedUser(result.data?.UserId, "google","login");
+
         const registration = await RegisterServiceWorker();
 
         if (registration) {

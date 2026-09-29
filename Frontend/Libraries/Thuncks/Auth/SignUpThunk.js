@@ -10,6 +10,8 @@ import { RegisterServiceWorker } from "@/Libraries/Firebase/RegisterServiceWorke
 import getDeviceType from "@/Component/getDeviceType";
 const deviceType = getDeviceType();
 
+import { FirebaseAuthenticatedUser } from "@/Libraries/Firebase/FirebaseAuthendicateUser";
+
 let SignUpThunck = createAsyncThunk(
   "SignupThunck",
   async (Data, { dispatch, rejectWithValue }) => {
@@ -33,6 +35,13 @@ let SignUpThunck = createAsyncThunk(
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
 
       if (result.status === 200) {
+        // Firebase Analytics
+        await FirebaseAuthenticatedUser(
+          result.data?.UserId,
+          "email",
+          "sign_up",
+        );
+
         const registration = await RegisterServiceWorker();
 
         if (registration) {

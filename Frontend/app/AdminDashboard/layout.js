@@ -22,9 +22,10 @@ const AdminLayout = ({ children }) => {
   const GoogleSignUpRole = useSelector((state) => state.GoogleSlice.Role);
 
   const loading = useSelector((state) => state.GlobalSlice.loading);
+  const authChecked = useSelector((state) => state.GlobalSlice.authChecked);
 
   useEffect(() => {
-    if (loading) {
+    if (loading || !authChecked) {
       return;
     }
 
@@ -49,10 +50,11 @@ const AdminLayout = ({ children }) => {
     SignUpRole,
     GoogleSignUpRole,
     loading,
+    authChecked,
     router,
   ]);
 
-  if (loading) {
+  if (loading || !authChecked) {
     return <HomeLoading />;
   }
 

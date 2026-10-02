@@ -25,6 +25,7 @@ import GlobalSlice from "@/Libraries/Slices/GlobalSlice";
 
 //for analytics
 import UserAnalyticsSlice from "@/Libraries/Slices/UserAnalytics/UserAnalytics";
+import FeatureAnalyticsSlice from "@/Libraries/Slices/UserAnalytics/FeatureAnalytics";
 
 export let store = configureStore({
   reducer: {
@@ -40,5 +41,6 @@ export let store = configureStore({
     GetNotification,
     UnreadNotification,
     UserAnalyticsSlice,
+    FeatureAnalyticsSlice,
   },
 });

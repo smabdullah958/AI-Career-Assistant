@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 
 const UserByCountry = () => {
-  const { UserByCountry,  loading } = useSelector(
+  const { UserByCountry, loading } = useSelector(
     (state) => state.UserAnalyticsSlice,
   );
 

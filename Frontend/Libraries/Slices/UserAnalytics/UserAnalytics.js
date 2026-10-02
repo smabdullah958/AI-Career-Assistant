@@ -64,7 +64,7 @@ let UserAnalyticsSlice = createSlice({
         state.UserGrowth=action?.payload?.User_Growth //get guser growth
         state.DeviceType=action?.payload?.Device_Analytics //to get a device type
         state.UserByCountry=action?.payload?.UserBy_Country //to get a user by their country 
-              state.RetentionRateTrend=action?.payload?.Retention_Rate_Trend
+              state.RetentionRateTrend=action?.payload?.Retention_Rate_Trend 
 
     });
   },

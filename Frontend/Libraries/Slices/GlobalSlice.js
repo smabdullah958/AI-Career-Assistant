@@ -11,6 +11,7 @@ let initialState = {
 
   // Check Login Loading
   loading: false,
+  authChecked: false,
   errorMessage: null,
 };
 
@@ -43,11 +44,13 @@ let GlobalSlice = createSlice({
     builder
       .addCase(CheckLoginThunk.pending, (state) => {
         state.loading = true;
+        state.authChecked = false;
         state.errorMessage = null;
       })
 
       .addCase(CheckLoginThunk.fulfilled, (state, action) => {
         state.loading = false;
+        state.authChecked = true;
 
         state.IsLoggIn = action.payload?.IsLoggIn;
         state.Role = action.payload?.Role;
@@ -63,6 +66,7 @@ let GlobalSlice = createSlice({
 
       .addCase(CheckLoginThunk.rejected, (state, action) => {
         state.loading = false;
+        state.authChecked = true;
         state.errorMessage = action.payload;
 
         state.IsLoggIn = false;

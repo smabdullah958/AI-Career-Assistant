@@ -19,6 +19,8 @@ let InterviewRoute = require("./Routes/InterviewRoute");
 let AnalyzerRoute = require("./Routes/AnalyzerRoute");
 let NotiicationRoute = require("./Routes/NotificationRoute");
 let UserAnalyticsRoute = require("./Routes/UserAnalytics"); //to analysis a user activity
+let FeatureAnalyticsRoute = require("./Routes/FeatureAnalytics");
+
 require("./Utilis/NotificationCron"); //now cron job
 
 ConnectDB();
@@ -29,6 +31,7 @@ app.use("/AiInterviews", InterviewRoute);
 app.use("/ResumeAnalyzer", AnalyzerRoute);
 app.use("/NotiicationRoute", NotiicationRoute);
 app.use("/Analytics", UserAnalyticsRoute);
+app.use("/Feature", FeatureAnalyticsRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

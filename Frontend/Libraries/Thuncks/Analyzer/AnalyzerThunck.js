@@ -1,8 +1,10 @@
+import { getFirebaseAnalytics } from "@/Libraries/Firebase/FirebaseConfig";
 import { setRemainingCalls } from "@/Libraries/Slices/GlobalSlice"; //fucntion to get  remining calls and it is present ina  interview slice
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 import axios from "axios";
+import { logEvent } from "firebase/analytics";
 
 let AnalyzerThunck = createAsyncThunk(
   "Analyzerthunck",
@@ -15,6 +17,17 @@ let AnalyzerThunck = createAsyncThunk(
       dispatch(setRemainingCalls(response.data?.remainingCalls));
 
       console.log("get response");
+
+      //count the number of api calls and log it in firebase analytics
+      if (response.status === 200) {
+        const analytics = await getFirebaseAnalytics();
+
+        if (analytics) {
+          logEvent(analytics, "ats_score_generated");
+          logEvent(analytics, "api_call");
+        }
+      }
+
       return response.data;
     } catch (error) {
       // get remainingCalls from a backend to display the remaining calls

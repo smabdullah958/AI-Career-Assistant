@@ -22,6 +22,13 @@ function CheckLogin() {
   let GoogleSignUpRole = useSelector((state) => state.GoogleSlice.Role); //get a role when create account witha  google
 
   const loading = useSelector((state) => state.GlobalSlice.loading);
+  const isAdmin = [
+    Role,
+    UserRole,
+    GooogleRole,
+    SignUpRole,
+    GoogleSignUpRole,
+  ].some((role) => role === "Admin" || role === "SuperAdmin");
 
   // Runs once when the website opens
   useEffect(() => {
@@ -33,18 +40,7 @@ function CheckLogin() {
       return;
     }
 
-    if (
-      Role === "Admin" ||
-      Role === "SuperAdmin" ||
-      UserRole === "Admin" ||
-      UserRole === "SuperAdmin" ||
-      GooogleRole === "Admin" ||
-      GooogleRole === "SuperAdmin" ||
-      SignUpRole === "Admin" ||
-      SignUpRole === "SuperAdmin" ||
-      GoogleSignUpRole === "Admin" ||
-      GoogleSignUpRole === "SuperAdmin"
-    ) {
+    if (pathname === "/" && isAdmin) {
       router.replace("/AdminDashboard");
     }
   }, [
@@ -53,6 +49,7 @@ function CheckLogin() {
     GooogleRole,
     SignUpRole,
     GoogleSignUpRole,
+    isAdmin,
     loading,
     pathname,
     router,

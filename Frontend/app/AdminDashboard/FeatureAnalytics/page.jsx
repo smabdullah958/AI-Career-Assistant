@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaServer, FaFileAlt, FaMicrophone, FaChartLine } from "react-icons/fa";
 
 import GetFeatureUsage from "@/Libraries/Thuncks/UserAnalytics/FeatureAnalyzerThunck";
+import FeatureUsagePercentage from "@/Component/Admin/FeatureAnalytics/FeatureUsagePercentage";
+import FeatureUsageComparison from "@/Component/Admin/FeatureAnalytics/FeatureUsageComparison";
 
 const FeatureAnalytics = () => {
   const dispatch = useDispatch();
@@ -13,7 +15,7 @@ const FeatureAnalytics = () => {
   // Monthly selected by default
   const [period, setPeriod] = useState("30d");
 
-  const { FeatureUsage, loading } = useSelector(
+  const { Feature_Analytics, loading } = useSelector(
     (state) => state.FeatureAnalyticsSlice,
   );
 
@@ -39,25 +41,25 @@ const FeatureAnalytics = () => {
   const analytics = [
     {
       title: "Total API Calls",
-      value: FeatureUsage?.Total_API_Calls,
+      value: Feature_Analytics?.Total_API_Calls,
       icon: FaServer,
       iconClass: "bg-blue-100 text-blue-600",
     },
     {
       title: "Total Resumes",
-      value: FeatureUsage?.Total_Resumes,
+      value: Feature_Analytics?.Total_Resumes,
       icon: FaFileAlt,
       iconClass: "bg-emerald-100 text-emerald-600",
     },
     {
       title: "Total Mock Interviews",
-      value: FeatureUsage?.Total_Mock_Interviews,
+      value: Feature_Analytics?.Total_Mock_Interviews,
       icon: FaMicrophone,
       iconClass: "bg-purple-100 text-purple-600",
     },
     {
       title: "Total ATS Scores",
-      value: FeatureUsage?.Total_ATS_Scores,
+      value: Feature_Analytics?.Total_ATS_Scores,
       icon: FaChartLine,
       iconClass: "bg-orange-100 text-orange-600",
     },
@@ -137,6 +139,8 @@ const FeatureAnalytics = () => {
           );
         })}
       </div>
+      <FeatureUsagePercentage />
+      <FeatureUsageComparison />
     </div>
   );
 };

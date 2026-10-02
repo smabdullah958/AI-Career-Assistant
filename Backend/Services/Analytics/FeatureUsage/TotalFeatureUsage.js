@@ -14,7 +14,7 @@ const TotalFeatureUsage = async () => {
     dateRanges: [
       {
         startDate: "2026-09-01",
-        endDate: "yesterday",
+        endDate: "today",
       },
     ],
 

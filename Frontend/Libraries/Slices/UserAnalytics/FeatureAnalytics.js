@@ -16,8 +16,8 @@ let initialState = {
       Total_Resumes: 0,
       Total_Mock_Interviews: 0,
       Total_ATS_Scores: 0,
-
-  }
+  },
+  Feature_Usage_Over_Time:[]
  
 };
 
@@ -43,7 +43,8 @@ let FeatureAnalyticsSlice = createSlice({
         state.success = true,
          state.Feature_Analytics = action.payload?.Total_Feature_Usage;
          state.Range_Feature_Usage = action.payload?.Range_Feature_Usage;
-    });
+        state.Feature_Usage_Over_Time=action.payload?.Feature_Usage_Over_Time
+        });
   },
 });
 

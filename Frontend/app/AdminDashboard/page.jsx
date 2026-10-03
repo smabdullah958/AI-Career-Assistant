@@ -140,11 +140,18 @@ const AdminDashboard = () => {
         })}
       </div>
 
-      <UserGrowth />
-      <DeviceAnalytics />
-      <Active_V_InActive />
-      <UserByCountry />
-      <RetentionRateTrend />
+      {/* ================= USER ANALYTICS ================= */}
+      <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <UserGrowth />
+
+        <DeviceAnalytics />
+
+        <Active_V_InActive />
+
+        <UserByCountry />
+
+        <RetentionRateTrend />
+      </div>
     </div>
   );
 };

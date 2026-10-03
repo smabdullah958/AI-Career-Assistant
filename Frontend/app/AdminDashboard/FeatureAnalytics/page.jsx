@@ -8,6 +8,8 @@ import { FaServer, FaFileAlt, FaMicrophone, FaChartLine } from "react-icons/fa";
 import GetFeatureUsage from "@/Libraries/Thuncks/UserAnalytics/FeatureAnalyzerThunck";
 import FeatureUsagePercentage from "@/Component/Admin/FeatureAnalytics/FeatureUsagePercentage";
 import FeatureUsageComparison from "@/Component/Admin/FeatureAnalytics/FeatureUsageComparison";
+import FeatureUsageOverTime from "@/Component/Admin/FeatureAnalytics/FeatureUsageOverTime";
+import FeatureUsageHorizental from "@/Component/Admin/FeatureAnalytics/FeatureUsageHorizental";
 
 const FeatureAnalytics = () => {
   const dispatch = useDispatch();
@@ -103,6 +105,7 @@ const FeatureAnalytics = () => {
       </div>
 
       {/* ================= ANALYTICS CARDS ================= */}
+      {/* ================= ANALYTICS CARDS ================= */}
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {analytics.map((item) => {
           const Icon = item.icon;
@@ -139,8 +142,17 @@ const FeatureAnalytics = () => {
           );
         })}
       </div>
-      <FeatureUsagePercentage />
-      <FeatureUsageComparison />
+
+      {/* ================= FEATURE ANALYTICS ================= */}
+      <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <FeatureUsagePercentage />
+
+        <FeatureUsageComparison />
+
+        <FeatureUsageOverTime />
+
+        <FeatureUsageHorizental />
+      </div>
     </div>
   );
 };

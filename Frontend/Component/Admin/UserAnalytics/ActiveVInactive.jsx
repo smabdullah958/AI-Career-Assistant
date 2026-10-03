@@ -17,7 +17,7 @@ const ACTIVE_INACTIVE_COLORS = {
 };
 
 const Active_V_InActive = () => {
-  const { ActiveUser, InActiveUser, TotalUser } = useSelector(
+  const { ActiveUser, InActiveUser, TotalUser, loading } = useSelector(
     (state) => state.UserAnalyticsSlice,
   );
 
@@ -45,7 +45,8 @@ const Active_V_InActive = () => {
   }, [ActiveUser, InActiveUser, TotalUser]);
 
   return (
-    <div className="mt-6 w-full max-w-5xl rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+    <div className="w-full rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+      {/* Header */}
       <div className="mb-5">
         <h2 className="text-lg font-semibold text-slate-900">
           Active vs Inactive Users
@@ -56,75 +57,107 @@ const Active_V_InActive = () => {
         </p>
       </div>
 
+      {/* Chart */}
       <div className="h-[350px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={chartData}
-              dataKey="users"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={85}
-              outerRadius={125}
-              paddingAngle={3}
-              stroke="none"
-            >
-              {chartData.map((entry) => (
-                <Cell
-                  key={entry.name}
-                  fill={ACTIVE_INACTIVE_COLORS[entry.name] || "#94a3b8"}
-                />
-              ))}
-            </Pie>
+        {loading ? (
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            {/* Donut Skeleton */}
+            <div className="relative h-[230px] w-[230px] animate-pulse">
+              <div className="h-full w-full rounded-full border-[35px] border-slate-200" />
 
-            <Tooltip
-              formatter={(value, name) => {
-                const user = chartData.find((item) => item.name === name);
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                <div className="h-7 w-16 rounded bg-slate-200" />
+                <div className="h-3 w-20 rounded bg-slate-200" />
+              </div>
+            </div>
 
-                return [`${user?.percentage ?? 0}%`, name];
-              }}
-            />
+            {/* Legend Skeleton */}
+            <div className="mt-4 flex items-center gap-8">
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 animate-pulse rounded-full bg-slate-200" />
+                <div className="h-4 w-20 animate-pulse rounded bg-slate-200" />
+              </div>
 
-            <Legend
-              verticalAlign="bottom"
-              align="center"
-              iconType="circle"
-              formatter={(value) => {
-                const user = chartData.find((item) => item.name === value);
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 animate-pulse rounded-full bg-slate-200" />
+                <div className="h-4 w-20 animate-pulse rounded bg-slate-200" />
+              </div>
+            </div>
 
-                return (
-                  <span className="text-sm text-slate-600">
-                    {value}{" "}
-                    <span className="font-semibold text-slate-900">
-                      {user?.percentage ?? 0}%
+            <p className="mt-4 text-sm text-slate-500">
+              Loading user activity...
+            </p>
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="users"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={85}
+                outerRadius={125}
+                paddingAngle={3}
+                stroke="none"
+              >
+                {chartData.map((entry) => (
+                  <Cell
+                    key={entry.name}
+                    fill={ACTIVE_INACTIVE_COLORS[entry.name] || "#94a3b8"}
+                  />
+                ))}
+              </Pie>
+
+              <Tooltip
+                formatter={(value, name) => {
+                  const user = chartData.find((item) => item.name === name);
+
+                  return [`${user?.percentage ?? 0}%`, name];
+                }}
+              />
+
+              <Legend
+                verticalAlign="bottom"
+                align="center"
+                iconType="circle"
+                formatter={(value) => {
+                  const user = chartData.find((item) => item.name === value);
+
+                  return (
+                    <span className="text-sm text-slate-600">
+                      {value}{" "}
+                      <span className="font-semibold text-slate-900">
+                        {user?.percentage ?? 0}%
+                      </span>
                     </span>
-                  </span>
-                );
-              }}
-            />
+                  );
+                }}
+              />
 
-            <text
-              x="50%"
-              y="47%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="fill-slate-900 text-3xl font-bold"
-            >
-              {TotalUser ?? 0}
-            </text>
+              <text
+                x="50%"
+                y="47%"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-slate-900 text-3xl font-bold"
+              >
+                {TotalUser ?? 0}
+              </text>
 
-            <text
-              x="50%"
-              y="56%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="fill-slate-500 text-sm"
-            >
-              Total Users
-            </text>
-          </PieChart>
-        </ResponsiveContainer>
+              <text
+                x="50%"
+                y="56%"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-slate-500 text-sm"
+              >
+                Total Users
+              </text>
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );

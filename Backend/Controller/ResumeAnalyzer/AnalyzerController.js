@@ -3,6 +3,8 @@ let PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
 //main ai file
 let chain = require("../../Services/Analyzer/ResumeAnalyzer");
 
+let SendGA4WithStatus = require("../../Utilis/SendGA4Event");
+
 let AnalyzerController = async (req, res) => {
   try {
     let { Experience, Role } = req.body;
@@ -27,6 +29,14 @@ let AnalyzerController = async (req, res) => {
 
     console.log(result);
 
+    //send success aclong witha status
+    await SendGA4WithStatus(
+      process.env.Client_ID,
+      "mock_interview",
+      "success",
+      1,
+    );
+
     return res.status(200).json({
       message: "all field are present",
       result,
@@ -34,6 +44,13 @@ let AnalyzerController = async (req, res) => {
     });
   } catch (err) {
     console.log("internal error", err);
+    await SendGA4WithStatus(
+      process.env.Client_ID,
+      "mock_interview",
+      "failed",
+      0,
+    );
+
     res.status(500).json({ message: "interal errro" });
   }
 };

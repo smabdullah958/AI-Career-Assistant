@@ -4,6 +4,7 @@ let GetCreditsForRegistration = require("../../Utilis/GetCreditsForRegistration"
 let SendNotification = require("../../Utilis/UserNotification"); //to send a notificaiton to a user
 
 let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
+const SendGA4Event = require("../../Utilis/SendGA4Event");
 
 let userModel = require("../../Model/Auth");
 require("dotenv").config();
@@ -72,6 +73,11 @@ let SignUp = async (req, res) => {
 
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
+    //call a credits alocate for a ga4 events
+    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
+      credits_allocated: 10,
+      allocation_type: "signup",
+    });
 
     //send notificaiton to  a user
     let notification = await SendNotification(

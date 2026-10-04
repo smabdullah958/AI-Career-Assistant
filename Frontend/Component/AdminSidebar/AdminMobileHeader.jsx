@@ -76,20 +76,13 @@ const AdminMobileHeader = () => {
             </Link>
 
             <Link
-              href="/AdminDashboard/contact"
+              href="/AdminDashboard/AiUsage"
               className="text-white hover:text-blue-700 transition-colors duration-300"
               onClick={closeMenu}
             >
-              Contact
+              AI Usage
             </Link>
 
-            <Link
-              href="/AdminDashboard/faq"
-              className="text-white hover:text-blue-700 transition-colors duration-300"
-              onClick={closeMenu}
-            >
-              FAQ
-            </Link>
             <Link
               href="/AdminDashboard/Notification"
               className="text-white hover:text-blue-700 transition-colors duration-300"

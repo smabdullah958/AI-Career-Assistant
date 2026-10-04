@@ -5,6 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 import axios from "axios";
 import { logEvent } from "firebase/analytics";
+const analytics = await getFirebaseAnalytics();
 
 let AnalyzerThunck = createAsyncThunk(
   "Analyzerthunck",
@@ -20,11 +21,13 @@ let AnalyzerThunck = createAsyncThunk(
 
       //count the number of api calls and log it in firebase analytics
       if (response.status === 200) {
-        const analytics = await getFirebaseAnalytics();
-
         if (analytics) {
           logEvent(analytics, "ats_score_generated");
-          logEvent(analytics, "api_call");
+          logEvent(analytics, "api_call", {
+            feature: "ats_analyzer",
+            credit_used: 1,
+            status: "success",
+          });
         }
       }
 
@@ -32,6 +35,13 @@ let AnalyzerThunck = createAsyncThunk(
     } catch (error) {
       // get remainingCalls from a backend to display the remaining calls
       dispatch(setRemainingCalls(error.response.data?.remainingCalls));
+
+      if (analytics) {
+        logEvent(analytics, "api_call", {
+          feature: "ats_analyzer",
+          status: "failed",
+        });
+      }
 
       return rejectWithValue(error?.response?.data);
     }

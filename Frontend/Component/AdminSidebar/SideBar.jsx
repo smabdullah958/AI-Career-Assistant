@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FiHome, FiInfo, FiPhone, FiHelpCircle } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
 import AdminHeaderWrapper from "@/Component/AdminSidebar/AdminHeaderWrapper";
 
 const AdminSidebar = () => {
@@ -32,28 +32,16 @@ const AdminSidebar = () => {
               href="/AdminDashboard/FeatureAnalytics"
               className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
             >
-              <FiInfo size={20} />
               <span>FeatureAnalytics</span>
             </Link>
           </li>
 
           <li>
             <Link
-              href="/AdminDashboard/contact"
+              href="/AdminDashboard/AiUsage"
               className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
             >
-              <FiPhone size={20} />
-              <span>Contact</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="/AdminDashboard/faq"
-              className="flex items-center gap-3 rounded-lg px-4 py-3 text-white hover:bg-blue-700"
-            >
-              <FiHelpCircle size={20} />
-              <span>FAQ</span>
+              <span>AI Usage</span>
             </Link>
           </li>
 

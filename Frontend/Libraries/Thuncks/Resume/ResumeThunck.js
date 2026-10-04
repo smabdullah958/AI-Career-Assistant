@@ -5,6 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { logEvent } from "firebase/analytics";
 let url = process.env.NEXT_PUBLIC_BackendURL;
+const analytics = await getFirebaseAnalytics();
 
 let ResumeThunck = createAsyncThunk(
   "ResumeThunck",
@@ -18,11 +19,13 @@ let ResumeThunck = createAsyncThunk(
 
       //count the number of api calls and log it in firebase analytics
       if (result.status === 200) {
-        const analytics = await getFirebaseAnalytics();
-
         if (analytics) {
           logEvent(analytics, "resume_generated");
-          logEvent(analytics, "api_call");
+          logEvent(analytics, "api_call", {
+            feature: "resume_builder",
+            credit_used: 1,
+            status: "success",
+          });
         }
       }
 
@@ -31,6 +34,12 @@ let ResumeThunck = createAsyncThunk(
       // get remainingCalls from a backend to display the remaining calls
       console.log("error ina  resume", err);
       dispatch(setRemainingCalls(err?.response?.data?.remainingCalls));
+      if (analytics) {
+        logEvent(analytics, "api_call", {
+          feature: "resume_builder",
+          status: "failed",
+        });
+      }
 
       return rejectWithValue(err?.response?.data);
     }

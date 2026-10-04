@@ -37,7 +37,7 @@ const WeeklyFeatureUsage = async (startDate, endDate) => {
 
   const Growth = [];
 
-  for (let i = 7; i >= 0; i--) {
+  for (let i = 0; i < 7; i++) {
     const DateValue = new Date();
 
     DateValue.setDate(DateValue.getDate() - i);

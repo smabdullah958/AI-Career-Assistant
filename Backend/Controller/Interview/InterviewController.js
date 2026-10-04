@@ -1,4 +1,5 @@
 let InterviewService = require("../../Services/Interview/InterviewService");
+let SendGA4WithStatus = require("../../Utilis/SendGA4Event");
 let InterviewController = async (req, res) => {
   try {
     let { Input } = req.body;
@@ -10,6 +11,13 @@ let InterviewController = async (req, res) => {
     console.log(SessionID);
 
     let response = await InterviewService(Input, SessionID);
+    //send success aclong witha status
+    await SendGA4WithStatus(
+      process.env.Client_ID,
+      "mock_interview",
+      "success",
+      1,
+    );
     console.log(response);
     res.status(200).json({
       message: "input is present ",
@@ -18,6 +26,12 @@ let InterviewController = async (req, res) => {
     });
   } catch (err) {
     console.log("internal error", err);
+    await SendGA4WithStatus(
+      process.env.Client_ID,
+      "mock_interview",
+      "failed",
+      0,
+    );
   }
 };
 module.exports = InterviewController;

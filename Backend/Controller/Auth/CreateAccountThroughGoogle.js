@@ -6,6 +6,8 @@ let SendNotification = require("../../Utilis/UserNotification"); //to send a not
 
 let SendAdminNotification = require("../../Utilis/AdminNotification"); //to send a notificaiton to a admin
 
+const SendGA4Event = require("../../Utilis/SendGA4Event");
+
 const CreateAccountThroughGoogle = async (req, res) => {
   try {
     const { Name, Email, GoogleId, Provider, deviceType } = req.body;
@@ -37,6 +39,12 @@ const CreateAccountThroughGoogle = async (req, res) => {
 
     // Give free credits only once
     await GetCreditsForRegistration(user._id);
+
+    //call a ga4 event for a credeits
+    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
+      credits_allocated: 10,
+      allocation_type: "signup",
+    });
 
     // Generate JWT
     const token = jwt.sign(

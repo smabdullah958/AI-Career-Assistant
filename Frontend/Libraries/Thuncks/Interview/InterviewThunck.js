@@ -6,6 +6,7 @@ import { logEvent } from "firebase/analytics";
 let url = process.env.NEXT_PUBLIC_BackendURL;
 
 import { getFirebaseAnalytics } from "@/Libraries/Firebase/FirebaseConfig";
+const analytics = await getFirebaseAnalytics();
 
 let InterviewThunck = createAsyncThunk(
   "InterviewThunck",
@@ -20,11 +21,13 @@ let InterviewThunck = createAsyncThunk(
 
       //count the number of api calls and log it in firebase analytics
       if (result.status === 200) {
-        const analytics = await getFirebaseAnalytics();
-
         if (analytics) {
           logEvent(analytics, "mock_interview_started");
-          logEvent(analytics, "api_call");
+          logEvent(analytics, "api_call", {
+            feature: "mock_interview",
+            credit_used: 1,
+            status: "success",
+          });
         }
       }
       return result?.data;
@@ -32,6 +35,13 @@ let InterviewThunck = createAsyncThunk(
       // get remainingCalls from a backend to display the remaining calls
       console.log("error in a interview", err);
       dispatch(setRemainingCalls(err.response.data?.remainingCalls));
+
+      if (analytics) {
+        logEvent(analytics, "api_call", {
+          feature: "mock_interview",
+          status: "failed",
+        });
+      }
 
       return rejectWithValue(err?.response?.data);
     }

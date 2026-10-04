@@ -19,7 +19,8 @@ let InterviewRoute = require("./Routes/InterviewRoute");
 let AnalyzerRoute = require("./Routes/AnalyzerRoute");
 let NotiicationRoute = require("./Routes/NotificationRoute");
 let UserAnalyticsRoute = require("./Routes/UserAnalytics"); //to analysis a user activity
-let FeatureAnalyticsRoute = require("./Routes/FeatureAnalytics");
+let FeatureAnalyticsRoute = require("./Routes/FeatureAnalytics"); //to analysis a feature
+let AIUsageAnalyticsRoutes = require("./Routes/AIUsageAnalyticsRoutes"); //to analyze the ai usage
 
 require("./Utilis/NotificationCron"); //now cron job
 
@@ -32,6 +33,7 @@ app.use("/ResumeAnalyzer", AnalyzerRoute);
 app.use("/NotiicationRoute", NotiicationRoute);
 app.use("/Analytics", UserAnalyticsRoute);
 app.use("/Feature", FeatureAnalyticsRoute);
+app.use("/AI", AIUsageAnalyticsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

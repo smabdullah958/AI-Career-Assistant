@@ -1,18 +1,60 @@
 const Usage = require("../Model/Usage");
-let Notifcation = require("../Utilis/UserNotification");
+const Notifcation = require("../Utilis/UserNotification");
+const SendGA4Event = require("../Utilis/SendGA4Event");
 
 let DailyUsageMiddleWare = async (req, res, next) => {
   const UserId = req.user.UserId;
 
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
 
-  let record = await Usage.findOne({ UserId, LastCallDate: today });
+  const PakistanDate = now.toLocaleDateString("en-CA", {
+    timeZone: "Asia/Karachi",
+  });
+
+  const PakistanTime = now.toLocaleTimeString("en-GB", {
+    timeZone: "Asia/Karachi",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  console.log("Pakistan Date:", PakistanDate);
+  console.log("Pakistan Time:", PakistanTime);
+
+  let today = PakistanDate;
+
+  // TEST: daily reset at 02:18 Pakistan time
+  if (PakistanTime >= "16:15") {
+    today = `${PakistanDate}-16:15`;
+  } else {
+    const previousDate = new Date(now);
+    previousDate.setDate(previousDate.getDate() - 1);
+
+    const PreviousPakistanDate = previousDate.toLocaleDateString("en-CA", {
+      timeZone: "Asia/Karachi",
+    });
+
+    today = `${PreviousPakistanDate}-16:15`;
+  }
+
+  console.log("Usage Day:", today);
+
+  let record = await Usage.findOne({
+    UserId,
+    LastCallDate: today,
+  });
 
   if (!record) {
     record = await Usage.create({
       UserId,
       LastCallDate: today,
       ApiCallCount: 10,
+    });
+
+    console.log("NEW DAILY CREDITS ALLOCATED");
+
+    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
+      credits_allocated: 10,
     });
   }
 
@@ -23,25 +65,24 @@ let DailyUsageMiddleWare = async (req, res, next) => {
     });
   }
 
-  // increase count
   record.ApiCallCount -= 1;
+
   await record.save();
 
   if (record.ApiCallCount <= 3) {
-    //send notification when remaining call is 3  or less than 3 to user
     let notification = await Notifcation(
       UserId,
       "Low_Credits",
       "Your daily API call limit is running low",
       `You have ${record.ApiCallCount} API calls remaining for today.`,
     );
-    console.log("send notfication to a user", notification);
+
+    console.log("send notification to a user", notification);
   }
 
-  //now pass the remaining call to a controller
   req.remainingCalls = record.ApiCallCount;
 
-  console.log("the api call is ", record.ApiCallCount);
+  console.log("Remaining API calls:", record.ApiCallCount);
 
   next();
 };

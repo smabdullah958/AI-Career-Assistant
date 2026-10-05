@@ -21,6 +21,11 @@ let initialState = {
   Success_Ratio:{
     Success_Ratio:0,
     Failure_Ratio:0
+  },
+  Average_Feature_Usage:{
+    Average_Resume_Calls:0,
+    Average_ATS_Calls:0,
+    Average_Mock_Interview_Calls:0
   }
 
 };
@@ -49,6 +54,7 @@ let AIUsageSlice = createSlice({
         state.AI_Calls_By_Feature=action?.payload?.AI_Calls_By_Feature,
         state.AI_Calls_Trend=action?.payload?.AI_Calls_Trend,
         state.Success_Ratio=action?.payload?.Success_Ratio
+        state.Average_Feature_Usage=action?.payload?.Average_Feature_Usage
         });
   },
 });

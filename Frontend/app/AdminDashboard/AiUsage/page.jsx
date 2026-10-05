@@ -10,6 +10,7 @@ import AIUsageThunck from "@/Libraries/Thuncks/UserAnalytics/AIUsageThunck";
 import AiCallsByFeature from "@/Component/Admin/AIUsage/AiCallsByFeature";
 import AiCallsTrend from "@/Component/Admin/AIUsage/AICallsTrend";
 import SuccessRatio from "@/Component/Admin/AIUsage/SuccessRatio";
+import AverageFeatureUsage from "@/Component/Admin/AIUsage/AverageFeatureUsage";
 
 const FeatureAnalytics = () => {
   const dispatch = useDispatch();
@@ -148,6 +149,7 @@ const FeatureAnalytics = () => {
         <AiCallsByFeature />
         <AiCallsTrend />
         <SuccessRatio />
+        <AverageFeatureUsage />
       </div>
     </div>
   );

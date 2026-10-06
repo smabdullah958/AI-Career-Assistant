@@ -30,6 +30,11 @@ let Sch = new mongoose.Schema(
       default: false,
       required: true,
     },
+    URL: {
+      type: String,
+      default: "/",
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -4,13 +4,7 @@ let Frontend = process.env.Frontend;
 const { getMessaging } = require("firebase-admin/messaging");
 const FCMToken = require("../../Model/FCMModel");
 
-const PushUserNotification = async (
-  UserId,
-  type,
-  title,
-  Message,
-  url = "/",
-) => {
+const PushUserNotification = async (UserId, type, title, Message, URL) => {
   try {
     const userFids = await FCMToken.find({
       UserId,
@@ -31,10 +25,10 @@ const PushUserNotification = async (
           fid: item.FcmToken,
 
           notification: { title, body: Message },
-          data: { type, url },
+          data: { type, URL },
           webpush: {
             fcmOptions: {
-              link: `${Frontend}/${url}`,
+              link: `${URL}`,
             },
           },
         };
@@ -43,7 +37,7 @@ const PushUserNotification = async (
 
         const response = await getMessaging().send(message);
 
-        console.log(`Notification sent to user: ${UserId}`);
+        console.log(`Notification sent to user: ${UserId} and url is ${URL}`);
 
         console.log("Firebase response:", response);
       } catch (error) {

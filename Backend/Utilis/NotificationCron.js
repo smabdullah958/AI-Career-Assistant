@@ -45,7 +45,7 @@ cron.schedule("*/2 * * * *", async () => {
 
       const message = "Here you can check out your weekly work";
 
-      let url = `${process.env.Frontend}/AdminDashbord`;
+      let url = `${process.env.Frontend}/AdminDashboard`;
 
       await CreateAdminNotification(admin._id, type, title, message, url);
 
@@ -97,7 +97,7 @@ cron.schedule("*/100 * * * *", async () => {
 
       const message = "Here you can check out your weekly work";
 
-      let url = `${process.env.Frontend}/AdminDashbord`;
+      let url = `${process.env.Frontend}/AdminDashboard`;
 
       await CreateAdminNotification(admin._id, type, title, message, url);
 

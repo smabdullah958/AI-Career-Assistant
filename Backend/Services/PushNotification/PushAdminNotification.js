@@ -34,7 +34,7 @@ const PushAdminNotification = async (
           data: { type, url },
           webpush: {
             fcmOptions: {
-              link: `${Frontend}/${url}`,
+              link: `${url}`,
             },
           },
         };

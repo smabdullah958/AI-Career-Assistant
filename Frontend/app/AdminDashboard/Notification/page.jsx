@@ -15,7 +15,11 @@ import { increment } from "@/Libraries/Slices/Notification/GetNotification";
 
 import { clearUnreadCount } from "@/Libraries/Slices/Notification/UnreadNotification";
 
+import { useRouter } from "next/navigation";
+
 const Page = () => {
+  const router = useRouter();
+
   const dispatch = useDispatch();
 
   const { response, loading, page, hasMore } = useSelector(
@@ -26,12 +30,6 @@ const Page = () => {
     dispatch(NotificationThunck(page));
   }, [page, dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(MarkAsRead());
-  //   console.log("so the mark as read: ", dispatch(MarkAsRead()));
-  // }, [dispatch]);
-
-  // Mark notifications as read ONLY when unread notifications exist
   useEffect(() => {
     if (!response || response.length === 0) {
       return;
@@ -73,6 +71,7 @@ const Page = () => {
           {response?.map((notification) => (
             <div
               key={notification._id}
+              onClick={() => router.push(notification.URL)}
               className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-gray-800 dark:bg-[#111827]"
             >
               <div className="flex gap-4">

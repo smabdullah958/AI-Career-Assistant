@@ -21,6 +21,7 @@ let NotiicationRoute = require("./Routes/NotificationRoute");
 let UserAnalyticsRoute = require("./Routes/UserAnalytics"); //to analysis a user activity
 let FeatureAnalyticsRoute = require("./Routes/FeatureAnalytics"); //to analysis a feature
 let AIUsageAnalyticsRoutes = require("./Routes/AIUsageAnalyticsRoutes"); //to analyze the ai usage
+let UserWeeklyNotification = require("./Routes/UserWeeklyNotification");
 
 require("./Utilis/NotificationCron"); //now cron job
 
@@ -34,6 +35,7 @@ app.use("/NotiicationRoute", NotiicationRoute);
 app.use("/Analytics", UserAnalyticsRoute);
 app.use("/Feature", FeatureAnalyticsRoute);
 app.use("/AI", AIUsageAnalyticsRoutes);
+app.use("/UserAnaltics", UserWeeklyNotification);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

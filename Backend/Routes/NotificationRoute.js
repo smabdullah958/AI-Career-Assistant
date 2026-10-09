@@ -1,7 +1,7 @@
 let express = require("express");
 let app = express.Router();
 
-let NotificationController = require("../Controller/Notification/GetNotification");
+let NotificationController = require("../Controller/Notification/GetNotification/GetNotification");
 let MarkNotificationAsRead = require("../Controller/Notification/MarkNotificationAsRead");
 let UnReadNotifications = require("../Controller/Notification/UnreadNotification");
 let AuthMiddleWare = require("../MiddleWare/AuthMiddleware");

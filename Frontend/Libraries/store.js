@@ -28,6 +28,9 @@ import UserAnalyticsSlice from "@/Libraries/Slices/UserAnalytics/UserAnalytics";
 import FeatureAnalyticsSlice from "@/Libraries/Slices/UserAnalytics/FeatureAnalytics";
 import AIUsageSlice from "@/Libraries/Slices/UserAnalytics/AiUsage";
 
+//get the user notifiocant dtail by id  and th si weekly
+import UserWeeklyNotificationById from "@/Libraries/Slices/Notification/UserWeeklyNotificationById";
+
 export let store = configureStore({
   reducer: {
     SignUpSlice,
@@ -44,5 +47,6 @@ export let store = configureStore({
     UserAnalyticsSlice,
     FeatureAnalyticsSlice,
     AIUsageSlice,
+    UserWeeklyNotificationById,
   },
 });

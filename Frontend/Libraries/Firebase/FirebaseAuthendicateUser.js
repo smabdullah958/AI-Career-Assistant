@@ -27,6 +27,7 @@ export const FirebaseAuthenticatedUser = async (userId, method, action) => {
 
     setUserProperties(analytics, {
       authenticated: "true",
+      app_user_id: String(userId),
     });
 
     console.log("✅ authenticated property set");

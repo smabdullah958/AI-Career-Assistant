@@ -7,7 +7,7 @@ const CreateAdminNotification = require("./AdminNotification"); //creae notifcai
 
 //weekly notification ona monday at a 9am
 // */1
-cron.schedule("*/2 * * * *", async () => {
+cron.schedule("*/1000 * * * *", async () => {
   try {
     console.log("🔔 Cron job started");
 
@@ -22,7 +22,7 @@ cron.schedule("*/2 * * * *", async () => {
 
       const message = "Here you can check out your weekly work";
 
-      let URL = `${process.env.Frontend}/Analytics/Weekly/${user._id}`;
+      let URL = `${process.env.Frontend}/WeeklyAnalytics/${user._id}`;
 
       await CreateNotification(user._id, type, title, message, URL);
 
@@ -74,7 +74,7 @@ cron.schedule("*/100 * * * *", async () => {
 
       const message = "Here you can check out your monthly work";
 
-      let URL = `${process.env.Frontend}/Analytics/Weekly/${user._id}`;
+      let URL = `${process.env.Frontend}/MonthlyAnalytics/${user._id}`;
 
       await CreateNotification(user._id, type, title, message, URL);
 

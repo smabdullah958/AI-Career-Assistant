@@ -1,4 +1,4 @@
-let NotifcationModel = require("../../Model/Notification");
+let NotifcationModel = require("../../../Model/Notification");
 
 let GetNotification = async (req, res) => {
   try {

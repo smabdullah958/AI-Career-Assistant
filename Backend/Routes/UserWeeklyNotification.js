@@ -1,7 +1,7 @@
 let express = require("express");
 let app = express.Router();
 
-let NotificationController = require("../Controller/Notification/GetNotification/UserNotificationThroughId");
+let NotificationController = require("../Controller/Notification/GetNotification/WeeklyUserNotificationThroughId");
 let UserAuth = require("../MiddleWare/AuthMiddleware");
 
 app.get("/WeeklyNotification/:UserId", UserAuth, NotificationController);

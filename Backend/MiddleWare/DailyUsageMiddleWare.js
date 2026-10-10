@@ -11,32 +11,10 @@ let DailyUsageMiddleWare = async (req, res, next) => {
     timeZone: "Asia/Karachi",
   });
 
-  const PakistanTime = now.toLocaleTimeString("en-GB", {
-    timeZone: "Asia/Karachi",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  // Reset daily credits at 12:00 AM Pakistan time
+  const today = PakistanDate;
 
   console.log("Pakistan Date:", PakistanDate);
-  console.log("Pakistan Time:", PakistanTime);
-
-  let today = PakistanDate;
-
-  // TEST: daily reset at 02:18 Pakistan time
-  if (PakistanTime >= "16:15") {
-    today = `${PakistanDate}-16:15`;
-  } else {
-    const previousDate = new Date(now);
-    previousDate.setDate(previousDate.getDate() - 1);
-
-    const PreviousPakistanDate = previousDate.toLocaleDateString("en-CA", {
-      timeZone: "Asia/Karachi",
-    });
-
-    today = `${PreviousPakistanDate}-16:15`;
-  }
-
   console.log("Usage Day:", today);
 
   let record = await Usage.findOne({

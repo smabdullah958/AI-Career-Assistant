@@ -30,6 +30,7 @@ import AIUsageSlice from "@/Libraries/Slices/UserAnalytics/AiUsage";
 
 //get the user notifiocant dtail by id  and th si weekly
 import UserWeeklyNotificationById from "@/Libraries/Slices/Notification/UserWeeklyNotificationById";
+import UserMonthlyNotificationById from "@/Libraries/Slices/Notification/UserMonthlyNotificationById";
 
 export let store = configureStore({
   reducer: {
@@ -48,5 +49,6 @@ export let store = configureStore({
     FeatureAnalyticsSlice,
     AIUsageSlice,
     UserWeeklyNotificationById,
+    UserMonthlyNotificationById,
   },
 });

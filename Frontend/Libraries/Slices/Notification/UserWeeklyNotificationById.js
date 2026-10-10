@@ -4,7 +4,7 @@ import UserWeeklyNotificationByIdThunck from "@/Libraries/Thuncks/Notification/U
 let initialState = {
   loading: false,
   error: false,
-  response: null,
+  Weekly_Credit_Analytics: null,
   success: false,
 Weekly_Credit_UsageTrend:null,
 Success_Failure_Analytics:null
@@ -27,7 +27,7 @@ let UserWeeklyNotificationById = createSlice({
       state.loading = false;
       state.error = false;
       state.success = true;
-state.response=action?.payload?.Data
+state.Weekly_Credit_Analytics=action?.payload?.Weekly_Credit_Analytics
 state.Weekly_Credit_UsageTrend=action?.payload?.Weekly_Credit_UsageTrend
 state.Success_Failure_Analytics=action?.payload?.Success_Failure_Analytics
     })    

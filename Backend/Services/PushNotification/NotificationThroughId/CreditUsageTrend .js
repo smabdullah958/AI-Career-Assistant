@@ -114,3 +114,110 @@ const WeeklyCreditUsageTrend = async (UserId, startDate, endDate) => {
 };
 
 module.exports = WeeklyCreditUsageTrend;
+
+//monthly trend
+const MonthlyCreditUsageTrend = async (UserId, startDate, endDate) => {
+  try {
+    const [response] = await analyticsDataClient.runReport({
+      property: `properties/${process.env.PropertyID}`,
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: "date" }, { name: "customEvent:feature" }],
+      metrics: [{ name: "eventCount" }],
+      dimensionFilter: {
+        andGroup: {
+          expressions: [
+            {
+              filter: {
+                fieldName: "eventName",
+                stringFilter: {
+                  matchType: "EXACT",
+                  value: "api_call",
+                },
+              },
+            },
+            {
+              filter: {
+                fieldName: "customEvent:status",
+                stringFilter: {
+                  matchType: "EXACT",
+                  value: "success",
+                },
+              },
+            },
+            {
+              filter: {
+                fieldName: "customUser:app_user_id",
+                stringFilter: {
+                  matchType: "EXACT",
+                  value: String(UserId),
+                },
+              },
+            },
+          ],
+        },
+      },
+      orderBys: [
+        {
+          dimension: {
+            dimensionName: "date",
+          },
+        },
+      ],
+    });
+
+    // Initialize exactly four weeks.
+    const MonthlyData = Array.from({ length: 4 }, (_, index) => ({
+      week: `Week ${index + 1}`,
+      ats_analyzer: 0,
+      resume_builder: 0,
+      mock_interview: 0,
+    }));
+
+    // Four complete weeks ending today.
+    const StartDate = new Date();
+    StartDate.setHours(0, 0, 0, 0);
+    StartDate.setDate(StartDate.getDate() - 27);
+
+    const startTimestamp = Date.UTC(
+      StartDate.getFullYear(),
+      StartDate.getMonth(),
+      StartDate.getDate(),
+    );
+
+    for (const row of response.rows || []) {
+      const dateKey = row.dimensionValues[0].value;
+      const feature = row.dimensionValues[1].value;
+      const count = Number(row.metricValues[0].value);
+
+      const year = Number(dateKey.slice(0, 4));
+      const month = Number(dateKey.slice(4, 6)) - 1;
+      const day = Number(dateKey.slice(6, 8));
+
+      const rowTimestamp = Date.UTC(year, month, day);
+      const dayDifference = Math.floor(
+        (rowTimestamp - startTimestamp) / 86400000,
+      );
+
+      const weekIndex = Math.floor(dayDifference / 7);
+
+      if (weekIndex < 0 || weekIndex >= 4) continue;
+
+      const weekData = MonthlyData[weekIndex];
+
+      if (feature === "ats_analyzer") {
+        weekData.ats_analyzer += count;
+      } else if (feature === "resume_builder") {
+        weekData.resume_builder += count;
+      } else if (feature === "mock_interview") {
+        weekData.mock_interview += count;
+      }
+    }
+
+    return { MonthlyData };
+  } catch (error) {
+    console.error("Monthly Credit Usage Trend Error:", error.message);
+    throw error;
+  }
+};
+
+module.exports = MonthlyCreditUsageTrend;

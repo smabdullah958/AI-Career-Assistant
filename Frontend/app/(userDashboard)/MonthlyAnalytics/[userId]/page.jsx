@@ -3,18 +3,18 @@
 import { use, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import UserWeeklyNotificationByIdThunck from "@/Libraries/Thuncks/Notification/UserWeeklyNotificationByIdThunck";
-import WeeklyUsageTrend from "@/Component/Notification/WeeklyAiUsageTrend";
-import SuccessFailureDonut from "@/Component/Notification/WeeklySuccess_Failure_Analytics";
+import UserMonthlyNotificationById from "@/Libraries/Thuncks/Notification/UserMonthlyNotificationByIdThunck";
+import MonthlyUsageTrend from "@/Component/Notification/MonthlyAiUsageTrend";
+import MonthlySuccessFailureDonut from "@/Component/Notification/MonthlySuccess_Failure_Analytics";
 
-export default function WeeklyAnalyticsPage({ params }) {
+export default function MonthlyAnalyticsPage({ params }) {
   const { userId } = use(params);
 
   const dispatch = useDispatch();
   const [pageLoading, setPageLoading] = useState(true);
 
-  const { Weekly_Credit_Analytics, loading, error } = useSelector(
-    (state) => state.UserWeeklyNotificationById,
+  const { Monthly_Credit_Analytics, loading, error } = useSelector(
+    (state) => state.UserMonthlyNotificationById,
   );
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function WeeklyAnalyticsPage({ params }) {
 
     setPageLoading(true);
 
-    dispatch(UserWeeklyNotificationByIdThunck(userId)).finally(() => {
+    dispatch(UserMonthlyNotificationById(userId)).finally(() => {
       setPageLoading(false);
     });
   }, [userId, dispatch]);
@@ -61,7 +61,7 @@ export default function WeeklyAnalyticsPage({ params }) {
     );
   }
 
-  if (!Weekly_Credit_Analytics) {
+  if (!Monthly_Credit_Analytics) {
     return null;
   }
 
@@ -71,7 +71,7 @@ export default function WeeklyAnalyticsPage({ params }) {
     Credits_Unused,
     Credits_By_Feature,
     Average_Credits_Per_Feature,
-  } = Weekly_Credit_Analytics;
+  } = Monthly_Credit_Analytics;
 
   return (
     <div className="min-h-screen w-full bg-gray-50 px-4 py-6 dark:bg-[#0b0f19] sm:px-6 lg:px-8">
@@ -164,8 +164,8 @@ export default function WeeklyAnalyticsPage({ params }) {
 
         {/* Analytics Charts */}
         <div className="mt-6 grid w-full grid-cols-1 gap-5 lg:grid-cols-2">
-          <WeeklyUsageTrend />
-          <SuccessFailureDonut />
+          <MonthlyUsageTrend />
+          <MonthlySuccessFailureDonut />
         </div>
       </div>
     </div>

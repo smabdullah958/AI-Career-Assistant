@@ -320,6 +320,8 @@ These existing repository assets illustrate captured UI states and may differ fr
 
 ![Resume analysis form](ScreenShot/resumeAnalyzer1.png)
 ![Resume analysis results](ScreenShot/resumeAnalyzer2.png)
+![Resume analysis results](ScreenShot/resumeAnalyzer3.png)
+![Resume analysis results](ScreenShot/resumeAnalyzer4.png)
 
 ### Interview practice
 

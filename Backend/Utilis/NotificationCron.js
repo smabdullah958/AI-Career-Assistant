@@ -5,9 +5,8 @@ const Auth = require("../Model/Auth");
 const CreateNotification = require("./UserNotification"); //creae notifcaiton toa user
 const CreateAdminNotification = require("./AdminNotification"); //creae notifcaiton toa admin
 
-//weekly notification ona monday at a 9am
-// */1
-cron.schedule("*/10 * * * *", async () => {
+// WEEKLY: Every Sunday at 9:00 AM
+cron.schedule("0 9 * * 0", async () => {
   try {
     console.log("🔔 Cron job started");
 
@@ -59,8 +58,8 @@ cron.schedule("*/10 * * * *", async () => {
   }
 });
 
-//montly notification ona monday at a 9am
-cron.schedule("*/5 * * * *", async () => {
+// MONTHLY: On the 1st day of every month at 9:00 AM
+cron.schedule("0 9 1 * *", async () => {
   try {
     console.log("🔔 Cron job started");
 

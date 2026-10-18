@@ -4,8 +4,6 @@ AI Career Assistant helps job seekers build resumes, understand how their experi
 
 The application has a Next.js frontend and a separate Express API backed by MongoDB. Groq powers analysis and interviews through LangChain; Firebase and Google Analytics support notifications and reporting.
 
-> **Implementation status:** Resume building uses templates and user-entered data, without AI content generation. The analyzer calculates role readiness, rather than a job-description match or certified ATS score. Google authentication, push delivery, and scheduled reporting have known issues described below.
-
 ## Contents
 
 - [Features](#features)
@@ -15,10 +13,7 @@ The application has a Next.js frontend and a separate Express API backed by Mong
 - [Environment variables](#environment-variables)
 - [Scripts and validation](#scripts-and-validation)
 - [API reference](#api-reference)
-- [Data and authentication](#data-and-authentication)
 - [Deployment](#deployment)
-- [Known limitations](#known-limitations)
-- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License and contact](#license-and-contact)
 
@@ -34,11 +29,15 @@ The application has a Next.js frontend and a separate Express API backed by Mong
 
 The backend submission validates form data and updates remaining credits. It does not invoke an LLM, rewrite content, save a resume document, or return generated resume content. Previews and PDF exports use the user's form data.
 
+![Resume builder form](ScreenShot/resume1.png)
+
+![Resume builder output](ScreenShot/resume2.png)
+
 ### AI resume analysis
 
 The AI Resume Analyzer evaluates a resume against a selected target role and experience level. It extracts text from text-readable PDF files and generates structured feedback to help candidates identify strengths, missing skills, and areas for improvement.
 
-## Input requirements and limitations
+#### Input requirements and limitations
 
 Upload a text-readable PDF of up to 3 MB and 5 pages.
 
@@ -48,7 +47,7 @@ Image-only scanned PDFs are not supported because OCR is not implemented.
 
 Analysis is based on the extracted resume text and the selected role and experience level; no job description is required.
 
-## Analysis results
+#### Analysis results
 
 The analyzer returns:
 
@@ -68,9 +67,9 @@ The analyzer returns:
 
 - Analysis limitations where information is missing or cannot be verified.
 
-- The backend validates model responses, rejects empty or truncated output, checks JSON structure, and verifies that required category scores are present and within the permitted range.
+The backend validates model responses, rejects empty or truncated output, checks JSON structure, and verifies that required category scores are present and within the permitted range.
 
-## Role-readiness score
+#### Role-readiness score
 
 The backend computes a weighted **role-readiness score out of 100** from model-produced category scores:
 
@@ -85,6 +84,14 @@ The backend computes a weighted **role-readiness score out of 100** from model-p
 
 No job description is supplied. The score evaluates resume evidence for a general role and experience level; it does not guarantee hiring outcomes or compatibility with a specific ATS.
 
+![Resume analysis form](ScreenShot/resumeAnalyzer1.png)
+
+![Resume analysis results](ScreenShot/resumeAnalyzer2.png)
+
+![Resume analysis results](ScreenShot/resumeAnalyzer3.png)
+
+![Resume analysis results](ScreenShot/resumeAnalyzer4.png)
+
 ### Mock interviews
 
 - Text conversations with an AI interviewer.
@@ -93,6 +100,8 @@ No job description is supplied. The score evaluates resume evidence for a genera
 - LangChain stores separate in-memory histories keyed by authenticated user ID, trimming earlier context to the most recent 10 messages when history is retrieved.
 
 Interview behavior depends on model compliance. History is not saved to MongoDB and disappears when the backend restarts.
+
+![Interview interface](ScreenShot/interview.png)
 
 ### Accounts, Credits, and Notifications
 
@@ -130,6 +139,9 @@ Reported metrics may include:
 
 - Success and failure rates.
 
+![Personal Weekly and Monthly Analytics interface](ScreenShot/weekly1.png)
+![Personal Weekly and Monthly Analytics interface](ScreenShot/weekly2.png)
+
 ### Administrator dashboards
 
 The `/AdminDashboard` area offers weekly (`7d`), monthly (`30d`), and yearly (`1y`) reporting:
@@ -140,6 +152,10 @@ The `/AdminDashboard` area offers weekly (`7d`), monthly (`30d`), and yearly (`1
 - **Notifications:** administrator inbox.
 
 User activity and device metrics use MongoDB; country, feature, API-call, and personal usage reporting use the Google Analytics Data API. Retention is an activity-based indicator rather than cohort analysis. There is no user-management CRUD interface or separate SuperAdmin management workflow.
+
+![Admin Analytics interface](ScreenShot/admin1.png)
+![Admin Analytics interface](ScreenShot/admin2.png)
+![Admin Analytics interface](ScreenShot/admin3.png)
 
 ## Technology stack
 
@@ -291,10 +307,10 @@ Client_ID=YOUR_GA4_CLIENT_ID
 
 GA4 submission failures are logged and swallowed, but missing or invalid reporting configuration can prevent startup or reports. Analytics is integrated into feature flows rather than exposed as an optional module.
 
-### Frontend: `Frontend/.env`
+### Frontend: `Frontend/.env.local`
 
 ```dotenv
-NEXT_PUBLIC_BackendURL=http://localhost:PortNo_of_backend
+NEXT_PUBLIC_BackendURL=http://localhost:5000
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=YOUR_GOOGLE_OAUTH_WEB_CLIENT_ID
 NEXT_PUBLIC_FIREBASE_API_KEY=YOUR_FIREBASE_WEB_API_KEY
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
@@ -331,19 +347,19 @@ Run each command from its application directory:
 | `Frontend` | `npm run build` | Next.js production build.                                       |
 | `Frontend` | `npm start`     | Serves the successful production build.                         |
 
-No automated application tests or CI/deployment workflows were found in tracked files. Lint/build success does not verify MongoDB, AI, OAuth, analytics, cookies, or push delivery. Check those separately using configured services. Starting the API also starts its cron jobs at the frequencies documented below.
+No automated application tests or CI/deployment workflows were found in tracked files. Lint/build success does not verify MongoDB, AI, OAuth, analytics, cookies, or push delivery. Check those separately using configured services. Starting the API also starts its cron jobs at 09:00 every Sunday for weekly reports and 09:00 on the first day of each month for monthly reports, using the server timezone.
 
-During the README audit, `npm run lint` reported **65 errors and 8 warnings** in existing frontend code, including hook/component naming, state updates in effects, and unescaped JSX text. A production build and live service integration tests were not run as part of this documentation change.
+Run the checks above against your current checkout. Lint results can change as the code evolves; live service integrations require separate verification.
 
 ## API reference
 
-These are the exact mounted paths, including existing spelling errors. Protected requests authenticate through the **`token` cookie**, not a bearer header. Browser clients must include credentials.
+The API mounts `/Auth`, `/Resume`, `/AiInterviews`, `/ResumeAnalyzer`, `/NotiicationRoute`, `/Analytics`, `/Feature`, `/AI`, `/UserAnaltics`, and `/UserAnalytic`. These prefixes preserve the spellings in `Backend/Server.js`; individual endpoints are defined in `Backend/Routes`. Protected requests authenticate through the **`token` cookie**, not a bearer header. Browser clients must include credentials.
 
 There are no saved-resume, analysis-history, or interview-transcript models. Resume form/results live in component/Redux state. Uploaded PDFs use memory storage; extracted text and interview messages are sent to Groq.
 
 Local signup hashes passwords with bcrypt. Signup/login issue a one-week JWT containing user ID, email, and role in the `token` cookie. Axios uses `withCredentials: true`; Express allows credentials from the configured frontend origin.
 
-Frontend session checks redirect administrators to their dashboard. Backend middleware verifies JWTs, restricts reporting to administrator claims, and checks ownership for personal reports. The role-assignment and Google verification defects below must be addressed before relying on this access model publicly.
+Frontend session checks redirect administrators to their dashboard. Backend middleware verifies JWTs, restricts reporting to administrator claims, and checks ownership for personal reports. Verify role assignment and Google authentication before relying on this access model publicly.
 
 Credits are allocated when a date's usage record is missing. Daily middleware/session checks use `Asia/Karachi`, while signup/login allocation uses UTC. One credit is deducted before a tool controller runs; invalid or failed requests are not automatically refunded.
 
@@ -355,29 +371,9 @@ No provider-specific deployment manifest, container setup, or automated release 
 2. Install frontend dependencies in `Frontend`, provide public variables, run `npm run build`, then `npm start`.
 3. Set `Frontend` to the exact frontend origin and `NEXT_PUBLIC_BackendURL` to the API URL. Use HTTPS and verify browser cross-origin cookies.
 4. Configure Firebase, OAuth origins, GA4 access/custom definitions, and web-push settings for the deployment.
-5. Address the known authentication and scheduling issues before public operation.
+5. Verify authentication, role permissions, and scheduled report delivery before public operation.
 
 Every API process runs cron jobs, so multiple replicas can duplicate notifications. Interview histories are process-local and are neither shared between replicas nor retained across restarts.
-
-## Screenshots
-
-These existing repository assets illustrate captured UI states and may differ from current screens.
-
-### Resume builder
-
-![Resume builder form](ScreenShot/resume1.png)
-![Resume builder output](ScreenShot/resume2.png)
-
-### Resume analysis
-
-![Resume analysis form](ScreenShot/resumeAnalyzer1.png)
-![Resume analysis results](ScreenShot/resumeAnalyzer2.png)
-![Resume analysis results](ScreenShot/resumeAnalyzer3.png)
-![Resume analysis results](ScreenShot/resumeAnalyzer4.png)
-
-### Interview practice
-
-![Interview interface](ScreenShot/interview.png)
 
 ## Contributing
 

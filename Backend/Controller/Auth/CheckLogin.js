@@ -5,7 +5,10 @@ const CheckAuth = async (req, res) => {
   try {
     const UserId = req.user.UserId;
 
-    const today = new Date().toISOString().split("T")[0];
+    // const today = new Date().toISOString().split("T")[0];
+    let today = new Date().toLocaleDateString("en-CA", {
+      timeZone: "Asia/Karachi",
+    });
 
     let record = await Usage.findOne({
       UserId,
@@ -28,7 +31,11 @@ const CheckAuth = async (req, res) => {
 
     console.log("last update ate ", LastActiveDate);
 
-    console.log("so the user is login successfully", LastActiveDate);
+    console.log(
+      "so the user is login successfully",
+      LastActiveDate,
+      record.ApiCallCount,
+    );
 
     return res.status(200).json({
       IsLoggIn: true,

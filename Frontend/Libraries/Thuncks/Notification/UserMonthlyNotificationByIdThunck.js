@@ -4,7 +4,7 @@ let url = process.env.NEXT_PUBLIC_BackendURL;
 
 let UserMonthlyNotificationByIdThunck = createAsyncThunk(
   "UserMonthlyNotificationByIdThunck",
-  async (userId) => {
+  async (userId, { rejectWithValue }) => {
     try {
       let result = await axios.get(
         `${url}/UserAnalytic/MonthlyNotification/${userId}`,
@@ -16,6 +16,11 @@ let UserMonthlyNotificationByIdThunck = createAsyncThunk(
       return result?.data;
     } catch (error) {
       console.log("internal error", error);
+      return rejectWithValue({
+        status: error.response?.status,
+        message:
+          error.response?.data?.message || "Unable to fetch monthly analytics",
+      });
     }
   },
 );

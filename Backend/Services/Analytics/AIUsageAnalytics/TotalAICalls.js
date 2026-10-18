@@ -13,7 +13,7 @@ const TotalAICalls = async () => {
 
     dateRanges: [
       {
-        startDate: "2026-09-01",
+        startDate: "2026-10-1",
         endDate: "today",
       },
     ],
@@ -31,7 +31,20 @@ const TotalAICalls = async () => {
     ],
   });
 
-  console.log("========== GA4 CREDIT ANALYTICS ==========");
+  // Log the actual GA4 results before calculating anything.
+  // const rows = response.rows || [];
+
+  // console.log("========== GA4 CREDIT ANALYTICS ==========");
+  // console.log(
+  //   JSON.stringify(
+  //     rows.map((row) => ({
+  //       eventName: row.dimensionValues?.[0]?.value,
+  //       eventCount: row.metricValues?.[0]?.value,
+  //     })),
+  //     null,
+  //     2,
+  //   ),
+  // );
 
   let Total_Credits = 0;
   let Credits_Consumed = 0;
@@ -44,7 +57,7 @@ const TotalAICalls = async () => {
     console.log("Count:", eventCount);
 
     if (eventName === "credits_allocated") {
-      Total_Credits = eventCount * 10;
+      Total_Credits += eventCount * 10;
     }
 
     if (eventName === "api_call") {
@@ -52,7 +65,8 @@ const TotalAICalls = async () => {
     }
   });
 
-  const Credits_Wasted = Math.max(Total_Credits - Credits_Consumed, 0);
+  // const Credits_Wasted = Math.max(Total_Credits - Credits_Consumed, 0);
+  const Credits_Wasted = Total_Credits - Credits_Consumed;
 
   const Number_Of_Features = 3;
 
@@ -64,7 +78,16 @@ const TotalAICalls = async () => {
   console.log("Credits Wasted:", Credits_Wasted);
   console.log("Average Credits Per Feature:", Average_Credits_Per_Feature);
 
-  console.log("==========================================");
+  // const result = {
+  //   Total_Credits,
+  //   Credits_Consumed,
+  //   Credits_Wasted,
+  //   Average_Credits_Per_Feature,
+  // };
+
+  // console.log("========== GA4 CALCULATED TOTALS ==========");
+  // console.log(JSON.stringify(result, null, 2));
+  // console.log("===========================================");
 
   return {
     Total_Credits,

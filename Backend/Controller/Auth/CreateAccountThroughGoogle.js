@@ -41,10 +41,15 @@ const CreateAccountThroughGoogle = async (req, res) => {
     await GetCreditsForRegistration(user._id);
 
     //call a ga4 event for a credeits
-    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
-      credits_allocated: 10,
-      allocation_type: "signup",
-    });
+    await SendGA4Event(
+      process.env.Client_ID,
+      "credits_allocated",
+      {
+        credits_allocated: 10,
+        allocation_type: "signup",
+      },
+      newUser._id,
+    );
 
     // Generate JWT
     const token = jwt.sign(

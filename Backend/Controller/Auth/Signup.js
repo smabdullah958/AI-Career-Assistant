@@ -74,10 +74,15 @@ let SignUp = async (req, res) => {
     //check the credits through user id
     let remainingCalls = await GetCreditsForRegistration(newUser._id);
     //call a credits alocate for a ga4 events
-    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
-      credits_allocated: 10,
-      allocation_type: "signup",
-    });
+    await SendGA4Event(
+      process.env.Client_ID,
+      "credits_allocated",
+      {
+        credits_allocated: 10,
+        allocation_type: "signup",
+      },
+      newUser._id,
+    );
 
     //send notificaiton to  a user
     let notification = await SendNotification(

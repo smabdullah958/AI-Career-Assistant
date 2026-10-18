@@ -30,23 +30,50 @@ const featureLines = [
   },
 ];
 
+const getLastSevenDays = () => {
+  const days = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+
+    days.push({
+      day: date.toLocaleDateString("en-US", {
+        weekday: "short",
+      }),
+      resume_builder: 0,
+      ats_analyzer: 0,
+      mock_interview: 0,
+    });
+  }
+
+  return days;
+};
+
 export default function WeeklyUsageTrend() {
   const { Weekly_Credit_UsageTrend, loading, error } = useSelector(
     (state) => state.UserWeeklyNotificationById,
   );
 
-  const data = Weekly_Credit_UsageTrend?.WeeklyData ?? [];
+  const apiData = Weekly_Credit_UsageTrend?.WeeklyData;
 
-  const hasUsage = data.some((item) =>
-    featureLines.some((feature) => Number(item[feature.key] ?? 0) > 0),
-  );
+  const data =
+    Array.isArray(apiData) && apiData.length > 0
+      ? apiData.map((item) => ({
+          ...item,
+          resume_builder: Number(item.resume_builder ?? 0),
+          ats_analyzer: Number(item.ats_analyzer ?? 0),
+          mock_interview: Number(item.mock_interview ?? 0),
+        }))
+      : getLastSevenDays();
 
   return (
-    <div className="max-w-7xl mt-10 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
+    <div className="mt-10 w-full max-w-7xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
           Weekly Usage Trend
         </h2>
+
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Daily API calls across your AI features
         </p>
@@ -59,17 +86,6 @@ export default function WeeklyUsageTrend() {
       ) : error ? (
         <div className="flex h-[300px] items-center justify-center text-center text-sm text-red-500">
           Failed to load weekly usage data.
-        </div>
-      ) : !data.length || !hasUsage ? (
-        <div className="flex h-[300px] items-center justify-center text-center">
-          <div>
-            <p className="font-medium text-gray-700 dark:text-gray-200">
-              No usage data yet
-            </p>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Your feature usage will appear here once recorded.
-            </p>
-          </div>
         </div>
       ) : (
         <div className="h-[300px] w-full">

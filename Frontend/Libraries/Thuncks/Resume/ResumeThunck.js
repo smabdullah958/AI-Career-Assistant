@@ -9,7 +9,7 @@ const analytics = await getFirebaseAnalytics();
 
 let ResumeThunck = createAsyncThunk(
   "ResumeThunck",
-  async (data, { dispatch, rejectWithValue }) => {
+  async(data, { dispatch, rejectWithValue }) => {
     try {
       let result = await axios.post(`${url}/Resume/createResume`, data, {
         withCredentials: true,

@@ -72,9 +72,20 @@ const InterviewPage = () => {
   };
 
   //reset the states when the page is load
+
   useEffect(() => {
     dispatch(ResetInterviewState());
-  }, []);
+
+    setInput("");
+
+    setMessages([
+      {
+        role: "ai",
+        content:
+          "Welcome! What is your profession or field? (e.g., Software Engineer, Doctor, Digital Marketer, Teacher, Accountant, Lawyer, Data Scientist, etc.)",
+      },
+    ]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (errorMessage) {

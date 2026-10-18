@@ -3,7 +3,7 @@ let PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
 //main ai file
 let chain = require("../../Services/Analyzer/ResumeAnalyzer");
 
-let SendGA4WithStatus = require("../../Utilis/SendGA4Event");
+let SendGA4WithStatus = require("../../Utilis/SendGA4WithStatus");
 
 let AnalyzerController = async (req, res) => {
   try {
@@ -22,8 +22,25 @@ let AnalyzerController = async (req, res) => {
     }
 
     //pdf text extractor
-    let TextExtractor = await PDFTextExtractor(req.file.buffer);
-    console.log(TextExtractor);
+    let { text: TextExtractor, pageCount } = await PDFTextExtractor(
+      req.file.buffer,
+    );
+    console.log(TextExtractor, pageCount);
+
+    // Validate page count.
+    if (pageCount > 5) {
+      return res.status(400).json({
+        message: "Only PDF files with a maximum of 5 pages are accepted.",
+      });
+    }
+
+    //if pdf has no text
+    if (!TextExtractor || !TextExtractor.trim()) {
+      return res.status(400).json({
+        message: "No readable text was found in this PDF.",
+      });
+    }
+
     //main ai/langchain
     let result = await chain(TextExtractor, Role, Experience);
 

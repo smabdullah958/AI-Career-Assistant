@@ -2,12 +2,13 @@
 
 import { use, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useRouter } from "next/navigation";
 import UserWeeklyNotificationByIdThunck from "@/Libraries/Thuncks/Notification/UserWeeklyNotificationByIdThunck";
 import WeeklyUsageTrend from "@/Component/Notification/WeeklyAiUsageTrend";
 import SuccessFailureDonut from "@/Component/Notification/WeeklySuccess_Failure_Analytics";
 
 export default function WeeklyAnalyticsPage({ params }) {
+  const router = useRouter();
   const { userId } = use(params);
 
   const dispatch = useDispatch();
@@ -23,12 +24,35 @@ export default function WeeklyAnalyticsPage({ params }) {
       return;
     }
 
-    setPageLoading(true);
+    let isMounted = true;
 
-    dispatch(UserWeeklyNotificationByIdThunck(userId)).finally(() => {
-      setPageLoading(false);
-    });
-  }, [userId, dispatch]);
+    const fetchWeeklyAnalytics = async () => {
+      setPageLoading(true);
+
+      try {
+        await dispatch(UserWeeklyNotificationByIdThunck(userId)).unwrap();
+      } catch (error) {
+        if (
+          error?.status === 401 ||
+          error?.status === 403 ||
+          error?.status === 404
+        ) {
+          router.replace("/");
+          return;
+        }
+      } finally {
+        if (isMounted) {
+          setPageLoading(false);
+        }
+      }
+    };
+
+    fetchWeeklyAnalytics();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId, dispatch, router]);
 
   if (pageLoading || loading) {
     return (

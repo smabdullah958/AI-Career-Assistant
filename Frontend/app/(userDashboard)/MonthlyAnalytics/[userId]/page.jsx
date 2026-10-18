@@ -2,12 +2,13 @@
 
 import { use, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useRouter } from "next/navigation";
 import UserMonthlyNotificationById from "@/Libraries/Thuncks/Notification/UserMonthlyNotificationByIdThunck";
 import MonthlyUsageTrend from "@/Component/Notification/MonthlyAiUsageTrend";
 import MonthlySuccessFailureDonut from "@/Component/Notification/MonthlySuccess_Failure_Analytics";
 
 export default function MonthlyAnalyticsPage({ params }) {
+  const router = useRouter();
   const { userId } = use(params);
 
   const dispatch = useDispatch();
@@ -17,18 +18,50 @@ export default function MonthlyAnalyticsPage({ params }) {
     (state) => state.UserMonthlyNotificationById,
   );
 
+  // useEffect(() => {
+  //   if (!userId) {
+  //     setPageLoading(false);
+  //     return;
+  //   }
+
+  //   setPageLoading(true);
+
+  //   dispatch(UserMonthlyNotificationById(userId)).finally(() => {
+  //     setPageLoading(false);
+  //   });
+  // }, [userId, dispatch]);
+
   useEffect(() => {
     if (!userId) {
       setPageLoading(false);
       return;
     }
 
-    setPageLoading(true);
+    let isMounted = true;
 
-    dispatch(UserMonthlyNotificationById(userId)).finally(() => {
-      setPageLoading(false);
-    });
-  }, [userId, dispatch]);
+    const fetchMonthlyAnalytics = async () => {
+      setPageLoading(true);
+
+      try {
+        await dispatch(UserMonthlyNotificationById(userId)).unwrap();
+      } catch (error) {
+        if (error?.status === 401 || error?.status === 403) {
+          router.replace("/");
+          return;
+        }
+      } finally {
+        if (isMounted) {
+          setPageLoading(false);
+        }
+      }
+    };
+
+    fetchMonthlyAnalytics();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userId, dispatch, router]);
 
   if (pageLoading || loading) {
     return (
@@ -79,11 +112,11 @@ export default function MonthlyAnalyticsPage({ params }) {
         {/* Page Header */}
         <div className="mb-7">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Weekly Analytics
+            Monthly Analytics
           </h1>
 
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            AI feature usage for the last 7 days
+            AI feature usage for the last 30 days
           </p>
         </div>
 

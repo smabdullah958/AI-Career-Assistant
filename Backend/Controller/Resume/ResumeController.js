@@ -1,5 +1,5 @@
 let { validationResult } = require("express-validator");
-let SendGA4WithStatus = require("../../Utilis/SendGA4Event");
+let SendGA4WithStatus = require("../../Utilis/SendGA4WithStatus");
 
 let ResumeController = async (req, res) => {
   try {

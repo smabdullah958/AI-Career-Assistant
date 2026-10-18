@@ -12,6 +12,6 @@ let PDFTextExtractor = async (pdfdata) => {
   //clean the memory so that the text can not occupy the memory or RAM
   await parser.destroy();
 
-  return result.text;
+  return { text: result.text, pageCount: result.total ?? result.pages?.length };
 };
 module.exports = PDFTextExtractor;

@@ -31,9 +31,14 @@ let DailyUsageMiddleWare = async (req, res, next) => {
 
     console.log("NEW DAILY CREDITS ALLOCATED");
 
-    await SendGA4Event(process.env.Client_ID, "credits_allocated", {
-      credits_allocated: 10,
-    });
+    await SendGA4Event(
+      process.env.Client_ID,
+      "credits_allocated",
+      {
+        credits_allocated: 10,
+      },
+      UserId,
+    );
   }
 
   if (record.ApiCallCount === 0) {

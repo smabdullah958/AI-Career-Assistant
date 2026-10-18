@@ -1,5 +1,5 @@
 let InterviewService = require("../../Services/Interview/InterviewService");
-let SendGA4WithStatus = require("../../Utilis/SendGA4Event");
+let SendGA4WithStatus = require("../../Utilis/SendGA4WithStatus");
 let InterviewController = async (req, res) => {
   try {
     let { Input } = req.body;

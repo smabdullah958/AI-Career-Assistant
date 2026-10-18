@@ -1,6 +1,6 @@
 let UserAuth = require("../../../Model/Auth");
 let MonthlyCreditAnalytics = require("../../../Services/PushNotification/NotificationThroughId/TotalCredits");
-let MonthlyCreditUsageTrend = require("../../../Services/PushNotification/NotificationThroughId/CreditUsageTrend ");
+let MonthlyCreditUsageTrend = require("../../../Services/PushNotification/NotificationThroughId/MonthlyCreditUsageTrend");
 let SuccessFailureAnalytics = require("../../../Services/PushNotification/NotificationThroughId/SuccessFailedAnalytics");
 
 let UserNotificationById = async (req, res) => {

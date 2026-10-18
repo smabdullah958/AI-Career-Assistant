@@ -8,8 +8,8 @@ let AIUsageThunck = createAsyncThunk("AIUsageThunck", async (period) => {
     });
 
     return result.data;
-  } catch (err) {
-    console.log("error ina  user analytics", err);
+  } catch {
+    // AI usage analytics fetch failed silently.
   }
 });
 

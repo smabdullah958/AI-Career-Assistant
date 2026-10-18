@@ -32,8 +32,6 @@ const LoginWithGoogle = ({ Provider = "Google" }) => {
           },
         );
 
-        console.log("Google User:", data);
-
         // Send data to backend
         const result = await dispatch(
           LogInWithGoogleThunck({
@@ -45,30 +43,21 @@ const LoginWithGoogle = ({ Provider = "Google" }) => {
         //for navigation
         const userRole = result.payload?.Role;
 
-        console.log("User Role:", userRole);
-
         // Redirect if login successful
         if (LogInWithGoogleThunck.fulfilled.match(result)) {
-          console.log("User Role:", userRole);
-
           if (userRole === "Admin" || userRole === "SuperAdmin") {
-            console.log("🚀 Navigating to AdminDashboard");
-
             router.push("/AdminDashboard");
-            console.log("✅ router.push executed");
           } else {
-            console.log("🚀 Navigating to home");
-
             router.replace("/");
           }
         }
-      } catch (error) {
-        console.log(error);
+      } catch {
+        // Failed Google login silently.
       }
     },
 
     onError: () => {
-      console.log("interna error");
+      // Failed Google login silently.
     },
   });
 

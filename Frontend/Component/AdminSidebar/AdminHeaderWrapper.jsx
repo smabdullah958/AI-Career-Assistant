@@ -9,7 +9,6 @@ const AdminHeaderWrapper = () => {
   const IsLoggIn = useSelector((state) => state.LogInSlice.IsLoggIn); //get role frm
   let IsLoggedIn = useSelector((state) => state.GlobalSlice.Role); //get role from a checklogin
 
-  // console.log("HeaderWrapper IsLoggIn:", IsLoggIn);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

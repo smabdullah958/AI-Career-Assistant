@@ -8,7 +8,7 @@ import { RegisterFCM } from "@/Libraries/Firebase/RegisterFCM";
 import { getFirebaseAnalytics } from "@/Libraries/Firebase/FirebaseConfig";
 
 import { useEffect } from "react";
-import { logEvent } from "firebase/analytics";
+
 
 const StoreProvider = ({ children }) => {
   useEffect(() => {
@@ -17,17 +17,7 @@ const StoreProvider = ({ children }) => {
         // -------------------------
         // Firebase Analytics
         // -------------------------
-        const analytics = await getFirebaseAnalytics();
-
-        if (analytics) {
-          console.log("Firebase Analytics initialized");
-
-          logEvent(analytics, "test_analytics_event");
-
-          console.log("Test Analytics event sent");
-        } else {
-          console.log("Firebase Analytics is not supported");
-        }
+        await getFirebaseAnalytics();
 
         // -------------------------
         // Firebase FCM
@@ -37,8 +27,8 @@ const StoreProvider = ({ children }) => {
         if (registration) {
           await RegisterFCM(registration);
         }
-      } catch (error) {
-        console.error("Firebase setup error:", error);
+      } catch {
+        // Firebase setup failed silently to avoid exposing runtime details in the console.
       }
     };
 

@@ -12,10 +12,8 @@ let UserWeeklyNotificationByIdThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      console.log("so th reuslt is a ");
       return result?.data;
     } catch (error) {
-      console.log("internal error", error);
       return rejectWithValue({
         status: error.response?.status,
         message:

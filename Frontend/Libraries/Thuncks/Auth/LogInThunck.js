@@ -17,8 +17,6 @@ let LogInThunck = createAsyncThunk(
   "Loginthunck",
   async (Data, { dispatch, rejectWithValue }) => {
     try {
-      console.log("🟢 LOGIN THUNK STARTED");
-
       let result = await axios.post(
         `${url}/Auth/login`,
         { ...Data, deviceType },
@@ -26,39 +24,20 @@ let LogInThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      console.log(result?.data);
-      console.log("🟢 LOGIN API RESPONSE:");
-      console.log("🟢 BACKEND URL:");
-
       dispatch(setRemainingCalls(result.data?.remainingCalls));
 
       if (result.status === 200) {
-        // Firebase Analytics
         await FirebaseAuthenticatedUser(result.data?.UserId, "email", "login");
-
-        console.log("🟢 Firebase authenticated user set");
-
-        console.log("🟢 LOGIN SUCCESS - STARTING FCM");
 
         const registration = await RegisterServiceWorker();
 
-        console.log("🟢 SERVICE WORKER RESULT:");
-
         if (registration) {
-          console.log("🟢 CALLING RegisterFCM NOW");
-
           await RegisterFCM(registration);
-
-          console.log("🟢 RegisterFCM FINISHED");
-        } else {
-          console.log("🔴 SERVICE WORKER REGISTRATION FAILED");
         }
       }
 
       return result?.data;
     } catch (error) {
-      console.error("🔴 LOGIN THUNK ERROR:");
-
       return rejectWithValue(error.response?.data?.message);
     }
   },

@@ -23,7 +23,6 @@ let LogInSlice = createSlice({
       // console.log("DisplayLogout Payload:", action.payload);
       state.IsLoggIn = action?.payload?.IsLoggIn;
       state.UserRole = action?.payload?.Role;
-      console.log(state.IsLoggIn, state.UserRole);
     },
     //to show the login button  it means that when a user is logout
     ResetLogOutRole: (state) => {

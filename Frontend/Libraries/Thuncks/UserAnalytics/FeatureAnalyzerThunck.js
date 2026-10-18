@@ -13,8 +13,10 @@ let FeatureAnalyticsThunck = createAsyncThunk(
       );
 
       return result.data;
-    } catch (err) {
-      console.log("error ina  user analytics");
+    } catch {
+      return rejectWithValue({
+        message: "Unable to fetch feature analytics",
+      });
     }
   },
 );

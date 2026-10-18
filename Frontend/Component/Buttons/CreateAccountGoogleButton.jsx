@@ -27,8 +27,6 @@ const GoogleButton = ({ Provider = "Google" }) => {
           },
         );
 
-        console.log(data);
-
         const result = await dispatch(
           GoogleThunk({
             Name: data.name,
@@ -41,13 +39,13 @@ const GoogleButton = ({ Provider = "Google" }) => {
         if (GoogleThunk.fulfilled.match(result)) {
           router.replace("/");
         }
-      } catch (err) {
-        console.log(err);
+      } catch {
+        // Google signup failed silently.
       }
     },
 
     onError: () => {
-      console.log("some thing went wrong");
+      // Google signup failed silently.
     },
   });
 

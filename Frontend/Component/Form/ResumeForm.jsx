@@ -79,7 +79,6 @@ const ResumeForm = ({ onDataChange }) => {
       ],
     },
   });
-  console.log("FORM ERRORS:", errors);
   const summaryCharacter = watch("Summary");
 
   // formvalue has all the data of a form (latest data)

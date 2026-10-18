@@ -795,10 +795,6 @@ const ElegantDownloadPDF = ({ response = {} }) => {
     // DOWNLOAD
     // =========================================================
 
-    console.log("PDF pages:", pdf.getNumberOfPages());
-
-    console.log("PDF size:", pdf.output("blob").size);
-
     pdf.save("Elegant-Resume.pdf");
   };
 

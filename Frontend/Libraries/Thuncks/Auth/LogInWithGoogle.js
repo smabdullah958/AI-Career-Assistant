@@ -36,14 +36,13 @@ let LogInWithGoogleThunck = createAsyncThunk(
 
       if (result.status === 200) {
         // Firebase Analytics
-        await FirebaseAuthenticatedUser(result.data?.UserId, "google","login");
+        await FirebaseAuthenticatedUser(result.data?.UserId, "google", "login");
 
         const registration = await RegisterServiceWorker();
 
         if (registration) {
           await RegisterFCM(registration);
         }
-        console.log("Service worker registration:");
       }
 
       return result.data;

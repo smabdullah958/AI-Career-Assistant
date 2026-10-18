@@ -33,6 +33,7 @@ import UserWeeklyNotificationById from "@/Libraries/Slices/Notification/UserWeek
 import UserMonthlyNotificationById from "@/Libraries/Slices/Notification/UserMonthlyNotificationById";
 
 export let store = configureStore({
+  devTools: process.env.NODE_ENV !== "production",
   reducer: {
     SignUpSlice,
     LogInSlice,

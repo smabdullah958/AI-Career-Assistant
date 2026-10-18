@@ -14,8 +14,8 @@ let LogOutThunck = createAsyncThunk(
         },
       );
       return response.data;
-    } catch (error) {
-      console.log("eror in a logout");
+    } catch {
+      // Logout failed silently.
     }
   },
 );

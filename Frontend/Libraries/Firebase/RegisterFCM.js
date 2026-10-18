@@ -11,24 +11,19 @@ export const RegisterFCM = async (registration) => {
     // Ask user for notification permission
     const permission = await Notification.requestPermission();
 
-    console.log("Notification permission:");
-
     if (permission !== "granted") {
-      console.log("Notification permission was not granted.");
       toast.error("Notification permision is not granted");
       return;
     }
-    console.log("so then notification persion ");
+
     // Get Firebase Messaging instance
     const messaging = getMessaging(app);
 
     // Listen for Firebase Installation ID
     onRegistered(messaging, async (installationId) => {
-      console.log("Firebase Installation ID:");
-
       //post the token to a backend
       try {
-        const response = await axios.post(
+        await axios.post(
           `${url}/NotiicationRoute/token`,
           {
             FcmToken: installationId,
@@ -37,20 +32,17 @@ export const RegisterFCM = async (registration) => {
             withCredentials: true,
           },
         );
-        console.log("FID sent to backend:");
-      } catch (err) {
-        console.log("internal issue in a axios : ", err);
+      } catch {
+        // FCM token sync failed silently.
       }
     });
-    console.log("so the registrariton is a ");
+
     // Register this browser with FCM
     await register(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_VAPID,
       serviceWorkerRegistration: registration,
     });
-
-    console.log("FCM registration completed.");
-  } catch (error) {
-    console.error("FCM registration error:", error);
+  } catch {
+    // FCM registration failed silently.
   }
 };

@@ -10,10 +10,9 @@ let NotificationThunck = createAsyncThunk("notification", async (page = 1) => {
         withCredentials: true,
       },
     );
-    console.log("so th reuslt is a ");
     return result?.data;
-  } catch (error) {
-    console.log("internal error", error);
+  } catch {
+    // Notification fetch failed silently.
   }
 });
 

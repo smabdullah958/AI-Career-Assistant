@@ -23,7 +23,6 @@ let GoogleThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      console.log(result?.data);
       // console.log("user is reggister");
       dispatch(
         //to show a logout button when a user is signup
@@ -48,7 +47,6 @@ let GoogleThunck = createAsyncThunk(
         if (registration) {
           await RegisterFCM(registration);
         }
-        console.log("Service worker registration:");
       }
       return result.data;
     } catch (error) {

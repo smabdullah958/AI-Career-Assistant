@@ -12,8 +12,8 @@ let GetUnreadNotification = createAsyncThunk(
       });
 
       return result.data;
-    } catch (error) {
-      console.log("Unread notification error:");
+    } catch {
+      // Notification fetch failed silently.
     }
   },
 );

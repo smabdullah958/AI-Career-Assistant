@@ -16,8 +16,8 @@ let MarkNotificationsAsRead = createAsyncThunk(
       );
 
       return result.data;
-    } catch (error) {
-      console.log("Mark notification read error:");
+    } catch {
+      // Mark-as-read request failed silently.
     }
   },
 );

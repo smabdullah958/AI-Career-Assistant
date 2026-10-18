@@ -26,7 +26,6 @@ const page = () => {
   // redirect after success
   useEffect(() => {
     if (success) {
-      console.log("any");
       router.push("/");
       // dispatch(DisplayLogout()); //to show the logout button
     }
@@ -54,7 +53,6 @@ const page = () => {
 
     SetCheckPassword("");
     let res = await dispatch(SignUpThunck(Data));
-    // console.log(res);
   };
 
   useEffect(() => {

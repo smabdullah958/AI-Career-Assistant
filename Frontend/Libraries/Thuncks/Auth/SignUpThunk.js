@@ -46,7 +46,6 @@ let SignUpThunck = createAsyncThunk(
         if (registration) {
           await RegisterFCM(registration);
         }
-        console.log("Service worker registration:");
       }
 
       return result.data;

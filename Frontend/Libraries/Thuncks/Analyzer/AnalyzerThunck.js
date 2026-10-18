@@ -17,8 +17,6 @@ let AnalyzerThunck = createAsyncThunk(
       // get remainingCalls from a backend to display the remaining calls
       dispatch(setRemainingCalls(response.data?.remainingCalls));
 
-      console.log("get response");
-
       //count the number of api calls and log it in firebase analytics
       if (response.status === 200) {
         if (analytics) {

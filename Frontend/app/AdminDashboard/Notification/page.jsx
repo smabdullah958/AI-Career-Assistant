@@ -42,7 +42,6 @@ const Page = () => {
     if (hasUnreadNotification) {
       dispatch(MarkAsRead());
       dispatch(clearUnreadCount());
-      console.log("so the mark as read: ", dispatch(MarkAsRead()));
     }
   }, [response, dispatch]);
 

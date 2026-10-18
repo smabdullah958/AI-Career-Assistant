@@ -45,7 +45,7 @@ const WeeklyAICallsTrend = async (startDate, endDate) => {
     for (let i = 0; i < 7; i++) {
       const DateValue = new Date();
 
-      DateValue.setDate(DateValue.getDate() - i);
+      DateValue.setDate(DateValue.getDate() - i - 1);
 
       const DateString =
         DateValue.getFullYear().toString() +
@@ -146,14 +146,15 @@ const MonthlyAICallsTrend = async (startDate, endDate) => {
 
         const CurrentDate = new Date(year, month, day);
 
-        const Today = new Date();
-        Today.setHours(0, 0, 0, 0);
+        const Yesterday = new Date();
+      Yesterday.setDate(Yesterday.getDate() - 1);
+        Yesterday.setHours(0, 0, 0, 0);
 
         const DaysAgo = Math.floor(
-          (Today - CurrentDate) / (1000 * 60 * 60 * 24),
+          (Yesterday - CurrentDate) / (1000 * 60 * 60 * 24),
         );
 
-        const WeekNumber = Math.floor((29 - DaysAgo) / 7);
+        const WeekNumber = Math.floor((27 - DaysAgo) / 7);
 
         if (WeekNumber !== i) return;
 
@@ -220,6 +221,8 @@ const YearlyAICallsTrend = async (startDate, endDate) => {
       let Successful_API_Calls = 0;
 
       const CurrentMonth = new Date();
+      CurrentMonth.setDate(CurrentMonth.getDate() - 1);
+      CurrentMonth.setDate(1);
 
       CurrentMonth.setMonth(CurrentMonth.getMonth() - (11 - i));
 

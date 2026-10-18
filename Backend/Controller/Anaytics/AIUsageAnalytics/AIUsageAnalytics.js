@@ -1,3 +1,4 @@
+const NonNegativeAnalytics = require("../../../Services/Analytics/NonNegativeAnalytics");
 let TotalAICalls = require("../../../Services/Analytics/AIUsageAnalytics/TotalAICalls");
 let AICallsByFeature = require("../../../Services/Analytics/FeatureUsage/RangeFeatureUsage"); //for feature usage in a specific range
 
@@ -23,18 +24,18 @@ let AIUsageAnalytics = async (req, res) => {
         Average_Feature_Usage,
       ] = await Promise.all([
         TotalAICalls(),
-        AICallsByFeature("7daysAgo", "today"),
-        WeeklyAICallsTrend("7daysAgo", "today"),
-        SuccessRatio("7daysAgo", "today"),
-        AverageFeatureUsage("7daysAgo", "today"),
+        AICallsByFeature("7daysAgo", "yesterday"),
+        WeeklyAICallsTrend("7daysAgo", "yesterday"),
+        SuccessRatio("7daysAgo", "yesterday"),
+        AverageFeatureUsage("7daysAgo", "yesterday"),
       ]);
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Total_AI_Calls,
         AI_Calls_By_Feature,
         AI_Calls_Trend,
         Success_Ratio,
         Average_Feature_Usage,
-      });
+      }));
     }
 
     if (Peroid === "30d") {
@@ -46,18 +47,18 @@ let AIUsageAnalytics = async (req, res) => {
         Average_Feature_Usage,
       ] = await Promise.all([
         TotalAICalls(),
-        AICallsByFeature("30daysAgo", "today"),
-        MonthlyAICallsTrend("30daysAgo", "today"),
-        SuccessRatio("30daysAgo", "today"),
-        AverageFeatureUsage("30daysAgo", "today"),
+        AICallsByFeature("30daysAgo", "yesterday"),
+        MonthlyAICallsTrend("30daysAgo", "yesterday"),
+        SuccessRatio("30daysAgo", "yesterday"),
+        AverageFeatureUsage("30daysAgo", "yesterday"),
       ]);
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Total_AI_Calls,
         AI_Calls_By_Feature,
         AI_Calls_Trend,
         Success_Ratio,
         Average_Feature_Usage,
-      });
+      }));
     }
 
     if (Peroid === "1y") {
@@ -69,18 +70,18 @@ let AIUsageAnalytics = async (req, res) => {
         Average_Feature_Usage,
       ] = await Promise.all([
         TotalAICalls(),
-        AICallsByFeature("365daysAgo", "today"),
-        YearlyAICallsTrend("365daysAgo", "today"),
-        SuccessRatio("365daysAgo", "today"),
-        AverageFeatureUsage("365daysAgo", "today"),
+        AICallsByFeature("365daysAgo", "yesterday"),
+        YearlyAICallsTrend("365daysAgo", "yesterday"),
+        SuccessRatio("365daysAgo", "yesterday"),
+        AverageFeatureUsage("365daysAgo", "yesterday"),
       ]);
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Total_AI_Calls,
         AI_Calls_By_Feature,
         AI_Calls_Trend,
         Success_Ratio,
         Average_Feature_Usage,
-      });
+      }));
     }
   } catch (error) {
     console.error("Error fetching feature analytics:", error);

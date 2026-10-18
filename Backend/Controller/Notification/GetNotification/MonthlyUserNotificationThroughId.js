@@ -1,3 +1,4 @@
+const NonNegativeAnalytics = require("../../../Services/Analytics/NonNegativeAnalytics");
 let UserAuth = require("../../../Model/Auth");
 let MonthlyCreditAnalytics = require("../../../Services/PushNotification/NotificationThroughId/TotalCredits");
 let MonthlyCreditUsageTrend = require("../../../Services/PushNotification/NotificationThroughId/MonthlyCreditUsageTrend");
@@ -17,16 +18,16 @@ let UserNotificationById = async (req, res) => {
       Monthly_Credit_Usage_Trend,
       Success_Failure_Analytics,
     ] = await Promise.all([
-      MonthlyCreditAnalytics(UserId, "30daysAgo", "today"),
-      MonthlyCreditUsageTrend(UserId, "30daysAgo", "today"),
-      SuccessFailureAnalytics(UserId, "30daysAgo", "today"),
+      MonthlyCreditAnalytics(UserId, "30daysAgo", "yesterday"),
+      MonthlyCreditUsageTrend(UserId, "30daysAgo", "yesterday"),
+      SuccessFailureAnalytics(UserId, "30daysAgo", "yesterday"),
     ]);
     console.log("Notification");
-    res.status(200).json({
+    res.status(200).json(NonNegativeAnalytics({
       Monthly_Credit_Analytics,
       Monthly_Credit_Usage_Trend,
       Success_Failure_Analytics,
-    });
+    }));
   } catch (error) {
     console.log("internal error ina  user notifiocnat route ", error);
     return res

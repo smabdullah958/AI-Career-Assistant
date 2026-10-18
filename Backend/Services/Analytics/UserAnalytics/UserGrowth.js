@@ -125,6 +125,7 @@ let YearlyUserGrowth = async (Model, EndDate) => {
     for (let i = 11; i >= 0; i--) {
       let MonthStart = new Date(EndDate);
 
+      MonthStart.setDate(1);
       MonthStart.setMonth(MonthStart.getMonth() - i);
 
       MonthStart.setDate(1);
@@ -136,6 +137,7 @@ let YearlyUserGrowth = async (Model, EndDate) => {
 
       MonthEnd.setDate(0);
       MonthEnd.setHours(23, 59, 59, 999);
+      if (MonthEnd > EndDate) MonthEnd = new Date(EndDate);
 
       const [Active_User, New_User, Total_User] = await Promise.all([
         Model.countDocuments({

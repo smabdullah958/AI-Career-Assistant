@@ -111,9 +111,7 @@ const CreditAnalytics = async (UserId, startDate, endDate) => {
     // UNUSED CREDITS
     // -----------------------------
 
-    // const Credits_Unused = Math.max(Total_Credits - Credits_Consumed, 0);
-
-    const Credits_Unused = Total_Credits - Credits_Consumed;
+    const Credits_Unused = Math.max(Total_Credits - Credits_Consumed, 0);
 
     // -----------------------------
     // AVERAGE CREDITS PER FEATURE

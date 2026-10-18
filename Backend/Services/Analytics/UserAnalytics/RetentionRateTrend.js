@@ -121,6 +121,7 @@ let YearlyRetentionRate = async (Model, EndDate) => {
     for (let i = 11; i >= 0; i--) {
       let MonthStart = new Date(EndDate);
 
+      MonthStart.setDate(1);
       MonthStart.setMonth(MonthStart.getMonth() - i);
       MonthStart.setDate(1);
       MonthStart.setHours(0, 0, 0, 0);
@@ -130,6 +131,7 @@ let YearlyRetentionRate = async (Model, EndDate) => {
       MonthEnd.setMonth(MonthEnd.getMonth() + 1);
       MonthEnd.setDate(0);
       MonthEnd.setHours(23, 59, 59, 999);
+      if (MonthEnd > EndDate) MonthEnd = new Date(EndDate);
 
       // Total users registered up to the end of this month
       let TotalUser = await Model.countDocuments({

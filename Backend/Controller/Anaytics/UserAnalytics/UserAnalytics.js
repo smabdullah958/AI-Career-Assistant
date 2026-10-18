@@ -1,3 +1,4 @@
+const NonNegativeAnalytics = require("../../../Services/Analytics/NonNegativeAnalytics");
 let Model = require("../../../Model/Auth");
 
 //active user
@@ -45,7 +46,8 @@ let UserAnalytics = async (req, res) => {
   try {
     let StartDate = new Date();
     let EndDate = new Date();
-    EndDate.setDate(EndDate.getDate());
+    EndDate.setDate(EndDate.getDate() - 1);
+    EndDate.setHours(23, 59, 59, 999);
     let Period = req.query.period;
 
     //for weekly
@@ -60,10 +62,10 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate_Trend,
       ] = await Promise.all([
         WeeklyActiveUser(Model, StartDate, EndDate),
-        TotalUser(Model),
+        TotalUser(Model, EndDate),
         WeeklyNewUser(Model, StartDate, EndDate),
         WeeklyUserGrowth(Model, EndDate),
-        DeviceAnalytics(),
+        DeviceAnalytics(EndDate),
         UserByCountry("7daysAgo", "yesterday"),
         WeeklyRetentionRate(Model, EndDate),
       ]);
@@ -84,7 +86,7 @@ let UserAnalytics = async (req, res) => {
         UserBy_Country,
         Retention_Rate_Trend,
       );
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Active_User,
         Total_User,
         In_Active_User,
@@ -94,7 +96,7 @@ let UserAnalytics = async (req, res) => {
         Device_Analytics,
         UserBy_Country,
         Retention_Rate_Trend,
-      });
+      }));
     }
 
     //for monthly
@@ -109,10 +111,10 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate_Trend,
       ] = await Promise.all([
         MonthlyActiveUser(Model, StartDate, EndDate),
-        TotalUser(Model),
+        TotalUser(Model, EndDate),
         MonthlyNewUser(Model, StartDate, EndDate),
         MonthlyUserGrowth(Model, EndDate),
-        DeviceAnalytics(),
+        DeviceAnalytics(EndDate),
         UserByCountry("30daysAgo", "yesterday"),
         MonthlyRetentionRate(Model, EndDate),
       ]);
@@ -133,7 +135,7 @@ let UserAnalytics = async (req, res) => {
         UserBy_Country,
         Retention_Rate_Trend,
       );
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Active_User,
         Total_User,
         In_Active_User,
@@ -143,7 +145,7 @@ let UserAnalytics = async (req, res) => {
         Device_Analytics,
         UserBy_Country,
         Retention_Rate_Trend,
-      });
+      }));
     }
 
     //for yearly
@@ -158,10 +160,10 @@ let UserAnalytics = async (req, res) => {
         Retention_Rate_Trend,
       ] = await Promise.all([
         YearlyActiveUser(Model, StartDate, EndDate),
-        TotalUser(Model),
+        TotalUser(Model, EndDate),
         YearlyNewUser(Model, StartDate, EndDate),
         YearlyUserGrowth(Model, EndDate),
-        DeviceAnalytics(),
+        DeviceAnalytics(EndDate),
         UserByCountry("365daysAgo", "yesterday"),
         YearlyRetentionRate(Model, EndDate),
       ]);
@@ -182,7 +184,7 @@ let UserAnalytics = async (req, res) => {
         UserBy_Country,
         Retention_Rate_Trend,
       );
-      res.status(200).json({
+      res.status(200).json(NonNegativeAnalytics({
         Active_User,
         Total_User,
         In_Active_User,
@@ -192,7 +194,7 @@ let UserAnalytics = async (req, res) => {
         Device_Analytics,
         UserBy_Country,
         Retention_Rate_Trend,
-      });
+      }));
     }
   } catch (error) {
     console.log("interanl error has been occur ina  controller ", error);

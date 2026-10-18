@@ -65,7 +65,7 @@ const WeeklyCreditUsageTrend = async (UserId, startDate, endDate) => {
 
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
-      date.setDate(date.getDate() - i);
+      date.setDate(date.getDate() - i - 1);
 
       const dateKey = [
         date.getFullYear(),

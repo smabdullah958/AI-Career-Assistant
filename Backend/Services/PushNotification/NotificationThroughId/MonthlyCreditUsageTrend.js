@@ -65,10 +65,10 @@ const MonthlyCreditUsageTrend = async (UserId, startDate, endDate) => {
       mock_interview: 0,
     }));
 
-    // Four complete weeks ending today.
+    // Four complete weeks ending yesterday.
     const StartDate = new Date();
     StartDate.setHours(0, 0, 0, 0);
-    StartDate.setDate(StartDate.getDate() - 27);
+    StartDate.setDate(StartDate.getDate() - 28);
 
     const startTimestamp = Date.UTC(
       StartDate.getFullYear(),

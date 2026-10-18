@@ -1,6 +1,6 @@
-let TotalUser = async (Model) => {
+let TotalUser = async (Model, EndDate) => {
   try {
-    let Total_User = await Model.countDocuments();
+    let Total_User = await Model.countDocuments({ CreatedAt: { $lte: EndDate } });
     console.log("so the total number of user is ", Total_User);
     return Total_User;
   } catch (error) {

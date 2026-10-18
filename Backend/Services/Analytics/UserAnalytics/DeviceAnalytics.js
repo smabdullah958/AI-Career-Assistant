@@ -1,10 +1,11 @@
 let Model = require("../../../Model/Auth");
 
-let DeviceAnalytics = async () => {
+let DeviceAnalytics = async (EndDate) => {
   try {
     let DevicesType = await Model.aggregate([
       {
         $match: {
+          CreatedAt: { $lte: EndDate },
           DeviceType: {
             $in: ["desktop", "mobile", "tablet"],
           },

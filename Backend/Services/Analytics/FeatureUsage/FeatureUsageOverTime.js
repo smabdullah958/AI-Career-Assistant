@@ -40,7 +40,7 @@ const WeeklyFeatureUsage = async (startDate, endDate) => {
   for (let i = 0; i < 7; i++) {
     const DateValue = new Date();
 
-    DateValue.setDate(DateValue.getDate() - i);
+    DateValue.setDate(DateValue.getDate() - i - 1);
 
     const DateString =
       DateValue.getFullYear().toString() +
@@ -141,13 +141,14 @@ const MonthlyFeatureUsage = async (startDate, endDate) => {
 
       const CurrentDate = new Date(year, month, day);
 
-      const Today = new Date();
+      const Yesterday = new Date();
+      Yesterday.setDate(Yesterday.getDate() - 1);
 
-      Today.setHours(0, 0, 0, 0);
+      Yesterday.setHours(0, 0, 0, 0);
 
-      const DaysAgo = Math.floor((Today - CurrentDate) / (1000 * 60 * 60 * 24));
+      const DaysAgo = Math.floor((Yesterday - CurrentDate) / (1000 * 60 * 60 * 24));
 
-      const WeekNumber = Math.floor((29 - DaysAgo) / 7);
+      const WeekNumber = Math.floor((27 - DaysAgo) / 7);
 
       if (WeekNumber !== i) {
         return;
@@ -213,7 +214,7 @@ const YearlyFeatureUsage = async (startDate, endDate) => {
 
   const Growth = [];
 
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 12; i++) {
     let Total_API_Calls = 0;
     let Total_Resumes = 0;
     let Total_Mock_Interviews = 0;
@@ -227,6 +228,8 @@ const YearlyFeatureUsage = async (startDate, endDate) => {
       const month = Number(yearMonth.substring(4, 6)) - 1;
 
       const CurrentMonth = new Date();
+      CurrentMonth.setDate(CurrentMonth.getDate() - 1);
+      CurrentMonth.setDate(1);
       CurrentMonth.setMonth(CurrentMonth.getMonth() - (11 - i));
 
       if (
@@ -254,6 +257,8 @@ const YearlyFeatureUsage = async (startDate, endDate) => {
     });
 
     const LabelDate = new Date();
+    LabelDate.setDate(LabelDate.getDate() - 1);
+    LabelDate.setDate(1);
     LabelDate.setMonth(LabelDate.getMonth() - (11 - i));
 
     Growth.push({

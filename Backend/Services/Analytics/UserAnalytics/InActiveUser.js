@@ -1,6 +1,6 @@
 let InActiveUser = (TotalUser, ActiveUser) => {
   try {
-    let InActiveUser = TotalUser - ActiveUser;
+    let InActiveUser = Math.max(0, TotalUser - ActiveUser);
     console.log("so the total number of In active user is ", InActiveUser);
     return InActiveUser;
   } catch (error) {

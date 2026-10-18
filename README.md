@@ -36,13 +36,41 @@ The backend submission validates form data and updates remaining credits. It doe
 
 ### AI resume analysis
 
-- Upload a text-readable PDF and select a target role and experience level.
-- PDFs are limited to **3 MB** and **5 pages**, processed from memory. No OCR is implemented for image-only scans.
-- Structured results cover candidate overview, skills and supporting evidence, projects, work history, education, certifications, and achievements where available.
-- Results include category scores, strengths, missing skills, improvements, formatting issues, and limitations.
-- Backend checks reject empty/truncated responses, invalid JSON, and missing or out-of-range category scores.
+The AI Resume Analyzer evaluates a resume against a selected target role and experience level. It extracts text from text-readable PDF files and generates structured feedback to help candidates identify strengths, missing skills, and areas for improvement.
 
-The API returns the broader structured analysis; the current results screen focuses on the summary, overall/category scores, strengths, missing skills, and improvements rather than rendering every returned field.
+## Input requirements and limitations
+
+Upload a text-readable PDF of up to 3 MB and 5 pages.
+
+Select a target role and experience level.
+
+Image-only scanned PDFs are not supported because OCR is not implemented.
+
+Analysis is based on the extracted resume text and the selected role and experience level; no job description is required.
+
+## Analysis results
+
+The analyzer returns:
+
+- Candidate overview and executive summary.
+
+- Skills and supporting resume evidence.
+
+- Project, work experience, education, certification, and achievement information where available.
+
+- Category scores and an overall role-readiness score.
+
+- Key strengths and missing or underrepresented skills.
+
+- Prioritized improvement recommendations.
+
+- Resume formatting, clarity, and consistency issues.
+
+- Analysis limitations where information is missing or cannot be verified.
+
+- The backend validates model responses, rejects empty or truncated output, checks JSON structure, and verifies that required category scores are present and within the permitted range.
+
+## Role-readiness score
 
 The backend computes a weighted **role-readiness score out of 100** from model-produced category scores:
 
@@ -66,17 +94,41 @@ No job description is supplied. The score evaluates resume evidence for a genera
 
 Interview behavior depends on model compliance. History is not saved to MongoDB and disappears when the backend restarts.
 
-### Accounts, credits, and notifications
+### Accounts, Credits, and Notifications
 
-- Local signup, password login, logout, and cookie-based session checks.
-- Google account buttons and API flows are present, with the limitations documented below.
-- `User`, `Admin`, and `SuperAdmin` roles in the data model.
-- **10 API requests per day**, shared across resume submission, resume analysis, and interview messages, with a remaining-credit indicator.
-- Low-credit notifications at 3 or fewer remaining calls.
-- Signup welcome notifications for users and new-user notifications for administrators.
-- Notification inboxes, pagination (10 records per API page), unread counts, and marking all unread notifications as read.
-- Personal seven-day and 30-day reports for credit totals, feature trends, and success/failure data. Report endpoints enforce ownership of the requested user ID.
-- Browser notification registration, a background service worker, and backend Firebase push services are included; delivery is unverified.
+- Local signup, password-based login, logout, and cookie-based session checks.
+
+- User, Admin, and SuperAdmin roles.
+
+- A daily allowance of 10 API requests, shared across supported AI features, with a remaining-credit indicator.
+
+- Low-credit notifications when three or fewer requests remain.
+
+- Signup welcome notifications and administrator notifications for new users.
+
+- In-app notification inboxes, pagination, unread counts, and marking notifications as read.
+
+- Personal seven-day and 30-day usage reports.
+
+- Browser notification registration and Firebase push-notification services; end-to-end delivery must be verified in the deployed environment.
+
+### Personal Weekly and Monthly Analytics
+
+Personal analytics provide a view of credit usage and AI feature activity over a selected reporting period.
+
+Reported metrics may include:
+
+- Credits allocated and consumed during the reporting period.
+
+- Unused credit balance, where it can be reconciled accurately.
+
+- Usage by feature, including Resume Builder, ATS Analyzer, and Mock Interview.
+
+- Usage trends over time.
+
+- Successful and failed API requests.
+
+- Success and failure rates.
 
 ### Administrator dashboards
 

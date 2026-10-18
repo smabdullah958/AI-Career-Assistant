@@ -17,7 +17,7 @@ let MarkNotificationsAsRead = createAsyncThunk(
 
       return result.data;
     } catch (error) {
-      console.log("Mark notification read error:", error);
+      console.log("Mark notification read error:");
     }
   },
 );

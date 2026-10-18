@@ -56,12 +56,6 @@ let GlobalSlice = createSlice({
         state.Role = action.payload?.Role;
         state.remainingCalls = action.payload?.RemainingCalls;
         state.ShowPopUp = action.payload?.ShowPopUp;
-        // console.log(
-        //   "the role and remaining calls and islogin is ",
-        //   state.IsLoggIn,
-        //   state.Role,
-        //   state.remainingCalls,
-        // );
       })
 
       .addCase(CheckLoginThunk.rejected, (state, action) => {

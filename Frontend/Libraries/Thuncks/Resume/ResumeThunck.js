@@ -9,7 +9,7 @@ const analytics = await getFirebaseAnalytics();
 
 let ResumeThunck = createAsyncThunk(
   "ResumeThunck",
-  async(data, { dispatch, rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       let result = await axios.post(`${url}/Resume/createResume`, data, {
         withCredentials: true,
@@ -32,7 +32,7 @@ let ResumeThunck = createAsyncThunk(
       return result.data;
     } catch (err) {
       // get remainingCalls from a backend to display the remaining calls
-      console.log("error ina  resume", err);
+      console.log("error ina  resume");
       dispatch(setRemainingCalls(err?.response?.data?.remainingCalls));
       if (analytics) {
         logEvent(analytics, "api_call", {

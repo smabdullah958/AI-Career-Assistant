@@ -32,7 +32,6 @@ let LogInWithGoogleThunck = createAsyncThunk(
           Role: result.data.Role,
         }),
       );
-      // console.log("result data ", result.data?.IsLoggIn, result.data?.Role);
       dispatch(setRemainingCalls(result?.data?.remainingCalls));
 
       if (result.status === 200) {
@@ -44,7 +43,7 @@ let LogInWithGoogleThunck = createAsyncThunk(
         if (registration) {
           await RegisterFCM(registration);
         }
-        console.log("Service worker registration:", registration);
+        console.log("Service worker registration:");
       }
 
       return result.data;

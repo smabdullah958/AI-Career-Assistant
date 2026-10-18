@@ -27,8 +27,8 @@ let LogInThunck = createAsyncThunk(
         },
       );
       console.log(result?.data);
-      console.log("🟢 LOGIN API RESPONSE:", result.status);
-      console.log("🟢 BACKEND URL:", url);
+      console.log("🟢 LOGIN API RESPONSE:");
+      console.log("🟢 BACKEND URL:");
 
       dispatch(setRemainingCalls(result.data?.remainingCalls));
 
@@ -42,7 +42,7 @@ let LogInThunck = createAsyncThunk(
 
         const registration = await RegisterServiceWorker();
 
-        console.log("🟢 SERVICE WORKER RESULT:", registration);
+        console.log("🟢 SERVICE WORKER RESULT:");
 
         if (registration) {
           console.log("🟢 CALLING RegisterFCM NOW");
@@ -57,7 +57,7 @@ let LogInThunck = createAsyncThunk(
 
       return result?.data;
     } catch (error) {
-      console.error("🔴 LOGIN THUNK ERROR:", error);
+      console.error("🔴 LOGIN THUNK ERROR:");
 
       return rejectWithValue(error.response?.data?.message);
     }

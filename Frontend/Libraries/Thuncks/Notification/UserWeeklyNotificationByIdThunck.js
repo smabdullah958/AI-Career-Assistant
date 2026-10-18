@@ -12,14 +12,14 @@ let UserWeeklyNotificationByIdThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      console.log("so th reuslt is a ", result?.paylod);
+      console.log("so th reuslt is a ");
       return result?.data;
     } catch (error) {
       console.log("internal error", error);
       return rejectWithValue({
         status: error.response?.status,
         message:
-          error.response?.data?.message || "Unable to fetch monthly analytics",
+          error.response?.data?.message || "Unable to fetch weekly analytics",
       });
     }
   },

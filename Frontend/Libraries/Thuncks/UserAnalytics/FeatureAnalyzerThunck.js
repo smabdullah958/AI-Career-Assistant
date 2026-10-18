@@ -14,7 +14,7 @@ let FeatureAnalyticsThunck = createAsyncThunk(
 
       return result.data;
     } catch (err) {
-      console.log("error ina  user analytics", err);
+      console.log("error ina  user analytics");
     }
   },
 );

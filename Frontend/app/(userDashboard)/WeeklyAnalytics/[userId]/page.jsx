@@ -74,11 +74,12 @@ export default function WeeklyAnalyticsPage({ params }) {
   }
 
   if (error) {
+    router.replace("/");
     return (
       <div className="min-h-screen bg-gray-50 p-6 dark:bg-[#0b0f19]">
         <div className="mx-auto max-w-6xl">
           <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-600 dark:border-red-900 dark:bg-red-950/20 dark:text-red-400">
-            Failed to load weekly analytics.
+            Unable to fetch weekly analytics
           </div>
         </div>
       </div>

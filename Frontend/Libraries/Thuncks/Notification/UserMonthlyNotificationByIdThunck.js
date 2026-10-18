@@ -12,10 +12,10 @@ let UserMonthlyNotificationByIdThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      console.log("so th reuslt is a ", result?.paylod);
+      console.log("so th reuslt is a ");
       return result?.data;
     } catch (error) {
-      console.log("internal error", error);
+      console.log("internal error");
       return rejectWithValue({
         status: error.response?.status,
         message:

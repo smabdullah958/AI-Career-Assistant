@@ -23,7 +23,6 @@ let SignUpThunck = createAsyncThunk(
           withCredentials: true,
         },
       );
-      // console.log("user is reggister");
       dispatch(
         //to show a logout button when a user is signup
         DisplayLogout({
@@ -47,7 +46,7 @@ let SignUpThunck = createAsyncThunk(
         if (registration) {
           await RegisterFCM(registration);
         }
-        console.log("Service worker registration:", registration);
+        console.log("Service worker registration:");
       }
 
       return result.data;

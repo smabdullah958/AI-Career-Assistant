@@ -60,7 +60,7 @@ cron.schedule("*/10 * * * *", async () => {
 });
 
 //montly notification ona monday at a 9am
-cron.schedule("0 23 * * *", async () => {
+cron.schedule("*/5 * * * *", async () => {
   try {
     console.log("🔔 Cron job started");
 

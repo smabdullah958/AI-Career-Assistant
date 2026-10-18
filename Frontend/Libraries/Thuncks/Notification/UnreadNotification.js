@@ -13,7 +13,7 @@ let GetUnreadNotification = createAsyncThunk(
 
       return result.data;
     } catch (error) {
-      console.log("Unread notification error:", error);
+      console.log("Unread notification error:");
     }
   },
 );

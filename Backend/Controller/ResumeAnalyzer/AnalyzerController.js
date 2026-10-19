@@ -1,15 +1,14 @@
-//text extractor
-let PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
-//main ai file
-let chain = require("../../Services/Analyzer/ResumeAnalyzer");
+const PDFTextExtractor = require("../../Services/Analyzer/PDFTextExtractor");
+const chain = require("../../Services/Analyzer/ResumeAnalyzer");
 
-let SendGA4WithStatus = require("../../Utilis/SendGA4WithStatus");
+const SendGA4WithStatus = require("../../Utilis/SendGA4WithStatus");
 
 let AnalyzerController = async (req, res) => {
   try {
     let { Experience, Role } = req.body;
 
     console.log(Experience, Role);
+
     if (!req.file || !Experience || !Role) {
       return res.status(400).json({ message: "All teh fields are required" });
     }
@@ -25,6 +24,7 @@ let AnalyzerController = async (req, res) => {
     let { text: TextExtractor, pageCount } = await PDFTextExtractor(
       req.file.buffer,
     );
+
     console.log(TextExtractor, pageCount);
 
     // Validate page count.
@@ -41,8 +41,18 @@ let AnalyzerController = async (req, res) => {
       });
     }
 
+    // Start streaming only after validation succeeds.
+    res.status(200);
+    res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache, no-transform");
+    res.setHeader("Connection", "keep-alive");
+    res.setHeader("X-Accel-Buffering", "no");
+    res.flushHeaders?.();
+
     //main ai/langchain
-    let result = await chain(TextExtractor, Role, Experience);
+    let result = await chain(TextExtractor, Role, Experience, (chunk) => {
+      res.write(`event: chunk\ndata: ${JSON.stringify({ chunk })}\n\n`);
+    });
 
     console.log(result);
 
@@ -54,13 +64,19 @@ let AnalyzerController = async (req, res) => {
       1,
     );
 
-    return res.status(200).json({
-      message: "all field are present",
-      result,
-      remainingCalls: req.remainingCalls, // remaining calls is come from a middleware which si used to check the daily usage
-    });
+    // Send the complete parsed result after all chunks have been received.
+    res.write(
+      `event: complete\ndata: ${JSON.stringify({
+        message: "all field are present",
+        result,
+        remainingCalls: req.remainingCalls,
+      })}\n\n`,
+    );
+
+    return res.end();
   } catch (err) {
     console.log("internal error", err);
+
     await SendGA4WithStatus(
       process.env.Client_ID,
       "mock_interview",
@@ -68,7 +84,17 @@ let AnalyzerController = async (req, res) => {
       0,
     );
 
-    res.status(500).json({ message: "interal errro" });
+    if (res.headersSent) {
+      res.write(
+        `event: error\ndata: ${JSON.stringify({
+          message: "interal errro",
+        })}\n\n`,
+      );
+
+      return res.end();
+    }
+
+    return res.status(500).json({ message: "interal errro" });
   }
 };
 

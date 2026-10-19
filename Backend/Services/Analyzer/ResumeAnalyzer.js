@@ -50,41 +50,46 @@ function extractResponseText(content) {
   return "";
 }
 
-const Analyzer = async (PDFText, Role, Experience) => {
+const Analyzer = async (PDFText, Role, Experience, onChunk) => {
   try {
     const prompt = ChatPromptTemplate.fromTemplate(AnalyzerPrompt);
     const chain = prompt.pipe(LLM);
 
-    const response = await chain.invoke({
+    let raw = "";
+    let finishReason;
+
+    const stream = await chain.stream({
       PDFText,
       Role,
       Experience,
     });
 
-    const finishReason = response.response_metadata?.finish_reason;
-    let raw = extractResponseText(response.content).trim();
+    for await (const chunk of stream) {
+      const text = extractResponseText(chunk.content);
 
-    // Log response diagnostics without printing the candidate's resume.
-    console.log("Resume Analyzer response diagnostics:", {
+      if (text) {
+        raw += text;
+        onChunk?.(text);
+      }
+
+      finishReason = chunk.response_metadata?.finish_reason || finishReason;
+    }
+
+    console.log("Resume Analyzer stream diagnostics:", {
       responseLength: raw.length,
       finishReason,
-      usage: response.usage_metadata,
     });
 
-    if (!raw) {
-      throw new Error(
-        "Groq returned an empty response. Check the model response and API configuration.",
-      );
+    if (!raw.trim()) {
+      throw new Error("The AI returned an empty response.");
     }
 
-    // Detect responses that may have been truncated by the token limit.
     if (finishReason === "length") {
       throw new Error(
-        "Groq reached its output-token limit. Increase the allowed output tokens or shorten the prompt/response.",
+        "The AI response was truncated. Increase the output-token limit or shorten the prompt.",
       );
     }
 
-    // Remove optional Markdown JSON fences.
     raw = raw
       .replace(/^```(?:json)?\s*/i, "")
       .replace(/\s*```$/i, "")
@@ -94,18 +99,13 @@ const Analyzer = async (PDFText, Role, Experience) => {
 
     try {
       parsed = JSON.parse(raw);
-    } catch (parseError) {
-      console.error("Resume Analyzer returned invalid JSON:", {
-        parseError: parseError.message,
+    } catch (error) {
+      console.error("Invalid streamed JSON:", {
+        message: error.message,
         responseLength: raw.length,
-        finishReason,
-        responseStart: raw.slice(0, 150),
-        responseEnd: raw.slice(-250),
       });
 
-      throw new Error(
-        "The AI returned incomplete or invalid JSON. Check the response diagnostics and Groq output-token limit.",
-      );
+      throw new Error("The AI returned incomplete or invalid JSON.");
     }
 
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {

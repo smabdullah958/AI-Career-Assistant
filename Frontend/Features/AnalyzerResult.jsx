@@ -12,66 +12,130 @@ import {
   FaChartBar,
   FaFolderOpen,
   FaInfoCircle,
+  FaGraduationCap,
+  FaCertificate,
+  FaTrophy,
+  FaFileAlt,
 } from "react-icons/fa";
+
+const SCORE_WEIGHTS = {
+  skillsRelevance: 30,
+  projectsPracticalApplication: 25,
+  workExperience: 20,
+  educationCertifications: 10,
+  achievementsImpact: 10,
+  resumeClarity: 5,
+};
 
 const AnalyzerResult = () => {
   const { response } = useSelector((state) => state.AnalyzeSlice);
-  const result = response ?? {};
+
+  const result =
+    response && typeof response === "object" && !Array.isArray(response)
+      ? response
+      : {};
 
   const asArray = (value) => (Array.isArray(value) ? value : []);
 
-  const asText = (value) =>
-    typeof value === "string" || typeof value === "number" ? String(value) : "";
+  const asText = (value) => {
+    if (typeof value === "string" || typeof value === "number") {
+      return String(value);
+    }
+
+    return "";
+  };
 
   const labelize = (value) =>
     String(value)
-      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
       .replace(/[_-]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
       .replace(/^./, (char) => char.toUpperCase());
+
+  const isObject = (value) =>
+    value !== null && typeof value === "object" && !Array.isArray(value);
+
+  const getItemText = (item, fields = []) => {
+    if (typeof item === "string" || typeof item === "number") {
+      return String(item);
+    }
+
+    if (isObject(item)) {
+      for (const field of fields) {
+        if (
+          typeof item[field] === "string" ||
+          typeof item[field] === "number"
+        ) {
+          if (String(item[field]).trim()) {
+            return String(item[field]);
+          }
+        }
+      }
+    }
+
+    return "";
+  };
 
   const missingSkills = asArray(result.missingSkills);
   const strengths = asArray(result.strengths);
   const improvements = asArray(result.improvements);
+
   const projects = asArray(result.projects);
   const workExperience = asArray(result.workExperience);
+  const education = asArray(result.education);
+  const certifications = asArray(result.certifications);
+  const achievements = asArray(result.achievements);
+  const formattingIssues = asArray(result.formattingIssues);
+  const limitations = asArray(result.limitations);
+
   const technicalSkills = asArray(result.skills?.technical);
   const softSkills = asArray(result.skills?.soft);
   const tools = asArray(result.skills?.toolsAndTechnologies);
-  const categoryScores = result.categoryScores ?? {};
+  const skillsNeedingMoreEvidence = asArray(
+    result.skills?.skillsNeedingMoreEvidence,
+  );
 
-  const scoreWeights = {
-    skillsRelevance: 35,
-    projectsPracticalApplication: 30,
-    workExperience: 25,
-    resumeClarity: 10,
-  };
+  const categoryScores = isObject(result.categoryScores)
+    ? result.categoryScores
+    : {};
 
   const calculateReadinessScore = () => {
+    const rawOverallScore = result.roleReadinessScore;
+
     if (
-      typeof result.roleReadinessScore === "number" &&
-      Number.isFinite(result.roleReadinessScore)
+      rawOverallScore !== null &&
+      rawOverallScore !== undefined &&
+      rawOverallScore !== "" &&
+      Number.isFinite(Number(rawOverallScore))
     ) {
-      return Math.min(100, Math.max(0, result.roleReadinessScore));
+      return Math.min(100, Math.max(0, Number(rawOverallScore)));
     }
 
     let weightedTotal = 0;
     let availableWeight = 0;
 
-    for (const [key, weight] of Object.entries(scoreWeights)) {
-      const score = categoryScores[key]?.score;
+    for (const [key, weight] of Object.entries(SCORE_WEIGHTS)) {
+      const rawScore = categoryScores[key]?.score;
 
-      if (
-        typeof score === "number" &&
-        Number.isFinite(score) &&
-        score >= 0 &&
-        score <= 100
-      ) {
-        weightedTotal += (score / 100) * weight;
+      if (rawScore === null || rawScore === undefined || rawScore === "") {
+        continue;
+      }
+
+      const score = Number(rawScore);
+
+      if (Number.isFinite(score) && score >= 0 && score <= 100) {
+        weightedTotal += (score * weight) / 100;
         availableWeight += weight;
       }
     }
 
-    return availableWeight === 100 ? weightedTotal : null;
+    // Calculate a fallback only when all six categories are valid.
+    if (availableWeight === 100) {
+      return Math.min(100, Math.max(0, weightedTotal));
+    }
+
+    return null;
   };
 
   const readinessScore = calculateReadinessScore();
@@ -116,10 +180,11 @@ const AnalyzerResult = () => {
       ? circumference
       : circumference - (circumference * readinessScore) / 100;
 
-  const summary = result.candidateOverview?.summary ?? "";
-  const professionalTitle = result.candidateOverview?.professionalTitle ?? "";
-  const experienceLevelEvidence =
-    result.candidateOverview?.experienceLevelEvidence ?? "";
+  const summary = asText(result.candidateOverview?.summary);
+  const professionalTitle = asText(result.candidateOverview?.professionalTitle);
+  const experienceLevelEvidence = asText(
+    result.candidateOverview?.experienceLevelEvidence,
+  );
 
   const Card = ({ children, className = "" }) => (
     <section
@@ -149,6 +214,48 @@ const AnalyzerResult = () => {
     </div>
   );
 
+  const renderTextList = (items, emptyMessage, className = "") => {
+    if (items.length === 0) {
+      return <p className="text-sm leading-6 text-slate-500">{emptyMessage}</p>;
+    }
+
+    return (
+      <ul className={`space-y-3 ${className}`}>
+        {items.map((item, index) => {
+          const content = getItemText(item, [
+            "title",
+            "name",
+            "description",
+            "achievement",
+            "issue",
+            "reason",
+          ]);
+
+          return (
+            <li
+              key={`${content || "item"}-${index}`}
+              className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4"
+            >
+              <FaInfoCircle className="mt-1 shrink-0 text-indigo-500" />
+
+              <div className="min-w-0 flex-1">
+                <p className="text-sm leading-6 text-slate-700">
+                  {content || "Additional information"}
+                </p>
+
+                {isObject(item) && item.evidence && (
+                  <p className="mt-2 text-xs leading-5 text-slate-500">
+                    {asText(item.evidence)}
+                  </p>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
   return (
     <div className="mx-auto mt-16 max-w-7xl animate-in fade-in slide-in-from-bottom-10 px-4 pb-20 duration-700">
       {/* HEADER */}
@@ -160,12 +267,11 @@ const AnalyzerResult = () => {
         </span>
       </div>
 
-      {/* TWO-COLUMN LAYOUT */}
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
         {/* LEFT COLUMN */}
         <aside className="space-y-6 lg:col-span-4">
           {/* ROLE READINESS SCORE */}
-          <Card className="relative overflow-hidden p-7 md:p-8">
+          <Card className="relative overflow-hidden">
             <div
               className={`absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-30 blur-3xl ${styles.bg}`}
             />
@@ -238,7 +344,6 @@ const AnalyzerResult = () => {
               </p>
             )}
 
-            {/* EXECUTIVE SUMMARY */}
             <div className="mt-7 rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50 p-5">
               <div className="mb-3 flex items-center gap-2 text-slate-400">
                 <FaInfoCircle className="text-xs" />
@@ -268,31 +373,30 @@ const AnalyzerResult = () => {
             <div className="relative z-10 space-y-3">
               {missingSkills.length > 0 ? (
                 missingSkills.map((item, index) => {
-                  const skill =
-                    typeof item === "string"
-                      ? item
-                      : item?.skill || item?.name || "Unspecified skill";
+                  const skill = getItemText(item, ["skill", "name", "title"]);
+                  const reason = asText(item?.reason);
+                  const priority = asText(item?.priority);
 
                   return (
                     <div
-                      key={`${skill}-${index}`}
+                      key={`${skill || "skill"}-${index}`}
                       className="rounded-2xl border border-white/10 bg-white/10 p-4 transition-colors hover:bg-white/15"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <span className="text-sm font-bold leading-6">
-                          + {skill}
+                          + {skill || "Unspecified skill"}
                         </span>
 
-                        {item?.priority && (
+                        {priority && (
                           <span className="shrink-0 rounded-full bg-white/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-indigo-200">
-                            {item.priority}
+                            {priority}
                           </span>
                         )}
                       </div>
 
-                      {item?.reason && (
+                      {reason && (
                         <p className="mt-2 text-xs leading-6 text-indigo-200">
-                          {item.reason}
+                          {reason}
                         </p>
                       )}
                     </div>
@@ -317,29 +421,28 @@ const AnalyzerResult = () => {
             {technicalSkills.length > 0 ? (
               <div className="space-y-3">
                 {technicalSkills.map((skill, index) => {
-                  const name =
-                    typeof skill === "string"
-                      ? skill
-                      : skill?.name || "Unspecified skill";
+                  const name = getItemText(skill, ["name", "skill", "title"]);
+                  const evidence = asText(skill?.evidence);
+                  const evidenceType = asText(skill?.evidenceType);
 
                   return (
                     <div
-                      key={`${name}-${index}`}
+                      key={`${name || "skill"}-${index}`}
                       className="rounded-2xl border border-slate-100 bg-slate-50 p-4"
                     >
                       <h3 className="text-sm font-bold text-slate-800">
-                        {name}
+                        {name || "Unspecified skill"}
                       </h3>
 
-                      {skill?.evidence && (
+                      {evidence && (
                         <p className="mt-2 text-xs leading-6 text-slate-500">
-                          {skill.evidence}
+                          {evidence}
                         </p>
                       )}
 
-                      {skill?.evidenceType && (
+                      {evidenceType && (
                         <span className="mt-2 inline-block rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-slate-500">
-                          {labelize(skill.evidenceType)}
+                          {labelize(evidenceType)}
                         </span>
                       )}
                     </div>
@@ -348,7 +451,7 @@ const AnalyzerResult = () => {
               </div>
             ) : (
               <p className="text-sm text-slate-500">
-                No technical skills were provided.
+                No technical skills were identified in the resume.
               </p>
             )}
 
@@ -361,10 +464,11 @@ const AnalyzerResult = () => {
                 <div className="flex flex-wrap gap-2">
                   {softSkills.map((skill, index) => (
                     <span
-                      key={index}
+                      key={`${getItemText(skill, ["name", "skill"]) || "soft-skill"}-${index}`}
                       className="rounded-full border border-indigo-100 bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700"
                     >
-                      {typeof skill === "string" ? skill : skill?.name || ""}
+                      {getItemText(skill, ["name", "skill", "title"]) ||
+                        "Unspecified skill"}
                     </span>
                   ))}
                 </div>
@@ -380,11 +484,40 @@ const AnalyzerResult = () => {
                 <div className="flex flex-wrap gap-2">
                   {tools.map((tool, index) => (
                     <span
-                      key={index}
+                      key={`${getItemText(tool, ["name", "title"]) || "tool"}-${index}`}
                       className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600"
                     >
-                      {asText(tool)}
+                      {getItemText(tool, ["name", "title", "tool"]) ||
+                        "Unspecified technology"}
                     </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {skillsNeedingMoreEvidence.length > 0 && (
+              <div className="mt-6 border-t border-slate-100 pt-5">
+                <h3 className="mb-3 text-[10px] font-black uppercase tracking-widest text-amber-600">
+                  Skills Needing More Evidence
+                </h3>
+
+                <div className="space-y-3">
+                  {skillsNeedingMoreEvidence.map((item, index) => (
+                    <div
+                      key={`${getItemText(item, ["name", "skill", "title"]) || "skill"}-${index}`}
+                      className="rounded-2xl bg-amber-50 p-4"
+                    >
+                      <p className="text-sm font-bold text-slate-800">
+                        {getItemText(item, ["name", "skill", "title"]) ||
+                          "Unspecified skill"}
+                      </p>
+
+                      {item?.evidence && (
+                        <p className="mt-2 text-xs leading-6 text-slate-600">
+                          {asText(item.evidence)}
+                        </p>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -405,17 +538,16 @@ const AnalyzerResult = () => {
             <div className="grid gap-4">
               {strengths.length > 0 ? (
                 strengths.map((item, index) => {
-                  const title =
-                    typeof item === "string"
-                      ? item
-                      : item?.title || item?.name || "Strength";
-
-                  const evidence =
-                    typeof item === "object" ? item?.evidence : "";
+                  const title = getItemText(item, [
+                    "title",
+                    "name",
+                    "strength",
+                  ]);
+                  const evidence = asText(item?.evidence);
 
                   return (
                     <div
-                      key={`${title}-${index}`}
+                      key={`${title || "strength"}-${index}`}
                       className="group flex items-start gap-4 rounded-3xl border border-emerald-100/70 bg-emerald-50/30 p-5 transition-colors hover:bg-emerald-50"
                     >
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-emerald-600 shadow-sm transition-transform group-hover:scale-110">
@@ -424,7 +556,7 @@ const AnalyzerResult = () => {
 
                       <div>
                         <h3 className="text-sm font-bold leading-6 text-slate-800 md:text-base">
-                          {title}
+                          {title || "Strength"}
                         </h3>
 
                         {evidence && (
@@ -455,27 +587,24 @@ const AnalyzerResult = () => {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {improvements.length > 0 ? (
                 improvements.map((item, index) => {
-                  const issue =
-                    typeof item === "string"
-                      ? item
-                      : item?.issue || item?.title || "Improvement";
-
-                  const suggestion =
-                    typeof item === "object" ? item?.suggestion : "";
-
-                  const priority =
-                    typeof item === "object" ? item?.priority : "";
+                  const issue = getItemText(item, [
+                    "issue",
+                    "title",
+                    "description",
+                  ]);
+                  const suggestion = asText(item?.suggestion);
+                  const priority = asText(item?.priority);
 
                   return (
                     <div
-                      key={`${issue}-${index}`}
+                      key={`${issue || "improvement"}-${index}`}
                       className="group flex gap-4 rounded-[2rem] border border-slate-200/60 bg-slate-50 p-5 transition-all hover:bg-white hover:shadow-lg"
                     >
                       <FaExclamationCircle className="mt-1 shrink-0 text-amber-500 transition-transform group-hover:rotate-12" />
 
                       <div>
                         <h3 className="text-sm font-bold leading-6 text-slate-800">
-                          {issue}
+                          {issue || "Improvement"}
                         </h3>
 
                         {suggestion && (
@@ -501,7 +630,7 @@ const AnalyzerResult = () => {
             </div>
           </Card>
 
-          {/* SCORE BREAKDOWN */}
+          {/* SCORE BREAKDOWN: ALL BACKEND CATEGORIES */}
           {Object.keys(categoryScores).length > 0 && (
             <Card>
               <SectionHeading
@@ -511,16 +640,20 @@ const AnalyzerResult = () => {
               />
 
               <div className="space-y-6">
-                {Object.entries(scoreWeights).map(([key, weight]) => {
-                  const category = categoryScores[key];
+                {Object.entries(categoryScores).map(([key, category]) => {
+                  const rawScore = category?.score;
+                  const value = Number(rawScore);
 
-                  if (!category) return null;
+                  const isValidScore =
+                    rawScore !== null &&
+                    rawScore !== undefined &&
+                    rawScore !== "" &&
+                    Number.isFinite(value) &&
+                    value >= 0 &&
+                    value <= 100;
 
-                  const value = Number(category.score);
-
-                  const categoryScore = Number.isFinite(value)
-                    ? Math.min(100, Math.max(0, value))
-                    : 0;
+                  const categoryScore = isValidScore ? value : 0;
+                  const weight = SCORE_WEIGHTS[key];
 
                   return (
                     <div key={key}>
@@ -529,8 +662,8 @@ const AnalyzerResult = () => {
                           {labelize(key)}
                         </span>
 
-                        <span className="text-sm font-black text-slate-800">
-                          {category?.score ?? "N/A"}/100
+                        <span className="shrink-0 text-sm font-black text-slate-800">
+                          {isValidScore ? `${value}/100` : "N/A"}
                         </span>
                       </div>
 
@@ -543,13 +676,15 @@ const AnalyzerResult = () => {
 
                       {category?.reason && (
                         <p className="mt-2 text-xs leading-6 text-slate-500">
-                          {category.reason}
+                          {asText(category.reason)}
                         </p>
                       )}
 
-                      <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                        Score weight: {weight}%
-                      </p>
+                      {weight !== undefined && (
+                        <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                          Score weight: {weight}%
+                        </p>
+                      )}
                     </div>
                   );
                 })}
@@ -558,184 +693,365 @@ const AnalyzerResult = () => {
           )}
 
           {/* PROJECTS */}
-          {Array.isArray(result.projects) && (
-            <Card>
-              <SectionHeading
-                icon={FaFolderOpen}
-                title="Projects"
-                subtitle="Practical application of your skills"
-              />
+          <Card>
+            <SectionHeading
+              icon={FaFolderOpen}
+              title="Projects"
+              subtitle="Practical application of your skills"
+            />
 
-              {projects.length > 0 ? (
-                <div className="space-y-5">
-                  {projects.map((project, index) => (
-                    <article
-                      key={`${project?.name || "project"}-${index}`}
-                      className="rounded-3xl border border-slate-200 p-5 transition-colors hover:border-indigo-100"
-                    >
-                      <h3 className="text-lg font-black text-slate-800">
-                        {project?.name || "Project"}
-                      </h3>
+            {projects.length > 0 ? (
+              <div className="space-y-5">
+                {projects.map((project, index) => (
+                  <article
+                    key={`${project?.name || "project"}-${index}`}
+                    className="rounded-3xl border border-slate-200 p-5 transition-colors hover:border-indigo-100"
+                  >
+                    <h3 className="text-lg font-black text-slate-800">
+                      {asText(project?.name) || "Project"}
+                    </h3>
 
-                      {project?.purpose && (
-                        <p className="mt-2 text-sm leading-7 text-slate-600">
-                          {project.purpose}
-                        </p>
-                      )}
+                    {project?.purpose && (
+                      <p className="mt-2 text-sm leading-7 text-slate-600">
+                        {asText(project.purpose)}
+                      </p>
+                    )}
 
-                      {asArray(project.technologies).length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {project.technologies.map((tech, techIndex) => (
+                    {asArray(project?.technologies).length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {project.technologies.map((tech, techIndex) => {
+                          const techName = getItemText(tech, [
+                            "name",
+                            "title",
+                            "technology",
+                          ]);
+
+                          return (
                             <span
-                              key={`${tech}-${techIndex}`}
+                              key={`${techName || "technology"}-${techIndex}`}
                               className="rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700"
                             >
-                              {asText(tech)}
+                              {techName || "Unspecified technology"}
                             </span>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {asArray(project?.features).length > 0 && (
+                      <div className="mt-5">
+                        <h4 className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                          Key Features
+                        </h4>
+
+                        <ul className="space-y-2">
+                          {project.features.map((feature, featureIndex) => (
+                            <li
+                              key={featureIndex}
+                              className="flex gap-2 text-sm leading-6 text-slate-600"
+                            >
+                              <FaCheckCircle className="mt-1 shrink-0 text-emerald-500" />
+                              <span>
+                                {getItemText(feature, [
+                                  "name",
+                                  "title",
+                                  "description",
+                                ]) || "Feature"}
+                              </span>
+                            </li>
                           ))}
-                        </div>
-                      )}
+                        </ul>
+                      </div>
+                    )}
 
-                      {asArray(project.features).length > 0 && (
-                        <div className="mt-5">
-                          <h4 className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            Key Features
-                          </h4>
+                    {project?.candidateContribution && (
+                      <p className="mt-4 text-sm leading-7 text-slate-600">
+                        <strong className="text-slate-800">
+                          Contribution:{" "}
+                        </strong>
+                        {asText(project.candidateContribution)}
+                      </p>
+                    )}
 
-                          <ul className="space-y-2">
-                            {project.features.map((feature, featureIndex) => (
-                              <li
-                                key={featureIndex}
-                                className="flex gap-2 text-sm leading-6 text-slate-600"
-                              >
-                                <FaCheckCircle className="mt-1 shrink-0 text-emerald-500" />
-                                {asText(feature)}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {asArray(project?.outcomes).length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                          Outcomes
+                        </h4>
 
-                      {project.candidateContribution && (
-                        <p className="mt-4 text-sm leading-7 text-slate-600">
-                          <strong className="text-slate-800">
-                            Contribution:{" "}
-                          </strong>
-                          {project.candidateContribution}
-                        </p>
-                      )}
+                        <ul className="space-y-2">
+                          {project.outcomes.map((outcome, outcomeIndex) => (
+                            <li
+                              key={outcomeIndex}
+                              className="text-sm leading-6 text-slate-600"
+                            >
+                              •{" "}
+                              {getItemText(outcome, [
+                                "description",
+                                "title",
+                                "outcome",
+                              ]) || "Outcome"}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                      {asArray(project.outcomes).length > 0 && (
-                        <div className="mt-4">
-                          <h4 className="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            Outcomes
-                          </h4>
-
-                          <ul className="space-y-2">
-                            {project.outcomes.map((outcome, outcomeIndex) => (
-                              <li
-                                key={outcomeIndex}
-                                className="text-sm leading-6 text-slate-600"
-                              >
-                                • {asText(outcome)}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {project.evidence && (
-                        <p className="mt-4 text-xs leading-6 text-slate-500">
-                          {project.evidence}
-                        </p>
-                      )}
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-slate-500">
-                  No projects were provided.
-                </p>
-              )}
-            </Card>
-          )}
+                    {project?.evidence && (
+                      <p className="mt-4 text-xs leading-6 text-slate-500">
+                        <strong>Evidence: </strong>
+                        {asText(project.evidence)}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">
+                No projects were identified in the resume.
+              </p>
+            )}
+          </Card>
 
           {/* WORK EXPERIENCE */}
-          {Array.isArray(result.workExperience) && (
-            <Card>
-              <SectionHeading
-                icon={FaBriefcase}
-                title="Work Experience"
-                subtitle="Professional and internship experience"
-              />
+          <Card>
+            <SectionHeading
+              icon={FaBriefcase}
+              title="Work Experience"
+              subtitle="Professional and internship experience"
+            />
 
-              {workExperience.length > 0 ? (
-                <div className="space-y-6">
-                  {workExperience.map((job, index) => (
-                    <article
-                      key={`${job?.jobTitle || "role"}-${index}`}
-                      className="border-l-2 border-indigo-200 pl-5"
-                    >
-                      <h3 className="font-black text-slate-800">
-                        {job?.jobTitle || "Position"}
-                      </h3>
+            {workExperience.length > 0 ? (
+              <div className="space-y-6">
+                {workExperience.map((job, index) => (
+                  <article
+                    key={`${job?.jobTitle || "role"}-${index}`}
+                    className="border-l-2 border-indigo-200 pl-5"
+                  >
+                    <h3 className="font-black text-slate-800">
+                      {asText(job?.jobTitle) || "Position"}
+                    </h3>
 
-                      {job?.organization && (
-                        <p className="mt-1 text-sm font-bold text-indigo-700">
-                          {job.organization}
-                        </p>
-                      )}
+                    {job?.organization && (
+                      <p className="mt-1 text-sm font-bold text-indigo-700">
+                        {asText(job.organization)}
+                      </p>
+                    )}
 
-                      {job?.duration && (
-                        <p className="mt-1 text-xs text-slate-400">
-                          {job.duration}
-                        </p>
-                      )}
+                    {job?.duration && (
+                      <p className="mt-1 text-xs text-slate-400">
+                        {asText(job.duration)}
+                      </p>
+                    )}
 
-                      {asArray(job.responsibilities).length > 0 && (
-                        <ul className="mt-4 space-y-2">
+                    {asArray(job?.responsibilities).length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                          Responsibilities
+                        </h4>
+
+                        <ul className="space-y-2">
                           {job.responsibilities.map((item, itemIndex) => (
                             <li
                               key={itemIndex}
                               className="text-sm leading-6 text-slate-600"
                             >
-                              • {asText(item)}
+                              •{" "}
+                              {getItemText(item, [
+                                "description",
+                                "title",
+                                "responsibility",
+                              ]) || "Responsibility"}
                             </li>
                           ))}
                         </ul>
-                      )}
+                      </div>
+                    )}
 
-                      {asArray(job.achievements).length > 0 && (
-                        <div className="mt-4">
-                          <h4 className="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            Work Accomplishments
-                          </h4>
+                    {asArray(job?.achievements).length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                          Work Accomplishments & Impact
+                        </h4>
 
-                          <ul className="space-y-2">
-                            {job.achievements.map((item, itemIndex) => (
-                              <li
-                                key={itemIndex}
-                                className="text-sm leading-6 text-slate-600"
-                              >
-                                • {asText(item)}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                        <ul className="space-y-2">
+                          {job.achievements.map((item, itemIndex) => (
+                            <li
+                              key={itemIndex}
+                              className="text-sm leading-6 text-slate-600"
+                            >
+                              •{" "}
+                              {getItemText(item, [
+                                "description",
+                                "title",
+                                "achievement",
+                              ]) || "Achievement"}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                      {job.evidence && (
-                        <p className="mt-3 text-xs leading-6 text-slate-500">
-                          {job.evidence}
+                    {job?.evidence && (
+                      <p className="mt-3 text-xs leading-6 text-slate-500">
+                        <strong>Evidence: </strong>
+                        {asText(job.evidence)}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">
+                No work experience was identified in the resume.
+              </p>
+            )}
+          </Card>
+
+          {/* EDUCATION */}
+          <Card>
+            <SectionHeading
+              icon={FaGraduationCap}
+              title="Education"
+              subtitle="Academic background"
+            />
+
+            {education.length > 0 ? (
+              <div className="space-y-4">
+                {education.map((item, index) => (
+                  <article
+                    key={`${item?.qualification || "education"}-${index}`}
+                    className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+                  >
+                    <h3 className="font-black text-slate-800">
+                      {asText(item?.qualification) || "Qualification"}
+                    </h3>
+
+                    {item?.institution && (
+                      <p className="mt-1 text-sm font-semibold text-indigo-700">
+                        {asText(item.institution)}
+                      </p>
+                    )}
+
+                    {item?.duration && (
+                      <p className="mt-1 text-xs text-slate-400">
+                        {asText(item.duration)}
+                      </p>
+                    )}
+
+                    {asArray(item?.details).length > 0 && (
+                      <ul className="mt-3 space-y-2">
+                        {item.details.map((detail, detailIndex) => (
+                          <li
+                            key={detailIndex}
+                            className="text-sm leading-6 text-slate-600"
+                          >
+                            •{" "}
+                            {getItemText(detail, [
+                              "description",
+                              "title",
+                              "detail",
+                            ]) || "Education detail"}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">
+                No education details were identified in the resume.
+              </p>
+            )}
+          </Card>
+
+          {/* CERTIFICATIONS */}
+          <Card>
+            <SectionHeading
+              icon={FaCertificate}
+              title="Certifications"
+              subtitle="Professional credentials"
+            />
+
+            {renderTextList(
+              certifications,
+              "No certifications were identified in the resume.",
+            )}
+          </Card>
+
+          {/* ACHIEVEMENTS & IMPACT */}
+          <Card>
+            <SectionHeading
+              icon={FaTrophy}
+              title="Achievements & Impact"
+              subtitle="Accomplishments supported by resume evidence"
+            />
+
+            {renderTextList(
+              achievements,
+              "No specific achievements were identified in the resume.",
+            )}
+          </Card>
+
+          {/* FORMATTING ISSUES */}
+          <Card>
+            <SectionHeading
+              icon={FaFileAlt}
+              title="Formatting & Clarity"
+              subtitle="Resume presentation checks"
+            />
+
+            {formattingIssues.length > 0 ? (
+              <ul className="space-y-3">
+                {formattingIssues.map((item, index) => {
+                  const issue = getItemText(item, [
+                    "issue",
+                    "description",
+                    "title",
+                  ]);
+
+                  return (
+                    <li
+                      key={`${issue || "formatting-issue"}-${index}`}
+                      className="flex items-start gap-3 rounded-2xl bg-amber-50 p-4"
+                    >
+                      <FaExclamationTriangle className="mt-1 shrink-0 text-amber-500" />
+
+                      <div>
+                        <p className="text-sm leading-6 text-slate-700">
+                          {issue || "Formatting issue"}
                         </p>
-                      )}
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-slate-500">
-                  No work experience was provided.
-                </p>
+
+                        {isObject(item) && item.suggestion && (
+                          <p className="mt-2 text-xs leading-5 text-slate-500">
+                            Suggestion: {asText(item.suggestion)}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="text-sm text-slate-500">
+                No specific formatting issues were identified.
+              </p>
+            )}
+          </Card>
+
+          {/* ANALYSIS LIMITATIONS */}
+          {limitations.length > 0 && (
+            <Card>
+              <SectionHeading
+                icon={FaInfoCircle}
+                title="Analysis Limitations"
+                subtitle="Context for interpreting your results"
+              />
+
+              {renderTextList(
+                limitations,
+                "No additional limitations were reported.",
               )}
             </Card>
           )}

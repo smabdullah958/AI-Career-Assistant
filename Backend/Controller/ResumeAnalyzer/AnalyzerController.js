@@ -10,7 +10,7 @@ let AnalyzerController = async (req, res) => {
     console.log(Experience, Role);
 
     if (!req.file || !Experience || !Role) {
-      return res.status(400).json({ message: "All teh fields are required" });
+      return res.status(400).json({ message: "All the fields are required" });
     }
 
     //only 3mb file is need
@@ -21,9 +21,11 @@ let AnalyzerController = async (req, res) => {
     }
 
     //pdf text extractor
-    let { text: TextExtractor, pageCount } = await PDFTextExtractor(
-      req.file.buffer,
-    );
+    let {
+      text: TextExtractor,
+      hasReadableText,
+      pageCount,
+    } = await PDFTextExtractor(req.file.buffer);
 
     console.log(TextExtractor, pageCount);
 
@@ -35,9 +37,10 @@ let AnalyzerController = async (req, res) => {
     }
 
     //if pdf has no text
-    if (!TextExtractor || !TextExtractor.trim()) {
+    if (!hasReadableText) {
       return res.status(400).json({
-        message: "No readable text was found in this PDF.",
+        message:
+          "This PDF has no readable text and may be image-based or scanned. Only text-based PDFs are allowed.",
       });
     }
 
@@ -93,8 +96,10 @@ let AnalyzerController = async (req, res) => {
 
       return res.end();
     }
-
-    return res.status(500).json({ message: "interal errro" });
+    return res.status(500).json({
+      message:
+        "The AI service is temporarily unavailable. Please try again later.",
+    });
   }
 };
 

@@ -1,17 +1,34 @@
-let { PDFParse } = require("pdf-parse");
-let PDFTextExtractor = async (pdfdata) => {
+const { PDFParse } = require("pdf-parse");
+
+const PDFTextExtractor = async (pdfdata) => {
   const parser = new PDFParse({
     data: pdfdata,
   });
 
-  //get text
-  let result = await parser.getText();
+  try {
+    // Extract PDF text
+    const result = await parser.getText();
 
-  console.log("this is a pdf text in a text extractor");
+    const text = result.text || "";
 
-  //clean the memory so that the text can not occupy the memory or RAM
-  await parser.destroy();
+    // Check whether the PDF contains readable text
+    const hasReadableText = text.trim().length > 0;
 
-  return { text: result.text, pageCount: result.total ?? result.pages?.length };
+    const pageCount = result.total ?? result.pages?.length ?? 0;
+
+    console.log("PDF text extraction completed");
+    console.log("Page count:", pageCount);
+    console.log("Readable text:", hasReadableText);
+
+    return {
+      text,
+      pageCount,
+      ...(hasReadableText && { hasReadableText: true }),
+    };
+  } finally {
+    // Always release parser resources
+    await parser.destroy();
+  }
 };
+
 module.exports = PDFTextExtractor;

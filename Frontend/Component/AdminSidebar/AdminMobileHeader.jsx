@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import AdminHeaderWrapper from "@/Component/AdminSidebar/AdminHeaderWrapper";
 
 const AdminMobileHeader = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -90,6 +91,8 @@ const AdminMobileHeader = () => {
             >
               Notification
             </Link>
+
+            <AdminHeaderWrapper />
           </nav>
         </div>
       )}

@@ -32,6 +32,10 @@ let ResumeController = async (req, res) => {
     );
 
     console.log("internal error", err);
+    return res.status(500).json({
+      message:
+        "The AI service is temporarily unavailable. Please try again later.",
+    });
   }
 };
 

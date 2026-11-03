@@ -32,6 +32,10 @@ let InterviewController = async (req, res) => {
       "failed",
       0,
     );
+    return res.status(500).json({
+      message:
+        "The AI service is temporarily unavailable. Please try again later.",
+    });
   }
 };
 module.exports = InterviewController;

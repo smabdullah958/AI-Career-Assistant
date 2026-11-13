@@ -33,6 +33,7 @@ const ResumeForm = ({ onDataChange }) => {
     control,
     watch,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(ResumeSchema),
@@ -128,6 +129,19 @@ const ResumeForm = ({ onDataChange }) => {
         EndDate: "",
       });
     }
+  };
+
+  //fucniton to generate descirption of a experience
+  const GenerateDescription = (index) => {
+    const Role = getValues(`Experience.${index}.Role`);
+    const CompanyName = getValues(`Experience.${index}.CompanyName`);
+    const StartDate = getValues(`Experience.${index}.StartDate`);
+    const EndDate = getValues(`Experience.${index}.EndDate`);
+
+    alert(
+      Role + ", " + CompanyName + ", " + StartDate + ", " + EndDate ||
+        "Please enter a role first.",
+    );
   };
 
   //useFieldArray for dynamic projects
@@ -594,6 +608,17 @@ const ResumeForm = ({ onDataChange }) => {
                   placeholder="Experience Description"
                   className="border-black w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none text-gray-500"
                 />
+               
+              {/*<button
+                  type="button"
+                  onClick={() => {
+                    GenerateDescription(index);
+                  }}
+                  className="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 duration-300 w-fit"
+                >
+                  Generate with AI
+                </button>
+                */}
               </section>
             </section>
           ))}
